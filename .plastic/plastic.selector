@@ -1,0 +1,4 @@
+repository "SeniorGameAI/Basic@18968264871698@cloud"
+  path "/"
+    br "/main"
+    co "/main"
