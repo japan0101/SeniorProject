@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -26,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     float horizontalInput;
     float verticalInput;
     Vector3 moveDirection;
+    private Coroutine resetJumpRoutine;
 
     Rigidbody rb;
     private void Start()
@@ -33,7 +35,6 @@ public class PlayerMovement : MonoBehaviour
         //set up regid body
         rb= GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-
         ResetJump();
     }
 
@@ -50,10 +51,15 @@ public class PlayerMovement : MonoBehaviour
         // when to jump
         if (Input.GetKey(jumpKey) && readyToJump && grounded){
             readyToJump = false;
-
             Jump();
 
-            Invoke(nameof(ResetJump),jumpCooldown);
+            // If there's an existing coroutine, stop it first
+            if (resetJumpRoutine != null)
+            {
+                StopCoroutine(resetJumpRoutine);
+            }
+
+            resetJumpRoutine = StartCoroutine(ResetJumpAfterDelay(jumpCooldown));
         }
     }
 
@@ -78,10 +84,15 @@ public class PlayerMovement : MonoBehaviour
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
-
     private void ResetJump()
     {
         readyToJump = true;
+    }
+    private IEnumerator ResetJumpAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ResetJump();
+        resetJumpRoutine = null; // Clear the reference when done
     }
     private void SpeedControl()
     {
