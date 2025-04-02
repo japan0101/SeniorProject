@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -6,6 +7,14 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed;
 
     public float groundDrag;
+
+    public float jumpForce;
+    public float jumpCooldown;
+    public float airMultiplier;
+    bool readyToJump;
+
+    [Header("Keybinds")]
+    public KeyCode jumpKey = KeyCode.Space;
 
     [Header("GroundCheck")]
     public float playerHieght;
@@ -16,7 +25,6 @@ public class PlayerMovement : MonoBehaviour
 
     float horizontalInput;
     float verticalInput;
-
     Vector3 moveDirection;
 
     Rigidbody rb;
@@ -25,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
         //set up regid body
         rb= GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+
+        ResetJump();
     }
 
     private void FixedUpdate()
@@ -36,6 +46,15 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+
+        // when to jump
+        if (Input.GetKey(jumpKey) && readyToJump && grounded){
+            readyToJump = false;
+
+            Jump();
+
+            Invoke(nameof(ResetJump),jumpCooldown);
+        }
     }
 
     private void MovePlayer()
@@ -43,7 +62,26 @@ public class PlayerMovement : MonoBehaviour
         //calculate movement direction
         moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
 
-        rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        //on ground
+        if (grounded)
+        {
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        }
+        //in Air
+        else if (!grounded)
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+    }
+    private void Jump()
+    {
+        // reset y velocity
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+
+        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+    }
+
+    private void ResetJump()
+    {
+        readyToJump = true;
     }
     private void SpeedControl()
     {
