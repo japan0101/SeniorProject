@@ -7,7 +7,6 @@ public class PlayerShoot : MonoBehaviour
 {
     [Header("Weapon Config")]
     public float primaryCooldown;
-    public float primaryPower;
     
     private bool primaryReadyToShoot;
 
@@ -49,19 +48,6 @@ public class PlayerShoot : MonoBehaviour
         resetPrimaryRoutine = null; //clear ref
     }
 
-    private void Shoot()
-    {
-        //require (Vector3 shootDirection, Vector3 shotPosition)
-        //create bullet then add force to it
-        Vector3 shootDirection = playerCam.transform.forward;
-        var bulletInstance = Instantiate(bullet, gunPos.position, Quaternion.LookRotation(shootDirection));
-        var bulletRB = bulletInstance.GetComponentInChildren<Rigidbody>();
-        //bulletRB.AddForce(orientation.forward * 20 + orientation.up * 10, ForceMode.Impulse);
-        bulletRB.AddForce(shootDirection * primaryPower, ForceMode.Impulse);
-
-        //casting rays to check hit direction currently as debug
-        Debug.DrawRay(gunPos.position, shootDirection * 5, Color.red, 1f);
-    }
     void Update()
     {
         MyInput();

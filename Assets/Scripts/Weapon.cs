@@ -6,7 +6,6 @@ using UnityEngine.UIElements;
 public class Weapon : MonoBehaviour
 {
     public float primaryPower;
-
     public GameObject bullet;
 
     
