@@ -52,18 +52,13 @@ public class PlayerShoot : MonoBehaviour
     {
         //create bullet then add force to it
         Vector3 shootDirection = playerCam.transform.forward;
-        var bulletInstance = Instantiate(bullet, gunPos.position - new Vector3(0, -1, 0), Quaternion.LookRotation(shootDirection));
+        var bulletInstance = Instantiate(bullet, gunPos.position, Quaternion.LookRotation(shootDirection));
         var bulletRB = bulletInstance.GetComponentInChildren<Rigidbody>();
         //bulletRB.AddForce(orientation.forward * 20 + orientation.up * 10, ForceMode.Impulse);
         bulletRB.AddForce(shootDirection * primaryPower, ForceMode.Impulse);
 
         //casting rays to check hit direction currently as debug
         Debug.DrawRay(gunPos.position, shootDirection * 5, Color.red, 1f);
-        //if (Physics.Raycast(gunPos.position, orientation.forward, out RaycastHit hitInfo, 200))
-        //{
-        //    Debug.Log(hitInfo.point);
-        //    Debug.DrawLine(gunPos.position, hitInfo.point, Color.green, 20f);
-        //}
     }
     void Update()
     {
