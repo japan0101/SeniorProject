@@ -21,6 +21,7 @@ public class PlayerShoot : MonoBehaviour
     public Camera playerCam;
 
     private Coroutine resetPrimaryRoutine;
+    public static Action<Vector3, Vector3> shootInput;
     private void MyInput()
     {
         if (Input.GetKey(Primary) && primaryReadyToShoot)
@@ -28,7 +29,7 @@ public class PlayerShoot : MonoBehaviour
             if (resetPrimaryRoutine != null)
                 StopCoroutine(resetPrimaryRoutine);
             primaryReadyToShoot = false;
-            Shoot();
+            shootInput?.Invoke(playerCam.transform.forward, gunPos.position);
             resetPrimaryRoutine = StartCoroutine(PrimaryCooldown(primaryCooldown));
         }
     }
@@ -50,6 +51,7 @@ public class PlayerShoot : MonoBehaviour
 
     private void Shoot()
     {
+        //require (Vector3 shootDirection, Vector3 shotPosition)
         //create bullet then add force to it
         Vector3 shootDirection = playerCam.transform.forward;
         var bulletInstance = Instantiate(bullet, gunPos.position, Quaternion.LookRotation(shootDirection));

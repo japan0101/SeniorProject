@@ -2,18 +2,22 @@ using UnityEngine;
 
 public class MainBullet : MonoBehaviour
 {
-    public LayerMask whatIsGround;
-    public LayerMask whatIsEnemy;
-    public LayerMask whatIsPlayer;
+    [Header("Bullet data")]
+    public float lifetime;
+
+    private int groundLayer = 10;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        Destroy(gameObject, lifetime);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer == whatIsGround) {
+        Debug.Log(collision.ToString());
+        Debug.Log(groundLayer);
+        if (collision.gameObject.layer == groundLayer) {
+            Debug.Log("Ground hit");
             Destroy(gameObject);
         }
     }
