@@ -15,9 +15,13 @@ public class MainBullet : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log(collision.ToString());
-        Debug.Log(groundLayer);
+        //Debug.Log(groundLayer);
         if (collision.gameObject.layer == groundLayer) {
-            Debug.Log("Ground hit");
+            //Debug.Log("Ground hit");
+            Destroy(gameObject);
+        }
+        if (collision.gameObject.layer == 11)
+        {
             Destroy(gameObject);
         }
     }
