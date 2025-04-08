@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 3879614004484745148}
   - component: {fileID: 3261763802834215650}
   - component: {fileID: 1357192555338001853}
-  - component: {fileID: 417987129108983277}
+  - component: {fileID: 2959808435615367032}
   m_Layer: 9
   m_Name: TestBullet
   m_TagString: Untagged
@@ -169,7 +169,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &417987129108983277
+--- !u!114 &2959808435615367032
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,4 +181,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4206e3bd8fdea234a9069008f6807a6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 10
+  lifetime: 5
+  damage: 1

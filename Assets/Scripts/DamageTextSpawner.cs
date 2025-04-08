@@ -17,18 +17,22 @@ public class DamageTextSpawner : MonoBehaviour
         // Check if collision is with PlayerAttack layer
         if (collision.gameObject.layer == 9)
         {
-            SpawnDamageText(collision.contacts[0].point);
+            MainBullet bullet = collision.gameObject.GetComponent<MainBullet>();
+            if (bullet != null)
+            {
+                SpawnDamageText(collision.contacts[0].point, bullet.damage);
+            }
         }
     }
 
-    private void SpawnDamageText(Vector3 position)
+    private void SpawnDamageText(Vector3 position, float damage)
     {
         // Create text object
         GameObject textObj = Instantiate(textPrefab, position + textOffset, Quaternion.identity);
         TextMeshPro tmp = textObj.GetComponent<TextMeshPro>();
 
         // Configure text
-        tmp.text = "Hit!";
+        tmp.text = damage.ToString();
         tmp.fontSize = fontSize;
         tmp.color = textColor;
         tmp.alignment = TextAlignmentOptions.Center;

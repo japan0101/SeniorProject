@@ -4,6 +4,7 @@ public class MainBullet : MonoBehaviour
 {
     [Header("Bullet data")]
     public float lifetime;
+    public float damage;
 
     private int groundLayer = 10;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
