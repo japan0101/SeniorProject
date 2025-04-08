@@ -7,7 +7,6 @@ public class PlayerShoot : MonoBehaviour
 {
     [Header("Weapon Config")]
     public float primaryCooldown;
-    
     private bool primaryReadyToShoot;
 
     [Header("Keybinds")]

@@ -22,7 +22,9 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask whatIsGround;
     bool grounded;
 
-    public Transform orientation;
+    public Transform hOrientation;
+    public Transform vOrientation;
+    public GameObject primaryWeaponHolder;
 
     float horizontalInput;
     float verticalInput;
@@ -66,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         //calculate movement direction
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        moveDirection = hOrientation.forward * verticalInput + hOrientation.right * horizontalInput;
 
         //on ground
         if (grounded)
@@ -108,7 +110,9 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //Rotate Player model
-        transform.rotation = orientation.rotation;
+        transform.rotation = hOrientation.rotation;
+        primaryWeaponHolder.transform.localRotation = vOrientation.rotation;
+
 
         //ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);

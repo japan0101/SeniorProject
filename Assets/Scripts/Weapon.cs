@@ -8,10 +8,13 @@ public class Weapon : MonoBehaviour
     public float primaryPower;
     public GameObject bullet;
 
-    
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
+    {
+        Equip();
+    }
+
+    public void Equip()
     {
         PlayerShoot.shootInput += Shoot;
     }
@@ -30,5 +33,6 @@ public class Weapon : MonoBehaviour
     }
     void Update()
     {
+        
     }
 }

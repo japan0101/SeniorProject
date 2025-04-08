@@ -5,7 +5,8 @@ public class CameraMovement : MonoBehaviour
     public float senX;
     public float senY;
 
-    public Transform orientation;
+    public Transform hOrientation;
+    public Transform vOrientation;
 
     float xRotation;
     float yRotation;
@@ -31,6 +32,7 @@ public class CameraMovement : MonoBehaviour
 
         // rotate cam and orientation
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+        hOrientation.rotation = Quaternion.Euler(0, yRotation, 0);
+        vOrientation.rotation = Quaternion.Euler(xRotation, 0, 0);
     }
 }
