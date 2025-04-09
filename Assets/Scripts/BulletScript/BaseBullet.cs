@@ -19,7 +19,7 @@ public class MainBullet : MonoBehaviour
         //Debug.Log(groundLayer);
         if (collision.gameObject.layer == groundLayer) {
             //Debug.Log("Ground hit");
-            Destroy(gameObject);
+            Destroy(gameObject, 2);
         }
         if (collision.gameObject.layer == 11)
         {

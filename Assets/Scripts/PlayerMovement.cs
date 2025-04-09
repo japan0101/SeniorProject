@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,8 +7,17 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed;
+    public float sprintSpeed;
+
+    private float speed;
 
     public float groundDrag;
+
+    public float dashForce;
+    public float dashDuration;
+    public float dashCooldown;
+    bool dashing;
+    bool readyToDash;
 
     public float jumpForce;
     public float jumpCooldown;
@@ -16,6 +26,8 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
+    public KeyCode sprintKey = KeyCode.LeftShift;
+    public KeyCode dashKey = KeyCode.R;
 
     [Header("GroundCheck")]
     public float playerHeight;
@@ -29,7 +41,9 @@ public class PlayerMovement : MonoBehaviour
     float horizontalInput;
     float verticalInput;
     Vector3 moveDirection;
+
     private Coroutine resetJumpRoutine;
+    private Coroutine resetDashRoutine;
 
     Rigidbody rb;
     private void Start()
@@ -38,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
         rb= GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         ResetJump();
+        ResetDash();
     }
 
     private void FixedUpdate()
@@ -63,21 +78,49 @@ public class PlayerMovement : MonoBehaviour
 
             resetJumpRoutine = StartCoroutine(ResetJumpAfterDelay(jumpCooldown));
         }
+
+        //when dash
+        if (Input.GetKey(dashKey) && readyToDash)
+        {
+            readyToDash = false;
+            dashing = true;
+            Dash();
+
+            Invoke(nameof(ResetDashSpeed), dashDuration);
+
+            // If there's an existing coroutine, stop it first
+            if (resetDashRoutine != null)
+            {
+                StopCoroutine(resetDashRoutine);
+            }
+
+            resetDashRoutine = StartCoroutine(ResetDashAfterDelay(dashCooldown));
+        }
     }
 
     private void MovePlayer()
     {
         //calculate movement direction
         moveDirection = hOrientation.forward * verticalInput + hOrientation.right * horizontalInput;
-
+        if (dashing) {
+            speed = dashForce;
+        } else
+        if (Input.GetKey(sprintKey))
+        {
+            speed = sprintSpeed;
+        }
+        else
+        {
+            speed = moveSpeed;
+        }
         //on ground
         if (grounded)
         {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * speed * 10f, ForceMode.Force);
         }
         //in Air
         else if (!grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * speed * 10f * airMultiplier, ForceMode.Force);
     }
     private void Jump()
     {
@@ -86,9 +129,25 @@ public class PlayerMovement : MonoBehaviour
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
+
+    private void Dash()
+    {
+        // reset x velocity
+        //rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
+
+        rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
+    }
     private void ResetJump()
     {
         readyToJump = true;
+    }
+    private void ResetDash()
+    {
+        readyToDash = true;
+    }
+    private void ResetDashSpeed()
+    {
+        dashing = false;
     }
     private IEnumerator ResetJumpAfterDelay(float delay)
     {
@@ -96,13 +155,32 @@ public class PlayerMovement : MonoBehaviour
         ResetJump();
         resetJumpRoutine = null; // Clear the reference when done
     }
+
+    private IEnumerator ResetDashAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ResetDash();
+        resetJumpRoutine = null; // Clear the reference when done
+    }
     private void SpeedControl()
     {
         Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-
-        if (flatVel.magnitude > moveSpeed)
+        if (dashing)
         {
-            Vector3 limitedVel = flatVel.normalized * moveSpeed;
+            speed = dashForce;
+        }
+        else
+        if (Input.GetKey(sprintKey))
+        {
+            speed = sprintSpeed;
+        }
+        else
+        {
+            speed = moveSpeed;
+        }
+        if (flatVel.magnitude > speed)
+        {
+            Vector3 limitedVel = flatVel.normalized * speed;
             rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
         }
     }
