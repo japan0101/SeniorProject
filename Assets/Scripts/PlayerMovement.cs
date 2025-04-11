@@ -36,7 +36,6 @@ public class PlayerMovement : MonoBehaviour
 
     public Transform hOrientation;
     public Transform vOrientation;
-    public GameObject primaryWeaponHolder;
 
     float horizontalInput;
     float verticalInput;
@@ -189,7 +188,6 @@ public class PlayerMovement : MonoBehaviour
     {
         //Rotate Player model
         transform.rotation = hOrientation.rotation;
-        primaryWeaponHolder.transform.localRotation = vOrientation.rotation;
 
 
         //ground check

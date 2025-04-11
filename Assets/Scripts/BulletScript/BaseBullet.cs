@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
+using static UnityEngine.InputSystem.OnScreen.OnScreenStick;
 
 public class MainBullet : MonoBehaviour
 {
@@ -6,24 +9,21 @@ public class MainBullet : MonoBehaviour
     public float lifetime;
     public float damage;
 
+    private List<OnHitBehavior> hitBehaviors = new List<OnHitBehavior>();
+
     private int groundLayer = 10;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        GetComponents<OnHitBehavior>(hitBehaviors);
         Destroy(gameObject, lifetime);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.ToString());
-        //Debug.Log(groundLayer);
-        if (collision.gameObject.layer == groundLayer) {
-            //Debug.Log("Ground hit");
-            Destroy(gameObject, 2);
-        }
-        if (collision.gameObject.layer == 11)
+        foreach (var behavior in hitBehaviors)
         {
-            Destroy(gameObject);
+            behavior.OnBulletHit(collision.gameObject.layer);
         }
     }
     // Update is called once per frame

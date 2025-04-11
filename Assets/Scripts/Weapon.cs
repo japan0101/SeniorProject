@@ -29,7 +29,7 @@ public class Weapon : MonoBehaviour
         bulletRB.AddForce(shootDirection * primaryPower, ForceMode.Impulse);
 
         //casting rays to check hit direction currently as debug
-        Debug.DrawRay(shotPosition, shootDirection * 5, Color.red, 1f);
+        //Debug.DrawRay(shotPosition, shootDirection * 5, Color.red, 1f);
     }
     void Update()
     {

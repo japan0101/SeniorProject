@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 3261763802834215650}
   - component: {fileID: 1357192555338001853}
   - component: {fileID: 2959808435615367032}
+  - component: {fileID: 2763902595245556465}
   m_Layer: 9
   m_Name: TestBullet
   m_TagString: Untagged
@@ -136,7 +137,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -183,3 +184,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifetime: 5
   damage: 1
+--- !u!114 &2763902595245556465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3710781043140105821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7514cf05120b32044b196258b608d820, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
