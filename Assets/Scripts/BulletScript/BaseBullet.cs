@@ -12,23 +12,30 @@ public class MainBullet : MonoBehaviour
     private List<OnHitBehavior> hitBehaviors = new List<OnHitBehavior>();
 
     private int groundLayer = 10;
+    private Vector3 lastVelocity;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         GetComponents<OnHitBehavior>(hitBehaviors);
         Destroy(gameObject, lifetime);
     }
-
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         foreach (var behavior in hitBehaviors)
         {
-            behavior.OnBulletHit(collision.gameObject.layer);
+            behavior.OnBulletHit(other, lastVelocity);
         }
     }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    foreach (var behavior in hitBehaviors)
+    //    {
+    //        behavior.OnBulletHit(collision.gameObject.layer);
+    //    }
+    //}
     // Update is called once per frame
     void Update()
     {
-        
+        lastVelocity = gameObject.GetComponent<Rigidbody>().linearVelocity;
     }
 }
