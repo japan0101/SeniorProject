@@ -18,9 +18,15 @@ public class BaseEnemy : MonoBehaviour
             if (bullet != null)
             {
                 //spawn hit FX then register damage
-                hp -= bullet.damage;
+                TakeDamage(collision.contacts[0].point, bullet.damage);
             }
         }
+    }
+
+    public void TakeDamage(Vector3 dmgPos, float damage)
+    {
+        GetComponent<DamageTextSpawner>().SpawnDamageText(dmgPos, damage);
+        hp -= damage;
     }
     // Update is called once per frame
     void Update()

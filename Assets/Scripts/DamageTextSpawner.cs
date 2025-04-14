@@ -15,17 +15,17 @@ public class DamageTextSpawner : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // Check if collision is with PlayerAttack layer
-        if (collision.gameObject.layer == 9)
-        {
-            MainBullet bullet = collision.gameObject.GetComponent<MainBullet>();
-            if (bullet != null)
-            {
-                SpawnDamageText(collision.contacts[0].point, bullet.damage);
-            }
-        }
+        //if (collision.gameObject.layer == 9)
+        //{
+        //    MainBullet bullet = collision.gameObject.GetComponent<MainBullet>();
+        //    if (bullet != null)
+        //    {
+        //        SpawnDamageText(collision.contacts[0].point, bullet.damage);
+        //    }
+        //}
     }
 
-    private void SpawnDamageText(Vector3 position, float damage)
+    public void SpawnDamageText(Vector3 position, float damage)
     {
         // Create text object
         GameObject textObj = Instantiate(textPrefab, position + textOffset, Quaternion.identity);
