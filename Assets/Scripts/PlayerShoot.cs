@@ -12,13 +12,17 @@ public class PlayerShoot : MonoBehaviour
 
     [Header("Keybinds")]
     public KeyCode Primary = KeyCode.Mouse0;
+    public KeyCode EquipPrimary = KeyCode.Alpha1;
+    public KeyCode EquipSecondary = KeyCode.Alpha2;
 
     [Header("Object Ref")]
-    public GameObject bullet;
+    //public GameObject bullet;
     public Transform gunHolder;
     public Transform gunPos;
     public Camera playerCam;
     public Transform visualizer; //to display hit position
+    public GameObject primaryWeapon;
+    public GameObject secondaryWeapon;
 
     [Header("Ray Settings")]
     //public Transform playerCam;
@@ -26,7 +30,7 @@ public class PlayerShoot : MonoBehaviour
     public LayerMask detectionLayer;
     public Color rayColor = Color.red;
     
-
+    public bool isPrimary = true;
     private Coroutine resetPrimaryRoutine;
     public static Action<Vector3, Vector3> shootInput;
     private Vector3 shootDirection;
@@ -37,14 +41,35 @@ public class PlayerShoot : MonoBehaviour
             if (resetPrimaryRoutine != null)
                 StopCoroutine(resetPrimaryRoutine);
             primaryReadyToShoot = false;
-            shootInput?.Invoke(shootDirection, gunPos.position);
-            resetPrimaryRoutine = StartCoroutine(PrimaryCooldown(primaryCooldown));
+            //shootInput?.Invoke(shootDirection, gunPos.position);
+            if (isPrimary)
+            {
+                primaryWeapon.GetComponent<Weapon>().Shoot(shootDirection, gunPos.position);
+            }
+            else
+            {
+                secondaryWeapon.GetComponent<Weapon>().Shoot(shootDirection, gunPos.position);
+            }
+                resetPrimaryRoutine = StartCoroutine(PrimaryCooldown(primaryCooldown));
+        }
+        if (Input.GetKey(EquipPrimary) && !isPrimary) {
+            primaryWeapon.GetComponent<Weapon>().Equip();
+            secondaryWeapon.GetComponent<Weapon>().Unequip();
+            isPrimary = true;
+        }
+        if (Input.GetKey(EquipSecondary) && isPrimary)
+        {
+            secondaryWeapon.GetComponent<Weapon>().Equip();
+            primaryWeapon.GetComponent<Weapon>().Unequip();
+            isPrimary = false;
         }
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         ResetCooldown();
+        primaryWeapon.GetComponent<Weapon>().Equip();
+        secondaryWeapon.GetComponent<Weapon>().Unequip();
     }
     private void ResetCooldown()
     {
@@ -74,7 +99,7 @@ public class PlayerShoot : MonoBehaviour
         {
             // Use the hit point if we hit something
             targetPoint = hit.point;
-            Debug.Log("Hit: " + hit.collider.name);
+            //Debug.Log("Hit: " + hit.collider.name);
         }
         else
         {

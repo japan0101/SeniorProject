@@ -6,6 +6,6 @@ public abstract class OnHitBehavior : MonoBehaviour
     protected int enemyLayer = 11;
     protected int playerAtkLayer = 9;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public abstract void OnBulletHit(Collider other, Vector3 lastVelocity);
+    public abstract void OnBulletHit(Collision other, Vector3 lastVelocity);
 }
 

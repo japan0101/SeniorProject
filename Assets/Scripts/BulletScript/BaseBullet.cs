@@ -19,20 +19,20 @@ public class MainBullet : MonoBehaviour
         GetComponents<OnHitBehavior>(hitBehaviors);
         Destroy(gameObject, lifetime);
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        foreach (var behavior in hitBehaviors)
-        {
-            behavior.OnBulletHit(other, lastVelocity);
-        }
-    }
-    //private void OnCollisionEnter(Collision collision)
+    //private void OnTriggerEnter(Collider other)
     //{
     //    foreach (var behavior in hitBehaviors)
     //    {
-    //        behavior.OnBulletHit(collision.gameObject.layer);
+    //        behavior.OnBulletHit(other, lastVelocity);
     //    }
     //}
+    private void OnCollisionEnter(Collision collision)
+    {
+        foreach (var behavior in hitBehaviors)
+        {
+            behavior.OnBulletHit(collision, lastVelocity);
+        }
+    }
     // Update is called once per frame
     void Update()
     {

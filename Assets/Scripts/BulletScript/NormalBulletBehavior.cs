@@ -2,14 +2,11 @@ using UnityEngine;
 
 public class NormalHit : OnHitBehavior
 {
-    public override void OnBulletHit(Collider other, Vector3 lastVelocity)
+    public override void OnBulletHit(Collision other, Vector3 lastVelocity)
     {
-        if (other.gameObject.layer == groundLayer)//Hitting ground/walls will bounces
+        if (other.gameObject.layer == groundLayer)
         {
-            Vector3 bounceDirection = Vector3.Reflect(lastVelocity.normalized, other.ClosestPoint(transform.position) - transform.position);
-            gameObject.GetComponent<Rigidbody>().linearVelocity = bounceDirection * 5;
-            //gameObject.GetComponent<Collider>().isTrigger = false;
-            Destroy(gameObject, 2);
+            Destroy(gameObject);
         }
         if (other.gameObject.layer == enemyLayer)
         {

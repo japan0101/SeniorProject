@@ -11,15 +11,22 @@ public class Weapon : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Equip();
+
     }
 
     public void Equip()
     {
         PlayerShoot.shootInput += Shoot;
+        GetComponent<MeshRenderer>().enabled = true;
     }
 
-    private void Shoot(Vector3 shootDirection, Vector3 shotPosition)
+    public void Unequip()
+    {
+        PlayerShoot.shootInput = null;
+        GetComponent<MeshRenderer>().enabled = false;
+    }
+
+    public void Shoot(Vector3 shootDirection, Vector3 shotPosition)
     {
         //create bullet then add force to it
         //Vector3 shootDirection = playerCam.transform.forward;

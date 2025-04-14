@@ -17,7 +17,7 @@ public class BaseEnemy : MonoBehaviour
             MainBullet bullet = collision.gameObject.GetComponent<MainBullet>();
             if (bullet != null)
             {
-                Debug.Log("hit enemy");
+                //spawn hit FX then register damage
                 hp -= bullet.damage;
             }
         }
@@ -26,7 +26,7 @@ public class BaseEnemy : MonoBehaviour
     void Update()
     {
         if (hp <= 0) {
-            Debug.Log("dies");
+            //Spawn dead FX then delete object
             Destroy(gameObject);
         }
     }
