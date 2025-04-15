@@ -1,12 +1,17 @@
 using System;
+using System.Diagnostics.Tracing;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.VFX;
 
 public class Weapon : MonoBehaviour
 {
     public float primaryPower;
     public GameObject bullet;
+    public VisualEffect muzzleFlash;
+    public VFXEventAttribute muzzleAttribute;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -30,6 +35,7 @@ public class Weapon : MonoBehaviour
     {
         //create bullet then add force to it
         //Vector3 shootDirection = playerCam.transform.forward;
+        muzzleFlash.SendEvent("OnPlay");
         var bulletInstance = Instantiate(bullet, shotPosition, Quaternion.LookRotation(shootDirection));
         var bulletRB = bulletInstance.GetComponentInChildren<Rigidbody>();
         //bulletRB.AddForce(orientation.forward * 20 + orientation.up * 10, ForceMode.Impulse);
