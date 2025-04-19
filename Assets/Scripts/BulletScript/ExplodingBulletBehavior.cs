@@ -32,8 +32,9 @@ public class ExplodingHit : OnHitBehavior
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, blastRadius);
         if (blastVFX != null && blastAttribute != null)
         {
-            blastAttribute.SetFloat("Power", GetComponent<MainBullet>().damage);
-            Debug.Log(blastAttribute.GetFloat("Power"));
+            //blastAttribute.SetFloat("Power", GetComponent<MainBullet>().damage);
+            //Debug.Log(blastAttribute.GetFloat("Power"));
+            blastVFX.SetFloat("Power", GetComponent<MainBullet>().damage);
             blastVFX.SetFloat("Radius", blastRadius);
             blastVFX.SendEvent("OnExplode", blastAttribute);
         }
@@ -51,6 +52,7 @@ public class ExplodingHit : OnHitBehavior
             }
         }
         GetComponentInChildren<MeshRenderer>().enabled = false;
+        GetComponentInChildren<Collider>().enabled = false;
         Destroy(gameObject, 0.4f);
     }
 

@@ -7,7 +7,12 @@ using UnityEngine.VFX;
 
 public class Weapon : MonoBehaviour
 {
+    [Header("Weapon Attribute")]
+    public int currentBullet;
+    public int maxBullet;
     public float primaryPower;
+
+    [Header("Assets References")]
     public GameObject bullet;
     public VisualEffect muzzleFlash;
     public VFXEventAttribute muzzleAttribute;
