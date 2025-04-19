@@ -6,6 +6,7 @@ public class ExplodingHit : OnHitBehavior
 {
     [Header("BulletAttribute")]
     public float blastRadius;
+    public float blastDamageMultiplier;
     [Header("References")]
     [SerializeField] public VisualEffect blastVFX;
     public VFXEventAttribute blastAttribute;
@@ -47,7 +48,7 @@ public class ExplodingHit : OnHitBehavior
             // Check if the object has a specific component if needed
             if (hitCollider.GetComponent<BaseEnemy>() != null)
             {
-                hitCollider.GetComponent<BaseEnemy>().TakeDamage(hitCollider.transform.position, GetComponent<MainBullet>().damage);
+                hitCollider.GetComponent<BaseEnemy>().TakeDamage(hitCollider.transform.position, GetComponent<MainBullet>().damage * blastDamageMultiplier);
                 Debug.Log("Enemy detected: " + hitCollider.name);
             }
         }

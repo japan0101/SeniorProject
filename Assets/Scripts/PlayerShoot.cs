@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
     [Header("Weapon Config")]
-    public float primaryCooldown;
+    private float equipedCooldown;
     private bool primaryReadyToShoot;
     public Vector3 rotationOffset; // Optional rotation adjustment
 
@@ -50,17 +50,19 @@ public class PlayerShoot : MonoBehaviour
             {
                 secondaryWeapon.GetComponent<Weapon>().Shoot(shootDirection, gunPos.position);
             }
-                resetPrimaryRoutine = StartCoroutine(PrimaryCooldown(primaryCooldown));
+                resetPrimaryRoutine = StartCoroutine(PrimaryCooldown(equipedCooldown));
         }
         if (Input.GetKey(EquipPrimary) && !isPrimary) {
             primaryWeapon.GetComponent<Weapon>().Equip();
             secondaryWeapon.GetComponent<Weapon>().Unequip();
+            equipedCooldown = primaryWeapon.GetComponent<Weapon>().cooldown;
             isPrimary = true;
         }
         if (Input.GetKey(EquipSecondary) && isPrimary)
         {
             secondaryWeapon.GetComponent<Weapon>().Equip();
             primaryWeapon.GetComponent<Weapon>().Unequip();
+            equipedCooldown = secondaryWeapon.GetComponent<Weapon>().cooldown;
             isPrimary = false;
         }
     }
@@ -70,6 +72,7 @@ public class PlayerShoot : MonoBehaviour
         ResetCooldown();
         primaryWeapon.GetComponent<Weapon>().Equip();
         secondaryWeapon.GetComponent<Weapon>().Unequip();
+        equipedCooldown = primaryWeapon.GetComponent<Weapon>().cooldown;
     }
     private void ResetCooldown()
     {
