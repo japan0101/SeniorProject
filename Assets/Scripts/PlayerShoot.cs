@@ -6,12 +6,12 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
     [Header("Weapon Config")]
-    private float equipedCooldown;
-    private bool primaryReadyToShoot;
+    private bool equipedReadyToShoot;
     public Vector3 rotationOffset; // Optional rotation adjustment
 
     [Header("Keybinds")]
     public KeyCode Primary = KeyCode.Mouse0;
+    public KeyCode ReloadKey = KeyCode.R;
     public KeyCode EquipPrimary = KeyCode.Alpha1;
     public KeyCode EquipSecondary = KeyCode.Alpha2;
 
@@ -21,8 +21,8 @@ public class PlayerShoot : MonoBehaviour
     public Transform gunPos;
     public Camera playerCam;
     public Transform visualizer; //to display hit position
-    public GameObject primaryWeapon;
-    public GameObject secondaryWeapon;
+    public Weapon primaryWeapon;
+    public Weapon secondaryWeapon;
 
     [Header("Ray Settings")]
     //public Transform playerCam;
@@ -31,58 +31,65 @@ public class PlayerShoot : MonoBehaviour
     public Color rayColor = Color.red;
     
     public bool isPrimary = true;
+    private Weapon equipedWeapon;
+
     private Coroutine resetPrimaryRoutine;
     public static Action<Vector3, Vector3> shootInput;
     private Vector3 shootDirection;
     private void MyInput()
     {
-        if (Input.GetKey(Primary) && primaryReadyToShoot)
+        if (Input.GetKey(Primary) && equipedReadyToShoot && equipedWeapon.CanShoot())
         {
             if (resetPrimaryRoutine != null)
                 StopCoroutine(resetPrimaryRoutine);
-            primaryReadyToShoot = false;
+            equipedReadyToShoot = false;
             //shootInput?.Invoke(shootDirection, gunPos.position);
             if (isPrimary)
             {
-                primaryWeapon.GetComponent<Weapon>().Shoot(shootDirection, gunPos.position);
+                primaryWeapon.Shoot(shootDirection, gunPos.position);
             }
             else
             {
-                secondaryWeapon.GetComponent<Weapon>().Shoot(shootDirection, gunPos.position);
+                secondaryWeapon.Shoot(shootDirection, gunPos.position);
             }
-                resetPrimaryRoutine = StartCoroutine(PrimaryCooldown(equipedCooldown));
+                resetPrimaryRoutine = StartCoroutine(PrimaryCooldown(equipedWeapon.cooldown));
         }
         //change weapon state and any related variable to the equiped weapon
         if (Input.GetKey(EquipPrimary) && !isPrimary) {
-            primaryWeapon.GetComponent<Weapon>().Equip();
-            secondaryWeapon.GetComponent<Weapon>().Unequip();
-            equipedCooldown = primaryWeapon.GetComponent<Weapon>().cooldown;
+            primaryWeapon.Equip();
+            secondaryWeapon.Unequip();
+            equipedWeapon = primaryWeapon;
             isPrimary = true;
         }
         if (Input.GetKey(EquipSecondary) && isPrimary)
         {
-            secondaryWeapon.GetComponent<Weapon>().Equip();
-            primaryWeapon.GetComponent<Weapon>().Unequip();
-            equipedCooldown = secondaryWeapon.GetComponent<Weapon>().cooldown;
+            secondaryWeapon.Equip();
+            primaryWeapon.Unequip();
+            equipedWeapon = secondaryWeapon;
             isPrimary = false;
+        }
+        if (Input.GetKey(ReloadKey))
+        {
+            equipedWeapon.Reload();
         }
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         ResetCooldown();
-        primaryWeapon.GetComponent<Weapon>().Equip();
-        secondaryWeapon.GetComponent<Weapon>().Unequip();
-        equipedCooldown = primaryWeapon.GetComponent<Weapon>().cooldown;
+        primaryWeapon.Equip();
+        secondaryWeapon.Unequip();
+        equipedWeapon = primaryWeapon;
+        equipedWeapon.cooldown = primaryWeapon.cooldown;
     }
     private void ResetCooldown()
     {
-        primaryReadyToShoot = true;
+        equipedReadyToShoot = true;
     }
     private IEnumerator PrimaryCooldown(float delay)
     {
         yield return new WaitForSeconds(delay);
-        primaryReadyToShoot = true;
+        equipedReadyToShoot = true;
         resetPrimaryRoutine = null; //clear routine ref
     }
 
