@@ -9,18 +9,12 @@ public class ExplodingHit : OnHitBehavior
     public float blastDamageMultiplier;
     [Header("References")]
     [SerializeField] public VisualEffect blastVFX;
-    public VFXEventAttribute blastAttribute;
     private void Awake()
     {
         // Auto-get the VFX from a child object
         if (blastVFX == null)
         {
             blastVFX = GetComponentInChildren<VisualEffect>(true); // 'true' includes inactive
-        }
-
-        if (blastVFX != null)
-        {
-            blastAttribute = blastVFX.CreateVFXEventAttribute();
         }
         else
         {
@@ -31,13 +25,12 @@ public class ExplodingHit : OnHitBehavior
     public override void OnBulletHit(Collision other, Vector3 lastVelocity)
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, blastRadius);
-        if (blastVFX != null && blastAttribute != null)
+        //play explosion Visual effect on hitting collision
+        if (blastVFX != null)
         {
-            //blastAttribute.SetFloat("Power", GetComponent<MainBullet>().damage);
-            //Debug.Log(blastAttribute.GetFloat("Power"));
             blastVFX.SetFloat("Power", GetComponent<MainBullet>().damage);
             blastVFX.SetFloat("Radius", blastRadius);
-            blastVFX.SendEvent("OnExplode", blastAttribute);
+            blastVFX.SendEvent("OnExplode");
         }
         else
         {

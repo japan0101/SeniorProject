@@ -52,6 +52,7 @@ public class PlayerShoot : MonoBehaviour
             }
                 resetPrimaryRoutine = StartCoroutine(PrimaryCooldown(equipedCooldown));
         }
+        //change weapon state and any related variable to the equiped weapon
         if (Input.GetKey(EquipPrimary) && !isPrimary) {
             primaryWeapon.GetComponent<Weapon>().Equip();
             secondaryWeapon.GetComponent<Weapon>().Unequip();
@@ -82,7 +83,7 @@ public class PlayerShoot : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         primaryReadyToShoot = true;
-        resetPrimaryRoutine = null; //clear ref
+        resetPrimaryRoutine = null; //clear routine ref
     }
 
     void Update()
