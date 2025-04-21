@@ -38,6 +38,7 @@ public class PlayerShoot : MonoBehaviour
     private Vector3 shootDirection;
     private void MyInput()
     {
+        GetComponent<ui_DisplayAmmo>().updateAmmo(equipedWeapon.currentAmmo, equipedWeapon.magsSize);
         if (Input.GetKey(Primary) && equipedReadyToShoot && equipedWeapon.CanShoot())
         {
             if (resetPrimaryRoutine != null)
@@ -81,6 +82,7 @@ public class PlayerShoot : MonoBehaviour
         secondaryWeapon.Unequip();
         equipedWeapon = primaryWeapon;
         equipedWeapon.cooldown = primaryWeapon.cooldown;
+        GetComponent<ui_DisplayAmmo>().updateAmmo(equipedWeapon.currentAmmo, equipedWeapon.magsSize);
     }
     private void ResetCooldown()
     {
