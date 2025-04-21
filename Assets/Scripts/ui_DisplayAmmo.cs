@@ -7,6 +7,6 @@ public class ui_DisplayAmmo : MonoBehaviour
     public TextMeshProUGUI displayText;
     public void updateAmmo(int current, int max)
     {
-        displayText.text = "Ammo:" + current + " / " + max;
+        displayText.text = "Ammo: " + current + " / " + max;
     }
 }
