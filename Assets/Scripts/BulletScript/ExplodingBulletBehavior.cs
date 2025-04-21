@@ -7,6 +7,7 @@ public class ExplodingHit : OnHitBehavior
     [Header("BulletAttribute")]
     public float blastRadius;
     public float blastDamageMultiplier;
+    public float blastKnockback;
     [Header("References")]
     [SerializeField] public VisualEffect blastVFX;
     private void Awake()
@@ -41,8 +42,34 @@ public class ExplodingHit : OnHitBehavior
             // Check if the object has a specific component if needed
             if (hitCollider.GetComponent<BaseEnemy>() != null)
             {
-                hitCollider.GetComponent<BaseEnemy>().TakeDamage(hitCollider.transform.position, GetComponent<MainBullet>().damage * blastDamageMultiplier);
-                Debug.Log("Enemy detected: " + hitCollider.name);
+                hitCollider.GetComponent<BaseEnemy>().TakeDamage(hitCollider.ClosestPoint(transform.position), GetComponent<MainBullet>().damage * blastDamageMultiplier);
+                //Debug.Log("Enemy detected: " + hitCollider.name);
+            }
+
+            if (hitCollider.GetComponent<Rigidbody>() != null) {
+                Debug.Log("RigidBody: " + hitCollider.name);
+                Ray ray = new Ray(transform.position, hitCollider.ClosestPoint(transform.position) - transform.position);
+                RaycastHit hit;
+                Vector3 targetPoint;
+
+                // Check if ray hits something
+                if (Physics.Raycast(ray, out hit, blastRadius))
+                {
+                    // Use the hit point if we hit something
+                    targetPoint = hit.point;
+                    //Debug.Log("Hit: " + hit.collider.name);
+                }
+                else
+                {
+                    // Use the ray's end point if nothing was hit
+                    targetPoint = ray.origin + ray.direction * blastRadius;
+                }
+
+                //get traget direction
+                Vector3 direction = targetPoint - transform.position;
+                hitCollider.GetComponent<Rigidbody>().AddForce(direction * blastKnockback, ForceMode.Impulse);
+
+
             }
         }
         GetComponentInChildren<MeshRenderer>().enabled = false;

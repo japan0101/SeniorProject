@@ -319,4 +319,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blastRadius: 3
   blastDamageMultiplier: 3
+  blastKnockback: 10
   blastVFX: {fileID: 7479218432229376278}
