@@ -27,14 +27,19 @@ public class PlayerHealth : MonoBehaviour
                 //spawn hit FX then register damage
                 TakeDamage(collision.contacts[0].point, bullet.damage);
             }
+            Attacks attacks = collision.gameObject.GetComponent<Attacks>();
+            if (attacks != null)
+            {
+                TakeDamage(collision.contacts[0].point, attacks.damage);
+            }
         }
     }
 
     public void TakeDamage(Vector3 dmgPos, float damage)
     {
         //GetComponent<DamageTextSpawner>().SpawnDamageText(dmgPos, damage);
-        DisplayHP();
         currentHP -= damage;
+        DisplayHP();
     }
 
     private void DisplayHP()

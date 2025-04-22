@@ -20,6 +20,7 @@ public class BaseEnemy : MonoBehaviour
                 //spawn hit FX then register damage
                 TakeDamage(collision.contacts[0].point, bullet.damage);
             }
+
         }
     }
 

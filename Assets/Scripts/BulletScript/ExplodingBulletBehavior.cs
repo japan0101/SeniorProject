@@ -45,7 +45,11 @@ public class ExplodingHit : OnHitBehavior
                 hitCollider.GetComponent<BaseEnemy>().TakeDamage(hitCollider.ClosestPoint(transform.position), GetComponent<MainBullet>().damage * blastDamageMultiplier);
                 //Debug.Log("Enemy detected: " + hitCollider.name);
             }
-
+            if (hitCollider.GetComponent<PlayerHealth>() != null)
+            {
+                hitCollider.GetComponent<PlayerHealth>().TakeDamage(hitCollider.ClosestPoint(transform.position), (GetComponent<MainBullet>().damage * blastDamageMultiplier) / 2);
+                //Debug.Log("Enemy detected: " + hitCollider.name);
+            }
             if (hitCollider.GetComponent<Rigidbody>() != null) {
                 Debug.Log("RigidBody: " + hitCollider.name);
                 Ray ray = new Ray(transform.position, hitCollider.ClosestPoint(transform.position) - transform.position);
