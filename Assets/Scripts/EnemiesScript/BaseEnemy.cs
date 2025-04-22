@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseEnemy : MonoBehaviour
 {
     [Header("Enemy Data")]
     public float hp=10;
+    public List<BaseEnemyAttack> attacks = new List<BaseEnemyAttack>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -14,6 +16,10 @@ public class BaseEnemy : MonoBehaviour
         // Check if collision is with PlayerAttack layer
         if (collision.gameObject.layer == 9)
         {
+            foreach (var atk in attacks)
+            {
+                atk.OnAttack();
+            }
             MainBullet bullet = collision.gameObject.GetComponent<MainBullet>();
             if (bullet != null)
             {

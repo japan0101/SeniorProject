@@ -12,19 +12,6 @@ public class DamageTextSpawner : MonoBehaviour
     [Header("References")]
     public GameObject textPrefab; // Prefab with TextMeshPro component
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        // Check if collision is with PlayerAttack layer
-        //if (collision.gameObject.layer == 9)
-        //{
-        //    MainBullet bullet = collision.gameObject.GetComponent<MainBullet>();
-        //    if (bullet != null)
-        //    {
-        //        SpawnDamageText(collision.contacts[0].point, bullet.damage);
-        //    }
-        //}
-    }
-
     public void SpawnDamageText(Vector3 position, float damage)
     {
         // Create text object

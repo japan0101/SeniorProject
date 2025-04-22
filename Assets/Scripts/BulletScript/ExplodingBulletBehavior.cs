@@ -51,7 +51,7 @@ public class ExplodingHit : OnHitBehavior
                 //Debug.Log("Enemy detected: " + hitCollider.name);
             }
             if (hitCollider.GetComponent<Rigidbody>() != null) {
-                Debug.Log("RigidBody: " + hitCollider.name);
+                //Debug.Log("RigidBody: " + hitCollider.name);
                 Ray ray = new Ray(transform.position, hitCollider.ClosestPoint(transform.position) - transform.position);
                 RaycastHit hit;
                 Vector3 targetPoint;
