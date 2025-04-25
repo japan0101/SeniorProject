@@ -5,7 +5,7 @@ public class EnemyMeleeAttack : BaseEnemyAttack
     [Header("Slash Settings")]
     [SerializeField] private GameObject _slashObject; // Prefab to spawn (trail/hitbox)
     [SerializeField] private float _slashRadius = 2f; // Distance from enemy
-    [SerializeField] private float _slashSpeed = 5f; // Rotation speed
+    [SerializeField] private float _slashSpeed = 1f; // Rotation speed
     [SerializeField] private float _arcAngle = 180f; // Semi-circle (180 degrees)
     [SerializeField] private bool _clockwise = true; // Direction of slash
 

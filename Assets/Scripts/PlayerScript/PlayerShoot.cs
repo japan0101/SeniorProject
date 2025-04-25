@@ -53,7 +53,7 @@ public class PlayerShoot : MonoBehaviour
             {
                 secondaryWeapon.Shoot(shootDirection, gunPos.position);
             }
-                resetPrimaryRoutine = StartCoroutine(PrimaryCooldown(equipedWeapon.cooldown));
+            resetPrimaryRoutine = StartCoroutine(PrimaryCooldown(equipedWeapon.cooldown));
         }
         //change weapon state and any related variable to the equiped weapon
         if (Input.GetKey(EquipPrimary) && !isPrimary) {
