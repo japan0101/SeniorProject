@@ -26,7 +26,7 @@ public class PlayerShoot : MonoBehaviour
     public LayerMask detectionLayer;
     public Color rayColor = Color.red;
 
-    private bool isPrimary = true;
+    private bool isPrimary;
     private Weapon equipedWeapon;
     private Coroutine activeReloadRoutine;
     private Coroutine shootCooldownRoutine;
@@ -34,8 +34,11 @@ public class PlayerShoot : MonoBehaviour
 
     void Start()
     {
-        
         SwitchWeapon(true);
+        Debug.Log($"Primary Weapon Assigned: {primaryWeapon != null}");
+        Debug.Log($"Secondary Weapon Assigned: {secondaryWeapon != null}");
+        Debug.Log($"Primary Active: {primaryWeapon.gameObject.activeInHierarchy}");
+        Debug.Log($"Secondary Active: {secondaryWeapon.gameObject.activeInHierarchy}");
         //UpdateAmmoUI();
     }
 

@@ -19,7 +19,7 @@ public class ExplodingHit : OnHitBehavior
         }
         else
         {
-            Debug.LogError("No VisualEffect found in children!", this);
+            //Debug.LogError("No VisualEffect found in children!", this);
         }
     }
 
