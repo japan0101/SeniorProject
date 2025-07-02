@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed;
     public float sprintSpeed;
+    public float sprintCost;
 
     private float speed;
 
@@ -16,13 +17,18 @@ public class PlayerMovement : MonoBehaviour
     public float dashForce;
     public float dashDuration;
     public float dashCooldown;
+    public float dashCost;
     bool dashing;
     bool readyToDash;
 
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
+    public float jumpCost;
     bool readyToJump;
+
+    [Header("References")]
+    public EnergyManager energyManager;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -65,7 +71,8 @@ public class PlayerMovement : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if (Input.GetKey(jumpKey) && readyToJump && grounded){
+        if (Input.GetKey(jumpKey) && readyToJump && grounded && energyManager.consumeEnergy(jumpCost))
+        {
             readyToJump = false;
             Jump();
 
@@ -79,7 +86,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //when dash
-        if (Input.GetKey(dashKey) && readyToDash)
+        if (Input.GetKey(dashKey) && readyToDash && energyManager.consumeEnergy(dashCost))
         {
             readyToDash = false;
             dashing = true;
@@ -104,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
         if (dashing) {
             speed = dashForce;
         } else
-        if (Input.GetKey(sprintKey))
+        if (Input.GetKey(sprintKey) && energyManager.consumeEnergy(sprintCost))
         {
             speed = sprintSpeed;
         }
@@ -127,6 +134,7 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+
     }
 
     private void Dash()
