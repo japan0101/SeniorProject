@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("References")]
     public EnergyManager energyManager;
+    public Camera playerCam;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -127,6 +128,8 @@ public class PlayerMovement : MonoBehaviour
         //in Air
         else if (!grounded)
             rb.AddForce(moveDirection.normalized * speed * 10f * airMultiplier, ForceMode.Force);
+
+        
     }
     private void Jump()
     {
