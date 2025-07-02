@@ -31,14 +31,13 @@ public class PlayerShoot : MonoBehaviour
     private Coroutine activeReloadRoutine;
     private Coroutine shootCooldownRoutine;
     private Vector3 shootDirection;
+    private float reloadTimer;
+
+    public bool IsReloading() => activeReloadRoutine != null;
 
     void Start()
     {
         SwitchWeapon(true);
-        Debug.Log($"Primary Weapon Assigned: {primaryWeapon != null}");
-        Debug.Log($"Secondary Weapon Assigned: {secondaryWeapon != null}");
-        Debug.Log($"Primary Active: {primaryWeapon.gameObject.activeInHierarchy}");
-        Debug.Log($"Secondary Active: {secondaryWeapon.gameObject.activeInHierarchy}");
         //UpdateAmmoUI();
     }
 
@@ -51,7 +50,7 @@ public class PlayerShoot : MonoBehaviour
     private void HandleInput()
     {
         // Shooting
-        if (Input.GetKey(Primary) && equipedReadyToShoot && equipedWeapon.CanShoot())
+        if (Input.GetKey(Primary) && equipedReadyToShoot && equipedWeapon.CanShoot() && activeReloadRoutine == null)
         {
             ShootWeapon();
         }
@@ -92,12 +91,22 @@ public class PlayerShoot : MonoBehaviour
         activeReloadRoutine = StartCoroutine(ReloadWeapon());
     }
 
+    public float GetReloadProgress()
+    {
+        return IsReloading() ? reloadTimer / equipedWeapon.reloadTime : 0;
+    }
     private IEnumerator ReloadWeapon()
     {
-        Debug.Log("Reloading...");
+        reloadTimer = 0;
+        while (reloadTimer < equipedWeapon.reloadTime)
+        {
+            reloadTimer += Time.deltaTime;
+            yield return null;
+        }
+        //Debug.Log("Reloading...");
         equipedWeapon.StartReload(); // Visual/audio feedback
         
-        yield return new WaitForSeconds(equipedWeapon.reloadTime);
+        //yield return new WaitForSeconds(equipedWeapon.reloadTime);
         
         equipedWeapon.FinishReload();
         UpdateAmmoUI();

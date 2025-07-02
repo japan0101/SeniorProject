@@ -9,18 +9,18 @@ public class ExplodingHit : OnHitBehavior
     public float blastDamageMultiplier;
     public float blastKnockback;
     [Header("References")]
-    [SerializeField] public VisualEffect blastVFX;
+    public VisualEffect blastVFX;
     private void Awake()
     {
         // Auto-get the VFX from a child object
-        if (blastVFX == null)
-        {
-            blastVFX = GetComponentInChildren<VisualEffect>(true); // 'true' includes inactive
-        }
-        else
-        {
-            //Debug.LogError("No VisualEffect found in children!", this);
-        }
+        //if (blastVFX == null)
+        //{
+        //    blastVFX = GetComponentInChildren<VisualEffect>(true); // 'true' includes inactive
+        //}
+        //else
+        //{
+        //    Debug.LogError("No VisualEffect found in children!", this);
+        //}
     }
 
     public override void OnBulletHit(Collision other, Vector3 lastVelocity)
