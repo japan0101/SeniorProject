@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.VFX;
+using static UnityEngine.Rendering.DebugUI;
 
 public class Weapon : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Weapon : MonoBehaviour
     public int magsSize;
     public float power; //shot's bullet initial velocity
     public float cooldown;
+    public float reloadTime;
 
     [Header("Assets References")]
     public GameObject bullet;
@@ -22,29 +24,37 @@ public class Weapon : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        //SetEquipped(false);
     }
 
-    public void Equip()
+    public void SetEquipped(bool value)
     {
-        PlayerShoot.shootInput += Shoot;
-        GetComponent<MeshRenderer>().enabled = true;
+        //PlayerShoot.shootInput += Shoot;
+        GetComponent<MeshRenderer>().enabled = value;
     }
 
     public void Unequip()
     {
-        PlayerShoot.shootInput = null;
+        //PlayerShoot.shootInput = null;
         GetComponent<MeshRenderer>().enabled = false;
-    }
-
-    public void Reload()
-    {
-        currentAmmo = magsSize;
     }
 
     public bool CanShoot()
     {
         return currentAmmo > 0;
+    }
+    public void StartReload()
+    {
+
+    }
+    public void FinishReload()
+    {
+        currentAmmo = magsSize;
+    }
+
+    public bool CanReload()
+    {
+        return true;
     }
     public void Shoot(Vector3 shootDirection, Vector3 shotPosition)
     {

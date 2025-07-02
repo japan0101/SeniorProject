@@ -1,13 +1,11 @@
-using System;
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections;
 
 public class PlayerShoot : MonoBehaviour
 {
     [Header("Weapon Config")]
-    private bool equipedReadyToShoot;
-    public Vector3 rotationOffset; // Optional rotation adjustment
+    [SerializeField] private Vector3 rotationOffset;
+    private bool equipedReadyToShoot = true;
 
     [Header("Keybinds")]
     public KeyCode Primary = KeyCode.Mouse0;
@@ -15,128 +13,141 @@ public class PlayerShoot : MonoBehaviour
     public KeyCode EquipPrimary = KeyCode.Alpha1;
     public KeyCode EquipSecondary = KeyCode.Alpha2;
 
-    [Header("Object Ref")]
-    //public GameObject bullet;
+    [Header("References")]
     public Transform gunHolder;
     public Transform gunPos;
     public Camera playerCam;
-    public Transform visualizer; //to display hit position
+    public Transform visualizer;
     public Weapon primaryWeapon;
     public Weapon secondaryWeapon;
 
     [Header("Ray Settings")]
-    //public Transform playerCam;
     public float rayLength = 10f;
     public LayerMask detectionLayer;
     public Color rayColor = Color.red;
-    
-    public bool isPrimary = true;
-    private Weapon equipedWeapon;
 
-    private Coroutine resetPrimaryRoutine;
-    public static Action<Vector3, Vector3> shootInput;
+    private bool isPrimary = true;
+    private Weapon equipedWeapon;
+    private Coroutine activeReloadRoutine;
+    private Coroutine shootCooldownRoutine;
     private Vector3 shootDirection;
-    private void MyInput()
-    {
-        GetComponent<ui_DisplayAmmo>().updateAmmo(equipedWeapon.currentAmmo, equipedWeapon.magsSize);
-        if (Input.GetKey(Primary) && equipedReadyToShoot && equipedWeapon.CanShoot())
-        {
-            if (resetPrimaryRoutine != null)
-                StopCoroutine(resetPrimaryRoutine);
-            equipedReadyToShoot = false;
-            //shootInput?.Invoke(shootDirection, gunPos.position);
-            if (isPrimary)
-            {
-                primaryWeapon.Shoot(shootDirection, gunPos.position);
-            }
-            else
-            {
-                secondaryWeapon.Shoot(shootDirection, gunPos.position);
-            }
-            resetPrimaryRoutine = StartCoroutine(PrimaryCooldown(equipedWeapon.cooldown));
-        }
-        //change weapon state and any related variable to the equiped weapon
-        if (Input.GetKey(EquipPrimary) && !isPrimary) {
-            primaryWeapon.Equip();
-            secondaryWeapon.Unequip();
-            equipedWeapon = primaryWeapon;
-            isPrimary = true;
-        }
-        if (Input.GetKey(EquipSecondary) && isPrimary)
-        {
-            secondaryWeapon.Equip();
-            primaryWeapon.Unequip();
-            equipedWeapon = secondaryWeapon;
-            isPrimary = false;
-        }
-        if (Input.GetKey(ReloadKey))
-        {
-            equipedWeapon.Reload();
-        }
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
-        ResetCooldown();
-        primaryWeapon.Equip();
-        secondaryWeapon.Unequip();
-        equipedWeapon = primaryWeapon;
-        equipedWeapon.cooldown = primaryWeapon.cooldown;
-        GetComponent<ui_DisplayAmmo>().updateAmmo(equipedWeapon.currentAmmo, equipedWeapon.magsSize);
-    }
-    private void ResetCooldown()
-    {
-        equipedReadyToShoot = true;
-    }
-    private IEnumerator PrimaryCooldown(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        equipedReadyToShoot = true;
-        resetPrimaryRoutine = null; //clear routine ref
+        
+        SwitchWeapon(true);
+        //UpdateAmmoUI();
     }
 
     void Update()
     {
-        MyInput();
-        shootDirection = getTarget();
+        HandleInput();
+        UpdateAiming();
     }
 
-    private Vector3 getTarget()
+    private void HandleInput()
+    {
+        // Shooting
+        if (Input.GetKey(Primary) && equipedReadyToShoot && equipedWeapon.CanShoot())
+        {
+            ShootWeapon();
+        }
+
+        // Weapon Switching
+        if (Input.GetKeyDown(EquipPrimary)) SwitchWeapon(true);
+        if (Input.GetKeyDown(EquipSecondary)) SwitchWeapon(false);
+
+        // Reloading
+        if (Input.GetKeyDown(ReloadKey) && equipedWeapon.CanReload())
+        {
+            StartReload();
+        }
+    }
+
+    private void ShootWeapon()
+    {
+        if (shootCooldownRoutine != null)
+            StopCoroutine(shootCooldownRoutine);
+
+        equipedReadyToShoot = false;
+        equipedWeapon.Shoot(shootDirection, gunPos.position);
+        UpdateAmmoUI();
+        
+        shootCooldownRoutine = StartCoroutine(ShootCooldown(equipedWeapon.cooldown));
+    }
+
+    private void StartReload()
+    {
+        // Cancel existing reload if in progress
+        if (activeReloadRoutine != null)
+        {
+            StopCoroutine(activeReloadRoutine);
+            Debug.Log("Reload interrupted");
+        }
+
+        // Start new reload
+        activeReloadRoutine = StartCoroutine(ReloadWeapon());
+    }
+
+    private IEnumerator ReloadWeapon()
+    {
+        Debug.Log("Reloading...");
+        equipedWeapon.StartReload(); // Visual/audio feedback
+        
+        yield return new WaitForSeconds(equipedWeapon.reloadTime);
+        
+        equipedWeapon.FinishReload();
+        UpdateAmmoUI();
+        activeReloadRoutine = null;
+        Debug.Log("Reload complete");
+    }
+
+    private IEnumerator ShootCooldown(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        equipedReadyToShoot = true;
+        shootCooldownRoutine = null;
+    }
+
+    private void SwitchWeapon(bool primary)
+    {
+        if (isPrimary == primary) return;
+
+        // Cancel any ongoing reload when switching weapons
+        if (activeReloadRoutine != null)
+        {
+            StopCoroutine(activeReloadRoutine);
+            activeReloadRoutine = null;
+        }
+
+        isPrimary = primary;
+        equipedWeapon = primary ? primaryWeapon : secondaryWeapon;
+        
+        primaryWeapon.SetEquipped(primary);
+        secondaryWeapon.SetEquipped(!primary);
+        
+        UpdateAmmoUI();
+    }
+
+    private void UpdateAiming()
     {
         Ray ray = new Ray(playerCam.transform.position, playerCam.transform.forward);
         RaycastHit hit;
-        Vector3 targetPoint;
+        Vector3 targetPoint = Physics.Raycast(ray, out hit, rayLength, detectionLayer) 
+            ? hit.point 
+            : ray.origin + ray.direction * rayLength;
 
-        // Check if ray hits something
-        if (Physics.Raycast(ray, out hit, rayLength, detectionLayer))
-        {
-            // Use the hit point if we hit something
-            targetPoint = hit.point;
-            //Debug.Log("Hit: " + hit.collider.name);
-        }
-        else
-        {
-            // Use the ray's end point if nothing was hit
-            targetPoint = ray.origin + ray.direction * rayLength;
-        }
         if (visualizer != null)
-        {
             visualizer.position = targetPoint;
-        }
 
-        //get traget direction
-        Vector3 direction = targetPoint - gunHolder.position;
+        shootDirection = targetPoint - gunHolder.position;
+        gunHolder.rotation = Quaternion.LookRotation(shootDirection) * Quaternion.Euler(rotationOffset);
+        
+        Debug.DrawRay(gunHolder.position, shootDirection, rayColor);
+    }
 
-        // Create the rotation to look at the point
-        Quaternion targetRotation = Quaternion.LookRotation(direction);
-
-        //// Apply optional offset
-        targetRotation *= Quaternion.Euler(rotationOffset);
-
-        gunHolder.rotation = targetRotation;
-
-        // Debug visualization
-        Debug.DrawRay(gunHolder.position, ray.direction * rayLength, rayColor);
-        return direction;
+    private void UpdateAmmoUI()
+    {
+        GetComponent<ui_DisplayAmmo>().updateAmmo(equipedWeapon.currentAmmo, equipedWeapon.magsSize);
     }
 }
