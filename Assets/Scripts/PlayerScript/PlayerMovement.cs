@@ -5,31 +5,21 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private PlayerStats _stats;
     [Header("Movement")]
-    public float moveSpeed;
-    public float sprintSpeed;
-    public float sprintCost;
 
     private float speed;
 
     public float groundDrag;
-
-    public float dashForce;
-    public float dashDuration;
-    public float dashCooldown;
-    public float dashCost;
     bool dashing;
     bool readyToDash;
 
-    public float jumpForce;
-    public float jumpCooldown;
     public float airMultiplier;
-    public float jumpCost;
     bool readyToJump;
 
     [Header("References")]
     public EnergyManager energyManager;
-    public Camera playerCam;
+    public Zoom zoomMnger;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -72,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if (Input.GetKey(jumpKey) && readyToJump && grounded && energyManager.consumeEnergy(jumpCost))
+        if (Input.GetKey(jumpKey) && readyToJump && grounded && energyManager.consumeEnergy(_stats.jumpCost))
         {
             readyToJump = false;
             Jump();
@@ -83,17 +73,17 @@ public class PlayerMovement : MonoBehaviour
                 StopCoroutine(resetJumpRoutine);
             }
 
-            resetJumpRoutine = StartCoroutine(ResetJumpAfterDelay(jumpCooldown));
+            resetJumpRoutine = StartCoroutine(ResetJumpAfterDelay(_stats.jumpCooldown));
         }
 
         //when dash
-        if (Input.GetKey(dashKey) && readyToDash && energyManager.consumeEnergy(dashCost))
+        if (Input.GetKey(dashKey) && readyToDash && energyManager.consumeEnergy(_stats.dashCost))
         {
             readyToDash = false;
             dashing = true;
             Dash();
 
-            Invoke(nameof(ResetDashSpeed), dashDuration);
+            Invoke(nameof(ResetDashSpeed), _stats.dashDuration);
 
             // If there's an existing coroutine, stop it first
             if (resetDashRoutine != null)
@@ -101,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
                 StopCoroutine(resetDashRoutine);
             }
 
-            resetDashRoutine = StartCoroutine(ResetDashAfterDelay(dashCooldown));
+            resetDashRoutine = StartCoroutine(ResetDashAfterDelay(_stats.dashCooldown));
         }
     }
 
@@ -110,15 +100,15 @@ public class PlayerMovement : MonoBehaviour
         //calculate movement direction
         moveDirection = hOrientation.forward * verticalInput + hOrientation.right * horizontalInput;
         if (dashing) {
-            speed = dashForce;
+            speed = _stats.dashForce;
         } else
-        if (Input.GetKey(sprintKey) && energyManager.consumeEnergy(sprintCost))
+        if (Input.GetKey(sprintKey) && energyManager.consumeEnergy(_stats.sprintCost))
         {
-            speed = sprintSpeed;
+            speed = _stats.sprintSpeed;
         }
         else
         {
-            speed = moveSpeed;
+            speed = _stats.moveSpeed;
         }
         //on ground
         if (grounded)
@@ -136,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
         // reset y velocity
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
 
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        rb.AddForce(transform.up * _stats.jumpForce, ForceMode.Impulse);
 
     }
 
@@ -145,7 +135,7 @@ public class PlayerMovement : MonoBehaviour
         // reset x velocity
         //rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
 
-        rb.AddForce(transform.forward * dashForce, ForceMode.Impulse);
+        rb.AddForce(transform.forward * _stats.dashForce, ForceMode.Impulse);
     }
     private void ResetJump()
     {
@@ -177,16 +167,16 @@ public class PlayerMovement : MonoBehaviour
         Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         if (dashing)
         {
-            speed = dashForce;
+            speed = _stats.dashForce;
         }
         else
         if (Input.GetKey(sprintKey))
         {
-            speed = sprintSpeed;
+            speed = _stats.sprintSpeed;
         }
         else
         {
-            speed = moveSpeed;
+            speed = _stats.moveSpeed;
         }
         if (flatVel.magnitude > speed)
         {
@@ -203,10 +193,10 @@ public class PlayerMovement : MonoBehaviour
 
         //ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-
+        
         MyInput();
         SpeedControl();
-
+        zoomMnger.speedZoom(speed);
         //Handle Drag
         if (grounded)
         {

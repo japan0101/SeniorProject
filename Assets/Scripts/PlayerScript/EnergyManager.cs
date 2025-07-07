@@ -3,16 +3,12 @@ using UnityEngine.UI;
 
 public class EnergyManager : MonoBehaviour
 {
-    [Header("Attributes")]
-    public float maxEnergy = 100;
-    public float regenerationRate = 1f;
-
-    private float energy;
+    [SerializeField] private PlayerStats _stats;
     public Image energyDisplay;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        energy = maxEnergy;
+        _stats.ModifyEnergy(_stats.maxEnergy);
         updateDisplay();
     }
     private void Update()
@@ -22,42 +18,33 @@ public class EnergyManager : MonoBehaviour
     }
     private void regenEnergy()
     {
-        if (energy < maxEnergy) {
-            energy += regenerationRate * Time.deltaTime;
-        }
+        _stats.ModifyEnergy(_stats.EnergyRegenRate * Time.deltaTime);
         
     }
     void updateDisplay()
     {
-        energyDisplay.fillAmount = energy/maxEnergy;
+        energyDisplay.fillAmount = _stats.currentEnergy / _stats.maxEnergy;
     }
     public bool consumeEnergy(float unit)
     {
-        if (energy - unit < 0) {
+        if (_stats.currentEnergy - unit < 0) {
             return false;
         }
         else
         {
-            energy -= unit;
+            _stats.ModifyEnergy(-unit);
             updateDisplay();
         }
         return true;
     }
     public void gainEnergy(float unit)
     {
-        if (energy + unit > maxEnergy)
-        {
-            energy = maxEnergy;
-        }
-        else
-        {
-            energy += unit;
-            updateDisplay();
-        }
+        _stats.ModifyEnergy(unit);
+        updateDisplay();
     }
 
     public float getEnergy()
     {
-        return energy;
+        return _stats.currentEnergy;
     }
 }

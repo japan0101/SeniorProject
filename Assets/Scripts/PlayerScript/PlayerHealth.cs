@@ -3,16 +3,13 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [Header("Attributes")]
-    public float maxHP;
-    private float currentHP;
+    [SerializeField] private PlayerStats _stats;
 
     [Header("Refferences")]
     public TextMeshProUGUI HPDisplay;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        currentHP = maxHP;
         DisplayHP();
     }
     private void OnCollisionEnter(Collision collision)
@@ -38,13 +35,13 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(Vector3 dmgPos, float damage)
     {
         //GetComponent<DamageTextSpawner>().SpawnDamageText(dmgPos, damage);
-        currentHP -= damage;
+        _stats.ModifyHP(-damage);
         DisplayHP();
     }
 
     private void DisplayHP()
     {
-        HPDisplay.text = "Health: " + currentHP + " / " + maxHP;
+        HPDisplay.text = "Health: " + _stats.currentHP + " / " + _stats.maxHP;
     }
     // Update is called once per frame
     void Update()

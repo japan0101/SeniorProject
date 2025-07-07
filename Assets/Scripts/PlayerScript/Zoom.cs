@@ -16,13 +16,17 @@ public class Zoom : MonoBehaviour
         {
             isZoomed = !isZoomed;
         }
+    }
 
-        if (isZoomed) {
-            GetComponent<Camera>().fieldOfView = Mathf.Lerp(GetComponent<Camera>().fieldOfView, zoom, Time.deltaTime * smooth);
+    public void speedZoom(float speed)
+    {
+        if (isZoomed)
+        {
+            GetComponent<Camera>().fieldOfView = Mathf.Lerp(GetComponent<Camera>().fieldOfView, zoom + speed - 7, Time.deltaTime * smooth);
         }
         else
         {
-            GetComponent<Camera>().fieldOfView = Mathf.Lerp(GetComponent<Camera>().fieldOfView, normal, Time.deltaTime * smooth);
+            GetComponent<Camera>().fieldOfView = Mathf.Lerp(GetComponent<Camera>().fieldOfView, normal + speed - 7, Time.deltaTime * smooth);
         }
     }
 }

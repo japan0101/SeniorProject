@@ -23,7 +23,6 @@ public class ui_ReloadIndicator : MonoBehaviour
         {
             //reloadingOverlay.color = reloadColor;
             reloadingOverlay.fillAmount = playerShoot.GetReloadProgress();
-            Debug.Log(playerShoot.GetReloadProgress());
         }
         else
         {
