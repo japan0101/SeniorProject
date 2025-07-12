@@ -9,7 +9,7 @@ public class PlayerStats : ScriptableObject
 
     public float maxEnergy = 100;
     public float currentEnergy = 100;
-    public float EnergyRegenRate = 1f;
+    public float EnergyRegenRate = 5f;
 
     public float moveSpeed = 7;
     public float sprintSpeed = 10;

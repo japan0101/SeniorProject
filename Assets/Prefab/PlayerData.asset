@@ -16,7 +16,7 @@ MonoBehaviour:
   currentHP: 250
   maxEnergy: 100
   currentEnergy: 100
-  EnergyRegenRate: 1
+  EnergyRegenRate: 5
   moveSpeed: 7
   sprintSpeed: 10
   sprintCost: 0.5
