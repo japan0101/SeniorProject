@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using Unity.VisualScripting;
 using Random = UnityEngine.Random;
 
 public class EnemyMeleeAgent : Agent
@@ -60,22 +61,21 @@ public override void CollectObservations(VectorSensor sensor)
     {
         // Give Agent the information about the state
         // The Player's position
-        float playerPoX_normalized = _player.localPosition.x/5f;
-        float playerPoZ_normalized = _player.localPosition.z/5f;
-        Debug.Log(playerPoX_normalized);
-        Debug.Log(playerPoZ_normalized);
+        Vector3 playerPosNormalized = _player.localPosition.normalized;
+
         // The Enemy's position
-        float enemyPosX_normalized = transform.localPosition.x/5f;
-        float enemyPosZ_normalized = transform.localPosition.z/5f;
+        Vector3 enemyPosNormalized = transform.localPosition.normalized;
+        
         
         // The Enemy's direction (on the Y Axis)
-        float enemyRotation_normalized = (transform.localRotation.eulerAngles.y / 360f) * 2f - 1f;
+        Vector3 forward = transform.forward;
+        float enemyRotation = Mathf.Atan2(forward.x, forward.z) * Mathf.Rad2Deg;
         
-        sensor.AddObservation(playerPoX_normalized);
-        sensor.AddObservation(playerPoZ_normalized);
-        sensor.AddObservation(enemyPosX_normalized);
-        sensor.AddObservation(enemyPosZ_normalized);
-        sensor.AddObservation(enemyRotation_normalized);
+        sensor.AddObservation(playerPosNormalized.x);
+        sensor.AddObservation(playerPosNormalized.z);
+        sensor.AddObservation(enemyPosNormalized.x);
+        sensor.AddObservation(enemyPosNormalized.z);
+        sensor.AddObservation(enemyRotation/180f);
     }
 
     public override void OnActionReceived(ActionBuffers actions)

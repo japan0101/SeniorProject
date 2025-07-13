@@ -1,23 +1,23 @@
 {
-    "My Behavior": {
+    "Enemy1": {
         "checkpoints": [
             {
-                "steps": 0,
-                "file_path": "results\\Enemy1\\My Behavior\\My Behavior-0.onnx",
+                "steps": 31118,
+                "file_path": "results\\Enemy1\\Enemy1\\Enemy1-31118.onnx",
                 "reward": null,
-                "creation_time": 1751448750.1813657,
+                "creation_time": 1752394545.1126869,
                 "auxillary_file_paths": [
-                    "results\\Enemy1\\My Behavior\\My Behavior-0.pt"
+                    "results\\Enemy1\\Enemy1\\Enemy1-31118.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 0,
-            "file_path": "results\\Enemy1\\My Behavior.onnx",
+            "steps": 31118,
+            "file_path": "results\\Enemy1\\Enemy1.onnx",
             "reward": null,
-            "creation_time": 1751448750.1813657,
+            "creation_time": 1752394545.1126869,
             "auxillary_file_paths": [
-                "results\\Enemy1\\My Behavior\\My Behavior-0.pt"
+                "results\\Enemy1\\Enemy1\\Enemy1-31118.pt"
             ]
         }
     },
