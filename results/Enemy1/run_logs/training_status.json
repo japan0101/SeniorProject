@@ -2,22 +2,22 @@
     "Enemy1": {
         "checkpoints": [
             {
-                "steps": 31118,
-                "file_path": "results\\Enemy1\\Enemy1\\Enemy1-31118.onnx",
-                "reward": null,
-                "creation_time": 1752394545.1126869,
+                "steps": 7635,
+                "file_path": "results\\Enemy1\\Enemy1\\Enemy1-7635.onnx",
+                "reward": -1.6176000171237521,
+                "creation_time": 1752399576.9443328,
                 "auxillary_file_paths": [
-                    "results\\Enemy1\\Enemy1\\Enemy1-31118.pt"
+                    "results\\Enemy1\\Enemy1\\Enemy1-7635.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 31118,
+            "steps": 7635,
             "file_path": "results\\Enemy1\\Enemy1.onnx",
-            "reward": null,
-            "creation_time": 1752394545.1126869,
+            "reward": -1.6176000171237521,
+            "creation_time": 1752399576.9443328,
             "auxillary_file_paths": [
-                "results\\Enemy1\\Enemy1\\Enemy1-31118.pt"
+                "results\\Enemy1\\Enemy1\\Enemy1-7635.pt"
             ]
         }
     },
