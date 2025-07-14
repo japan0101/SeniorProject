@@ -1,8 +1,12 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerStats", menuName = "PlayerStats")]
 public class PlayerStats : ScriptableObject
 {
+
+    public event Action onStatsChanged;
+
     //Base stats
     public float maxHP = 250;
     public float currentHP = 250;
@@ -27,10 +31,12 @@ public class PlayerStats : ScriptableObject
     public void ModifyHP(float amount)
     {
         currentHP = Mathf.Clamp(currentHP + amount, 0, maxHP);
+        onStatsChanged?.Invoke();
     }
 
     public void ModifyEnergy(float amount)
     {
         currentEnergy = Mathf.Clamp(currentEnergy + amount, 0, maxEnergy);
+        onStatsChanged?.Invoke();
     }
 }
