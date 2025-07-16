@@ -9,6 +9,7 @@ using static UnityEngine.Rendering.DebugUI;
 public class Weapon : MonoBehaviour
 {
     [Header("Weapon Attribute")]
+    public string DisplayName;
     public int currentAmmo;
     public int magsSize;
     public float power; //shot's bullet initial velocity

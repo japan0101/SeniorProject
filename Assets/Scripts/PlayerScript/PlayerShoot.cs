@@ -1,11 +1,14 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerShoot : MonoBehaviour
 {
     [Header("Weapon Config")]
     [SerializeField] private Vector3 rotationOffset;
     private bool equipedReadyToShoot = true;
+    public Color equipedColor = new Color(0f, 1f, 0.5f, 0.5f);
+    public Color nonEquipedColor = new Color(0f, 0f, 0f, 0.3921f);
 
     [Header("Keybinds")]
     public KeyCode Primary = KeyCode.Mouse0;
@@ -32,6 +35,10 @@ public class PlayerShoot : MonoBehaviour
     private Coroutine shootCooldownRoutine;
     private Vector3 shootDirection;
     private float reloadTimer;
+    private bool isReloading;
+
+[SerializeField] public Image PrimaryPanel;
+[SerializeField] public Image SecondaryPanel;
 
     public bool IsReloading() => activeReloadRoutine != null;
 
@@ -60,8 +67,9 @@ public class PlayerShoot : MonoBehaviour
         if (Input.GetKeyDown(EquipSecondary)) SwitchWeapon(false);
 
         // Reloading
-        if (Input.GetKeyDown(ReloadKey) && equipedWeapon.CanReload())
+        if (Input.GetKeyDown(ReloadKey) && equipedWeapon.CanReload() && !isReloading)
         {
+            isReloading = true;
             StartReload();
         }
     }
@@ -111,6 +119,7 @@ public class PlayerShoot : MonoBehaviour
         equipedWeapon.FinishReload();
         UpdateAmmoUI();
         activeReloadRoutine = null;
+        isReloading = false;
         Debug.Log("Reload complete");
     }
 
@@ -134,7 +143,8 @@ public class PlayerShoot : MonoBehaviour
 
         isPrimary = primary;
         equipedWeapon = primary ? primaryWeapon : secondaryWeapon;
-        
+        PrimaryPanel.color = primary ? equipedColor : nonEquipedColor;// changes ui color to indicate equiped weapon
+        SecondaryPanel.color = primary ? nonEquipedColor : equipedColor;// changes ui color to indicate equiped weapon
         primaryWeapon.SetEquipped(primary);
         secondaryWeapon.SetEquipped(!primary);
         
