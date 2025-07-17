@@ -9,7 +9,10 @@ public class BaseEnemy : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        foreach (var atk in attacks)
+        {
+            atk.OnAttack();//try to attack
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -18,7 +21,7 @@ public class BaseEnemy : MonoBehaviour
         {
             foreach (var atk in attacks)
             {
-                atk.OnAttack();
+                atk.OnAttack();//try to attack
             }
             MainBullet bullet = collision.gameObject.GetComponent<MainBullet>();
             if (bullet != null)
@@ -32,7 +35,7 @@ public class BaseEnemy : MonoBehaviour
 
     public void TakeDamage(Vector3 dmgPos, float damage)
     {
-        GetComponent<DamageTextSpawner>().SpawnDamageText(dmgPos, damage);
+        GetComponent<DamageTextSpawner>().SpawnDamageText(dmgPos, damage); //instantiate damage number with DamageTextSpawner component
         hp -= damage;
     }
     // Update is called once per frame
