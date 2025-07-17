@@ -1,41 +1,78 @@
-using System;
-using System.Linq.Expressions;
 using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
-using Unity.VisualScripting;
 using Random = UnityEngine.Random;
+using System.Collections;
 
 public class EnemyMeleeAgent : Agent
 {
     [SerializeField] private Transform _player;
+    [SerializeField] private Renderer _groundRenderer;
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _rotateSpeed;
 
     private Renderer _renderer;
 
-    private int _currentEpisode = 0;
-    private float _cumulativeReward = 0f;
+    [HideInInspector]public int CurrentEpisode = 0;
+    [HideInInspector]public float CumulativeReward = 0f;
+    
+    private Color _defaultGroundColor;
+    private Coroutine _flashGroundCoroutine;
+
+    private Rigidbody rb;
 
     public override void Initialize()
     {
         Debug.Log("Initialize()");
-
+        
+        rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = true; 
         _renderer = GetComponent<Renderer>();
-        _currentEpisode = 0;
-        _cumulativeReward = 0f;
+        CurrentEpisode = 0;
+        CumulativeReward = 0f;
+
+        if (_groundRenderer != null)
+        {   // Store default color of the ground
+            _defaultGroundColor = _groundRenderer.material.color;
+        }
     }
 
     public override void OnEpisodeBegin()
     {
         Debug.Log("OnEpisodeBegin()");
+        
+        if (_groundRenderer != null && CumulativeReward != 0f)
+        {
+            Color flashColor = (CumulativeReward > 0f) ? Color.green : Color.red;
+            
+            // Stop any existing FlashGround coroutine before starting a new one
+            if (_flashGroundCoroutine != null)
+            {
+                StopCoroutine(_flashGroundCoroutine);
+            }
 
-        _currentEpisode++;
-        _cumulativeReward = 0f;
+            _flashGroundCoroutine = StartCoroutine(FlashGround(flashColor, 1.0f));
+        }
+
+        CurrentEpisode++;
+        CumulativeReward = 0f;
         _renderer.material.color = Color.red;
 
         SpawnObjects();
+    }
+
+    private IEnumerator FlashGround(Color targetColor, float duration)
+    {
+        float elapsedTime = 0f;
+        
+        _groundRenderer.material.color = targetColor;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            _groundRenderer.material.color = Color.Lerp(targetColor, _defaultGroundColor, elapsedTime / duration);
+            yield return null;
+        }
     }
 
     private void SpawnObjects()
@@ -61,27 +98,56 @@ public override void CollectObservations(VectorSensor sensor)
     {
         // Give Agent the information about the state
         // The Player's position
-        Vector3 playerPosNormalized = _player.localPosition.normalized;
+        // Vector3 playerPosNormalized = _player.localPosition.normalized;
 
         // The Enemy's position
-        Vector3 enemyPosNormalized = transform.localPosition.normalized;
         
         
         // The Enemy's direction (on the Y Axis)
-        Vector3 forward = transform.forward;
-        float enemyRotation = Mathf.Atan2(forward.x, forward.z) * Mathf.Rad2Deg;
+
         
-        sensor.AddObservation(playerPosNormalized.x);
-        sensor.AddObservation(playerPosNormalized.z);
-        sensor.AddObservation(enemyPosNormalized.x);
-        sensor.AddObservation(enemyPosNormalized.z);
-        sensor.AddObservation(enemyRotation/180f);
+        // sensor.AddObservation(playerPosNormalized.x);
+        // sensor.AddObservation(playerPosNormalized.z); 
+        
+        // Using Ray Perception to identify the goal
+        sensor.AddObservation(transform.localPosition);
     }
 
+    public override void Heuristic(in ActionBuffers actionsOut)
+    {
+        var discreteActionsOut = actionsOut.DiscreteActions;
+
+        discreteActionsOut[0] = 0; // Do nothing
+        discreteActionsOut[1] = 0;
+
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            discreteActionsOut[0] = 1;
+        }
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
+            discreteActionsOut[0] = 2;
+        } else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            discreteActionsOut[0] = 3;
+        }
+        else if  (Input.GetKey(KeyCode.LeftArrow))
+        {
+            discreteActionsOut[0] = 4;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            discreteActionsOut[1] = 1;
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            discreteActionsOut[1] = 2;
+        }
+    }
+    
     public override void OnActionReceived(ActionBuffers actions)
     {
         // Agent decides what to do about the current state
-        Debug.Log("OnActionReceived()");
         // Move the agent using the action
         MoveAgent(actions.DiscreteActions);
         
@@ -89,25 +155,44 @@ public override void CollectObservations(VectorSensor sensor)
         AddReward(-2f / MaxStep);
         
         // Update the cumulative reward after adding the step penalty.
-        _cumulativeReward = GetCumulativeReward();
+        CumulativeReward = GetCumulativeReward();
     }
 
     public void MoveAgent(ActionSegment<int> act)
     {   
-        Debug.Log("MoveAgent()");
-        var action = act[0];
-
-        switch (action)
+        
+        var movement = act[0];
+        var rotation = act[1];
+        
+        switch (movement)
         {
             case 1: // Move forward
-                transform.position += transform.forward * _moveSpeed * Time.deltaTime;
+                rb.AddForce(transform.forward * _moveSpeed * 10f, ForceMode.Force);
+                // transform.position += transform.forward * _moveSpeed * Time.deltaTime;
                 Debug.Log("Forward");
                 break;
-            case 2: // Rotate left
+            case 2: // Move Backward
+                rb.AddForce(-transform.forward * _moveSpeed * 10f, ForceMode.Force);
+                // transform.position -= transform.forward * _moveSpeed * Time.deltaTime;
+                Debug.Log("Backward");
+                break;
+            case 3: // Stride Right
+                rb.AddForce(transform.right * _moveSpeed * 10f, ForceMode.Force);
+                Debug.Log("Stride Right");
+                break;
+            case 4: // Stride Left
+                rb.AddForce(-transform.right * _moveSpeed * 10f, ForceMode.Force);
+                Debug.Log("Stride Left");
+                break;
+        }
+
+        switch (rotation)
+        {
+            case 1: // Rotate left
                 transform.Rotate(0f, -_rotateSpeed * Time.deltaTime, 0f);
                 Debug.Log("Left");
                 break;
-            case 3: // Rotate Right
+            case 2: // Rotate Right
                 transform.Rotate(0f, _rotateSpeed * Time.deltaTime, 0f);
                 Debug.Log("Right");
                 break;
@@ -125,7 +210,7 @@ public override void CollectObservations(VectorSensor sensor)
     private void PlayerReached()
     {
         AddReward(1.0f);
-        _cumulativeReward = GetCumulativeReward();
+        CumulativeReward = GetCumulativeReward();
         
         EndEpisode();
     }

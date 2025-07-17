@@ -1,0 +1,38 @@
+{
+    "Melee1": {
+        "checkpoints": [
+            {
+                "steps": 499969,
+                "file_path": "results\\RayEnemy1\\Melee1\\Melee1-499969.onnx",
+                "reward": 0.9673348054653261,
+                "creation_time": 1752767970.8480077,
+                "auxillary_file_paths": [
+                    "results\\RayEnemy1\\Melee1\\Melee1-499969.pt"
+                ]
+            },
+            {
+                "steps": 500006,
+                "file_path": "results\\RayEnemy1\\Melee1\\Melee1-500006.onnx",
+                "reward": 0.9672460116907559,
+                "creation_time": 1752767970.929844,
+                "auxillary_file_paths": [
+                    "results\\RayEnemy1\\Melee1\\Melee1-500006.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 500006,
+            "file_path": "results\\RayEnemy1\\Melee1.onnx",
+            "reward": 0.9672460116907559,
+            "creation_time": 1752767970.929844,
+            "auxillary_file_paths": [
+                "results\\RayEnemy1\\Melee1\\Melee1-500006.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}
