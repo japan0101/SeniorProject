@@ -139,6 +139,7 @@ public class PlayerShoot : MonoBehaviour
         {
             StopCoroutine(activeReloadRoutine);
             activeReloadRoutine = null;
+            isReloading = false ;
         }
 
         isPrimary = primary;
