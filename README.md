@@ -86,7 +86,7 @@ exit()
 ```
 Change directory to this project
 ```powershell
-cd [part_to_this_project]
+cd [path_to_this_project]
 ```
 
 Install ML-Agents from the local source files
