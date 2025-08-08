@@ -36,8 +36,9 @@ public class PlayerShoot : MonoBehaviour
     private Vector3 shootDirection;
     private float reloadTimer;
     private bool isReloading;
+    private float cooldownTimer;
 
-[SerializeField] public Image PrimaryPanel;
+    [SerializeField] public Image PrimaryPanel;
 [SerializeField] public Image SecondaryPanel;
 
     public bool IsReloading() => activeReloadRoutine != null;
@@ -105,14 +106,15 @@ public class PlayerShoot : MonoBehaviour
     }
     private IEnumerator ReloadWeapon()
     {
+        //Debug.Log("Reloading...");
+        equipedWeapon.StartReload(); // Visual/audio feedback
+
         reloadTimer = 0;
         while (reloadTimer < equipedWeapon.reloadTime)
         {
             reloadTimer += Time.deltaTime;
             yield return null;
         }
-        //Debug.Log("Reloading...");
-        equipedWeapon.StartReload(); // Visual/audio feedback
         
         //yield return new WaitForSeconds(equipedWeapon.reloadTime);
         
@@ -125,7 +127,13 @@ public class PlayerShoot : MonoBehaviour
 
     private IEnumerator ShootCooldown(float delay)
     {
-        yield return new WaitForSeconds(delay);
+
+        cooldownTimer = 0;
+        while (cooldownTimer < equipedWeapon.cooldown)
+        {
+            cooldownTimer += Time.deltaTime;
+            yield return null;
+        }
         equipedReadyToShoot = true;
         shootCooldownRoutine = null;
     }
