@@ -1,9 +1,10 @@
-using UnityEngine;
+using System.Collections;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 using Random = UnityEngine.Random;
-using System.Collections;
 
 public class EnemyMeleeAgent : Agent
 {
@@ -144,7 +145,17 @@ public override void CollectObservations(VectorSensor sensor)
             discreteActionsOut[1] = 2;
         }
     }
-    
+
+    private void SpeedControl()
+    {
+        Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+        if (flatVel.magnitude > _moveSpeed)
+        {
+            Vector3 limitedVel = flatVel.normalized * _moveSpeed;
+            rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
+        }
+    }
+
     public override void OnActionReceived(ActionBuffers actions)
     {
         // Agent decides what to do about the current state
@@ -197,6 +208,7 @@ public override void CollectObservations(VectorSensor sensor)
                 Debug.Log("Right");
                 break;
         }
+        SpeedControl();
     }
 
     private void OnTriggerEnter(Collider other)
