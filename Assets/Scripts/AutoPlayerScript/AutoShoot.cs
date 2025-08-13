@@ -107,7 +107,7 @@ public class AutoShoot : MonoBehaviour
 
     private IEnumerator ShootCooldown(float delay)
     {
-        cooldownTimer = 0;
+        reloadTimer = 0;
         while (reloadTimer < equipedWeapon.cooldown)
         {
             reloadTimer += Time.deltaTime;
@@ -147,7 +147,7 @@ public class AutoShoot : MonoBehaviour
         //Debug.Log($"Rays hit: {Physics.Raycast(ray, out hit, rayLength, detectionLayer)}\nReady to Shoot: {equipedReadyToShoot}\n Can Shoot:{equipedWeapon.CanShoot()}");
         if (Physics.Raycast(ray, out hit, rayLength, detectionLayer))
         {
-            if (equipedWeapon.CanShoot() && equipedReadyToShoot && activeReloadRoutine == null && shootCooldownRoutine == null)
+            if (equipedWeapon.CanShoot() && equipedReadyToShoot && activeReloadRoutine == null)
             {
                 Debug.Log("pew");
                 ShootWeapon();
