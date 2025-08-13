@@ -9,19 +9,22 @@ public class BaseEnemy : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        foreach (var atk in attacks)
-        {
-            atk.OnAttack();//try to attack
-        }
+        //foreach (var atk in attacks)
+        //{
+        //    atk.OnAttack();//try to attack
+        //}
     }
     private void OnCollisionEnter(Collision collision)
     {
         // Check if collision is with PlayerAttack layer
         if (collision.gameObject.layer == 9)
         {
-            foreach (var atk in attacks)
-            {
-                atk.OnAttack();//try to attack
+            //foreach (var atk in attacks)
+            //{
+            //    atk.OnAttack();//try to attack
+            //}
+            if (attacks.Count > 0) {
+                attacks[0].OnAttack();
             }
             MainBullet bullet = collision.gameObject.GetComponent<MainBullet>();
             if (bullet != null)

@@ -22,6 +22,7 @@ public class EnemyMeleeAgent : Agent
     private Coroutine _flashGroundCoroutine;
 
     private Rigidbody rb;
+    private BaseEnemy enemy;
 
     public override void Initialize()
     {
@@ -180,20 +181,20 @@ public override void CollectObservations(VectorSensor sensor)
             case 1: // Move forward
                 rb.AddForce(transform.forward * _moveSpeed * 10f, ForceMode.Force);
                 // transform.position += transform.forward * _moveSpeed * Time.deltaTime;
-                Debug.Log("Forward");
+                //Debug.Log("Forward");
                 break;
             case 2: // Move Backward
                 rb.AddForce(-transform.forward * _moveSpeed * 10f, ForceMode.Force);
                 // transform.position -= transform.forward * _moveSpeed * Time.deltaTime;
-                Debug.Log("Backward");
+                //Debug.Log("Backward");
                 break;
             case 3: // Stride Right
                 rb.AddForce(transform.right * _moveSpeed * 10f, ForceMode.Force);
-                Debug.Log("Stride Right");
+                //Debug.Log("Stride Right");
                 break;
             case 4: // Stride Left
                 rb.AddForce(-transform.right * _moveSpeed * 10f, ForceMode.Force);
-                Debug.Log("Stride Left");
+                //Debug.Log("Stride Left");
                 break;
         }
 
@@ -201,11 +202,11 @@ public override void CollectObservations(VectorSensor sensor)
         {
             case 1: // Rotate left
                 transform.Rotate(0f, -_rotateSpeed * Time.deltaTime, 0f);
-                Debug.Log("Left");
+                //Debug.Log("Left");
                 break;
             case 2: // Rotate Right
                 transform.Rotate(0f, _rotateSpeed * Time.deltaTime, 0f);
-                Debug.Log("Right");
+                //Debug.Log("Right");
                 break;
         }
         SpeedControl();

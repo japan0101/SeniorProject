@@ -11,26 +11,26 @@ using Action = Unity.Behavior.Action;
 [NodeDescription(name: "Flee", story: "Navigate [Self] Away From [Object]", category: "Action/Navigation", id: "a82023d4e9e666090e95b5c5a3eb432c")]
 public partial class FleeAction : Action
 {
-    // The GameObject that will be fleeing.
+    // The GameObject that will be fleeing. This object must have a Rigidbody component.
     [SerializeReference] public BlackboardVariable<GameObject> Self;
     // The GameObject that the agent will flee from.
     [SerializeReference] public BlackboardVariable<GameObject> Object;
-    // The desired distance to maintain from the target.
-    [SerializeReference] public BlackboardVariable<float> FleeDistance;
+    // The force magnitude to apply when fleeing.
+    [SerializeReference] public BlackboardVariable<float> FleeForceMagnitude;
 
-    // A reference to the NavMeshAgent component on the Self GameObject.
-    private NavMeshAgent agent;
+    // A reference to the Rigidbody component on the Self GameObject.
+    private Rigidbody rb;
 
     protected override Status OnStart()
     {
-        // Get the NavMeshAgent component from the Self GameObject.
+        // Get the Rigidbody component from the Self GameObject.
         if (Self.Value != null)
         {
-            agent = Self.Value.GetComponent<NavMeshAgent>();
+            rb = Self.Value.GetComponent<Rigidbody>();
         }
 
-        // If the agent or target are missing, the action cannot succeed.
-        if (agent == null || Object.Value == null)
+        // If the Rigidbody or target are missing, the action cannot succeed.
+        if (rb == null || Object.Value == null)
         {
             return Status.Failure;
         }
@@ -40,8 +40,8 @@ public partial class FleeAction : Action
 
     protected override Status OnUpdate()
     {
-        // Ensure the agent and target still exist.
-        if (agent == null || Object.Value == null)
+        // Ensure the Rigidbody and target still exist.
+        if (rb == null || Object.Value == null)
         {
             return Status.Failure;
         }
@@ -50,24 +50,24 @@ public partial class FleeAction : Action
         // This vector points away from the target.
         Vector3 fleeDirection = Self.Value.transform.position - Object.Value.transform.position;
 
-        // Normalize the direction vector and multiply by the desired flee distance
-        // to get a new position far away from the target.
-        Vector3 newDestination = Self.Value.transform.position + fleeDirection.normalized * FleeDistance.Value;
+        // Normalize the direction vector to get a unit vector.
+        Vector3 normalizedFleeDirection = fleeDirection.normalized;
 
-        // Set the new destination for the NavMeshAgent.
-        agent.SetDestination(newDestination);
+        // Apply a force to the Rigidbody in the flee direction.
+        // We use ForceMode.Force to apply a continuous force over time.
+        Debug.Log("Run away" + normalizedFleeDirection);
+        rb.AddForce(normalizedFleeDirection * FleeForceMagnitude.Value, ForceMode.Force);
 
-        // The action is still running and will continue to update the destination
-        // as long as it's active.
-        return Status.Running;
+        // The action is still running and will continue to apply force.
+        return Status.Success;
     }
 
     protected override void OnEnd()
     {
-        // Optional: Stop the agent from moving when the action ends.
-        if (agent != null && agent.isActiveAndEnabled)
+        // Optional: Stop the Rigidbody's movement when the action ends.
+        if (rb != null)
         {
-            agent.isStopped = true;
+            //rb.linearVelocity = Vector3.zero;
         }
     }
 }

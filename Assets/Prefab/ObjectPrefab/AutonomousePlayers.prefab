@@ -202,14 +202,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Graph: {fileID: -2374764814037209062, guid: d7e45396e21f0e0468c174b84a4a3f16, type: 2}
+  m_Graph: {fileID: -3170010413787279404, guid: d7e45396e21f0e0468c174b84a4a3f16, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 8424349335019848558
+  - rid: 2218619058989564454
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
     version: 2
     RefIds:
+    - rid: 2218619058989564454
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 14998662716072673861
+          m_Value1: 6184463578992191341
+        Name: AimLocation
+        m_Value: {fileID: 1012060537206290185}
     - rid: 8424349335019848558
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
