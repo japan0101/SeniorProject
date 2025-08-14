@@ -18,6 +18,11 @@ public class PlayerHealth : MonoBehaviour
         //Debug.Log(collision.gameObject.layer);
         if (collision.gameObject.layer == 12)
         {
+            EnemyMeleeAgent attacker = collision.gameObject.GetComponent<EnemyMeleeAgent>();
+            if (attacker != null)
+            {
+                attacker.OnHitPlayer();
+            }
             MainBullet bullet = collision.gameObject.GetComponent<MainBullet>();
             if (bullet != null)
             {

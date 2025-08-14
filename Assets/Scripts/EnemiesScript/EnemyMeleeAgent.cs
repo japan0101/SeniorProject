@@ -2,6 +2,7 @@ using System.Collections;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using Unity.VisualScripting;
 using UnityEditor.Sprites;
 using UnityEngine;
 using UnityEngine.UIElements.Experimental;
@@ -24,7 +25,6 @@ public class EnemyMeleeAgent : Agent
 
     private Rigidbody rb;
 
-    private BaseEnemy enemy;
 
     public override void Initialize()
     {
@@ -211,7 +211,7 @@ public class EnemyMeleeAgent : Agent
         switch (attack)
         {
             case 1: // Basic Attack
-                enemy.attacks[0].OnAttack();
+                enemy.attacks[0].OnAttack(this.gameObject);
                 Debug.Log("Attack!");
                 break;
         }
@@ -232,6 +232,10 @@ public class EnemyMeleeAgent : Agent
         CumulativeReward = GetCumulativeReward();
         
         EndEpisode();
+    }
+    public void OnHitPlayer()
+    {
+        Debug.Log("Yipeee");
     }
 
     // private void PlayerReached()

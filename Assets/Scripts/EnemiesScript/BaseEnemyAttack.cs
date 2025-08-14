@@ -2,5 +2,6 @@ using UnityEngine;
 
 public abstract class BaseEnemyAttack : MonoBehaviour
 {
-    public abstract void OnAttack();
+    public GameObject attacker;
+    public abstract void OnAttack(GameObject attacker);
 }

@@ -19,13 +19,9 @@ public class BaseEnemy : MonoBehaviour
         // Check if collision is with PlayerAttack layer
         if (collision.gameObject.layer == 9)
         {
-            //foreach (var atk in attacks)
-            //{
-            //    atk.OnAttack();//try to attack
+            //if (attacks.Count > 0) {
+            //    attacks[0].OnAttack();
             //}
-            if (attacks.Count > 0) {
-                attacks[0].OnAttack();
-            }
             MainBullet bullet = collision.gameObject.GetComponent<MainBullet>();
             if (bullet != null)
             {
@@ -40,6 +36,7 @@ public class BaseEnemy : MonoBehaviour
     {
         GetComponent<DamageTextSpawner>().SpawnDamageText(dmgPos, damage); //instantiate damage number with DamageTextSpawner component
         hp -= damage;
+
     }
     
     // Update is called once per frame
