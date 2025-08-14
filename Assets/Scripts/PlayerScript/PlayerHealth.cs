@@ -18,8 +18,7 @@ public class PlayerHealth : MonoBehaviour
         //Debug.Log(collision.gameObject.layer);
         if (collision.gameObject.layer == 12)
         {
-            EnemyMeleeAgent attacker = collision.gameObject.GetComponent<EnemyMeleeAttack>().attacker.GetComponent<EnemyMeleeAgent>();
-            Debug.Log(attacker);
+            EnemyMeleeAgent attacker = collision.gameObject.GetComponentInParent<EnemyMeleeAttack>().attacker.GetComponent<EnemyMeleeAgent>();
             if (attacker)
             {
                 Debug.Log("Player detect hits");
@@ -35,7 +34,7 @@ public class PlayerHealth : MonoBehaviour
             if (attacks != null)
             {
                 TakeDamage(collision.contacts[0].point, attacks.damage);
-                attacker.OnHitPlayer();
+                //attacker.OnHitPlayer();
             }
         }
     }

@@ -22,7 +22,6 @@ public class EnemyMeleeAgent : Agent
 
     private Rigidbody rb;
     private BaseEnemy enemy;
-    
 
     public override void Initialize()
     {
@@ -60,7 +59,7 @@ public class EnemyMeleeAgent : Agent
 
         CurrentEpisode++;
         CumulativeReward = 0f;
-        _renderer.material.color = Color.red;
+        //_renderer.material.color = Color.red;
 
         SpawnPlayer();
     }

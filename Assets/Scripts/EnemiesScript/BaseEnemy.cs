@@ -4,9 +4,9 @@ using UnityEngine;
 public class BaseEnemy : MonoBehaviour
 {
     [Header("Enemy Data")]
-    public float hp=10;
-    public float maxHp=10;
+    public float hp=100;
     public List<BaseEnemyAttack> attacks = new List<BaseEnemyAttack>();
+    float timer = 0;
 
     private EnemyMeleeAgent agent;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,13 +23,6 @@ public class BaseEnemy : MonoBehaviour
         // Check if collision is with PlayerAttack layer
         if (collision.gameObject.layer == 9)
         {
-            //foreach (var atk in attacks)
-            //{
-            //    atk.OnAttack();//try to attack
-            //}
-            if (attacks.Count > 0) {
-                attacks[0].OnAttack(this.gameObject);
-            }
             MainBullet bullet = collision.gameObject.GetComponent<MainBullet>();
             if (bullet != null)
             {
@@ -56,5 +49,11 @@ public class BaseEnemy : MonoBehaviour
             agent.EndEpisode();
             hp = maxHp;
         }
+        if (timer > 2)
+        {
+            timer = 0;
+            attacks[0].OnAttack(gameObject);
+        }
+        timer += Time.deltaTime;
     }
 }
