@@ -58,13 +58,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1012060537206290185}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.01745245, y: 0, z: 0, w: 0.99984777}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 706603641807010181}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 2, y: 0, z: 0}
 --- !u!1 &3629137628541366980
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,8 +108,8 @@ GameObject:
   - component: {fileID: 706603641807010181}
   - component: {fileID: 5383467581015880645}
   - component: {fileID: 116878861277677139}
-  - component: {fileID: 7330938164222306370}
   - component: {fileID: 2617090495452285175}
+  - component: {fileID: 5907028583260193024}
   m_Layer: 0
   m_Name: AutonomousePlayers
   m_TagString: Player
@@ -190,43 +190,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 3072
   rayColor: {r: 1, g: 0, b: 0, a: 1}
---- !u!114 &7330938164222306370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3880061375110339810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Graph: {fileID: -3170010413787279404, guid: d7e45396e21f0e0468c174b84a4a3f16, type: 2}
-  m_BlackboardVariableOverridesList:
-  - rid: 8424349335019848558
-  - rid: 2218619058989564454
-  m_IsInitialised: 0
-  m_IsStarted: 0
-  references:
-    version: 2
-    RefIds:
-    - rid: 2218619058989564454
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 14998662716072673861
-          m_Value1: 6184463578992191341
-        Name: AimLocation
-        m_Value: {fileID: 1012060537206290185}
-    - rid: 8424349335019848558
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 1
-          m_Value1: 0
-        Name: Self
-        m_Value: {fileID: 3880061375110339810}
 --- !u!136 &2617090495452285175
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -250,6 +213,24 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5907028583260193024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3880061375110339810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73f97543a2618a6439cad143b63c701c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  environment: {fileID: 0}
+  distanceThreshold: 10
+  aimOrientation: {fileID: 1012060537206290185}
+  speed: 4
+  turnSpeed: 20
+  aimErrorMargin: 5
 --- !u!1 &4401588218360901725
 GameObject:
   m_ObjectHideFlags: 0

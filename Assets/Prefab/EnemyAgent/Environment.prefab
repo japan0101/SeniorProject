@@ -907,6 +907,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AutonomousePlayers
       objectReference: {fileID: 0}
+    - target: {fileID: 5907028583260193024, guid: 3e3173a6dc306434f9231b0f6284658a, type: 3}
+      propertyPath: environment
+      value: 
+      objectReference: {fileID: 8762950491571974918}
     - target: {fileID: 7330938164222306370, guid: 3e3173a6dc306434f9231b0f6284658a, type: 3}
       propertyPath: m_Graph
       value: 
