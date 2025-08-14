@@ -23,7 +23,6 @@ public class EnemyMeleeAgent : Agent
     private Coroutine _flashGroundCoroutine;
 
     private Rigidbody rb;
-    private BaseEnemy enemy;
 
     private BaseEnemy enemy;
 
@@ -65,7 +64,7 @@ public class EnemyMeleeAgent : Agent
         CumulativeReward = 0f;
         _renderer.material.color = Color.red;
 
-        SpawnObjects();
+        SpawnPlayer();
     }
 
     private IEnumerator FlashGround(Color targetColor, float duration)
@@ -81,7 +80,7 @@ public class EnemyMeleeAgent : Agent
         }
     }
 
-    private void SpawnObjects()
+    private void SpawnPlayer()
     {
         transform.localRotation = Quaternion.identity;
         transform.localPosition = new Vector3(0f, 0.5f, 0f);
@@ -100,7 +99,7 @@ public class EnemyMeleeAgent : Agent
         _player.localPosition = new Vector3(playerPosition.x, 0.5f, playerPosition.z);
     }
 
-public override void CollectObservations(VectorSensor sensor)
+    public override void CollectObservations(VectorSensor sensor)
     {
         // Give Agent the information about the state
         // The Player's position
@@ -219,25 +218,33 @@ public override void CollectObservations(VectorSensor sensor)
         SpeedControl();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            PlayerReached();
-        }
-    }
+    // private void OnTriggerEnter(Collider other)
+    // {
+    //     if (other.gameObject.CompareTag("Player"))
+    //     {
+    //         PlayerReached();
+    //     }
+    // }
 
-    private void PlayerReached()
+    private void OnDestroy()
     {
-        AddReward(1.0f);
+        AddReward(-1f);
         CumulativeReward = GetCumulativeReward();
         
         EndEpisode();
     }
 
+    // private void PlayerReached()
+    // {
+    //     AddReward(1.0f);
+    //     CumulativeReward = GetCumulativeReward();
+    //     
+    //     EndEpisode();
+    // }
+
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Wall"))
+        if (other.gameObject.layer == 9)
         {
             // Apply a small negative reward when the collision starts
             AddReward(-0.05f);
@@ -250,23 +257,23 @@ public override void CollectObservations(VectorSensor sensor)
         }
     }
 
-    private void OnCollisionStay(Collision other)
-    {
-        if (other.gameObject.CompareTag("Wall"))
-        {
-            // Continually penalize
-            AddReward(-0.01f * Time.fixedDeltaTime);
-        }
-    }
+    // private void OnCollisionStay(Collision other)
+    // {
+    //     if (other.gameObject.CompareTag("Wall"))
+    //     {
+    //         // Continually penalize
+    //         AddReward(-0.01f * Time.fixedDeltaTime);
+    //     }
+    // }
 
-    private void OnCollisionExit(Collision other)
-    {
-        if (other.gameObject.CompareTag("Wall"))
-        {
-            if (_renderer != null)
-            {
-                _renderer.material.color = Color.red;
-            }
-        }
-    }
+    // private void OnCollisionExit(Collision other)
+    // {
+    //     if (other.gameObject.CompareTag("Wall"))
+    //     {
+    //         if (_renderer != null)
+    //         {
+    //             _renderer.material.color = Color.red;
+    //         }
+    //     }
+    // }
 }

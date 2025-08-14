@@ -41,6 +41,7 @@ public class BaseEnemy : MonoBehaviour
         GetComponent<DamageTextSpawner>().SpawnDamageText(dmgPos, damage); //instantiate damage number with DamageTextSpawner component
         hp -= damage;
     }
+    
     // Update is called once per frame
     void Update()
     {
