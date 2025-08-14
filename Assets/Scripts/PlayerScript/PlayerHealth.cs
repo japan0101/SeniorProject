@@ -22,7 +22,7 @@ public class PlayerHealth : MonoBehaviour
             if (attacker)
             {
                 Debug.Log("Player detect hits");
-                attacker.OnHitPlayer();
+                attacker.OnAttackSuccess();
             }
             MainBullet bullet = collision.gameObject.GetComponent<MainBullet>();
             if (bullet != null)

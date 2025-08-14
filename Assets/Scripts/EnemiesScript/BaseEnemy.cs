@@ -5,6 +5,7 @@ public class BaseEnemy : MonoBehaviour
 {
     [Header("Enemy Data")]
     public float hp=100;
+    public float maxHp=100;
     public List<BaseEnemyAttack> attacks = new List<BaseEnemyAttack>();
     float timer = 0;
 

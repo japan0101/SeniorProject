@@ -230,11 +230,8 @@ public class EnemyMeleeAgent : Agent
 
     public void OnAttackSuccess()
     {
-        AddReward(0.1f);
-    }
-    public void OnHitPlayer()
-    {
         Debug.Log("Agent sense hit");
+        AddReward(0.1f);
     }
 
     // private void PlayerReached()
