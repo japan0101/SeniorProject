@@ -21,6 +21,7 @@ public class EnemyMeleeAgent : Agent
     private Coroutine _flashGroundCoroutine;
 
     private Rigidbody rb;
+    private BaseEnemy enemy;
 
     private BaseEnemy enemy;
 
@@ -43,7 +44,7 @@ public class EnemyMeleeAgent : Agent
 
     public override void OnEpisodeBegin()
     {
-        Debug.Log("OnEpisodeBegin()");
+        //Debug.Log("OnEpisodeBegin()");
         
         if (_groundRenderer != null && CumulativeReward != 0f)
         {
@@ -235,7 +236,7 @@ public class EnemyMeleeAgent : Agent
     }
     public void OnHitPlayer()
     {
-        Debug.Log("Yipeee");
+        Debug.Log("Agent sense hit");
     }
 
     // private void PlayerReached()

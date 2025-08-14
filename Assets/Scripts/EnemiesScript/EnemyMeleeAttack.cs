@@ -7,6 +7,7 @@ public class EnemyMeleeAttack : BaseEnemyAttack
     public GameObject Slash;
     GameObject atk;
     float timer = 0;
+    
 
     void Update()
     {
@@ -14,9 +15,9 @@ public class EnemyMeleeAttack : BaseEnemyAttack
         {
             atk.transform.RotateAround(transform.position, transform.up, 1440f * Time.deltaTime);//if there are atttack hitbox available then rotate it around parent object
         }
-        if (timer < 5) {
+        if (timer > 2) {
             timer = 0;
-            OnAttack(this.gameObject);
+            OnAttack(gameObject);
         }
         timer += Time.deltaTime;
     }
