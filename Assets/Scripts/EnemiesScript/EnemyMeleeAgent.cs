@@ -2,10 +2,7 @@ using System.Collections;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
-using Unity.VisualScripting;
-using UnityEditor.Sprites;
 using UnityEngine;
-using UnityEngine.UIElements.Experimental;
 using Random = UnityEngine.Random;
 
 public class EnemyMeleeAgent : Agent
@@ -25,6 +22,7 @@ public class EnemyMeleeAgent : Agent
 
     private Rigidbody rb;
 
+    private BaseEnemy enemy;
 
     public override void Initialize()
     {
@@ -226,12 +224,14 @@ public class EnemyMeleeAgent : Agent
     //     }
     // }
 
-    private void OnDestroy()
+    public void TakeDamage(float damage)
     {
-        AddReward(-1f);
-        CumulativeReward = GetCumulativeReward();
-        
-        EndEpisode();
+        AddReward(-(0.05f * damage));
+    }
+
+    public void OnAttackSuccess()
+    {
+        AddReward(0.1f);
     }
     public void OnHitPlayer()
     {
@@ -248,16 +248,11 @@ public class EnemyMeleeAgent : Agent
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.layer == 9)
+        if (other.gameObject.layer != 9) return;
+        // Change the color
+        if (_renderer != null)
         {
-            // Apply a small negative reward when the collision starts
-            AddReward(-0.05f);
-            
-            // Change the color
-            if (_renderer != null)
-            {
-                _renderer.material.color = Color.yellow;
-            }
+            _renderer.material.color = Color.yellow;
         }
     }
 
@@ -270,14 +265,13 @@ public class EnemyMeleeAgent : Agent
     //     }
     // }
 
-    // private void OnCollisionExit(Collision other)
-    // {
-    //     if (other.gameObject.CompareTag("Wall"))
-    //     {
-    //         if (_renderer != null)
-    //         {
-    //             _renderer.material.color = Color.red;
-    //         }
-    //     }
-    // }
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.gameObject.layer != 9) return;
+        
+        if (_renderer != null)
+        {
+            _renderer.material.color = Color.red;
+        }
+    }
 }
