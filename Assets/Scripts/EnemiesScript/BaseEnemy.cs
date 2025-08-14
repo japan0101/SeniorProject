@@ -5,6 +5,7 @@ public class BaseEnemy : MonoBehaviour
 {
     [Header("Enemy Data")]
     public float hp=10;
+    public float maxHp=10;
     public List<BaseEnemyAttack> attacks = new List<BaseEnemyAttack>();
 
     private EnemyMeleeAgent agent;
@@ -27,7 +28,7 @@ public class BaseEnemy : MonoBehaviour
             //    atk.OnAttack();//try to attack
             //}
             if (attacks.Count > 0) {
-                attacks[0].OnAttack();
+                attacks[0].OnAttack(this.gameObject);
             }
             MainBullet bullet = collision.gameObject.GetComponent<MainBullet>();
             if (bullet != null)
@@ -53,7 +54,7 @@ public class BaseEnemy : MonoBehaviour
         if (hp <= 0) {
             //Spawn dead FX then delete object
             agent.EndEpisode();
-            hp = 10;
+            hp = maxHp;
         }
     }
 }

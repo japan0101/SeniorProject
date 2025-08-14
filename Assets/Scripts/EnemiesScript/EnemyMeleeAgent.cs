@@ -22,8 +22,7 @@ public class EnemyMeleeAgent : Agent
 
     private Rigidbody rb;
     private BaseEnemy enemy;
-
-    private BaseEnemy enemy;
+    
 
     public override void Initialize()
     {
@@ -177,7 +176,7 @@ public class EnemyMeleeAgent : Agent
         
         var movement = act[0];
         var rotation = act[1];
-        var attack = act[2];
+        // var attack = act[2];
         
         switch (movement)
         {
@@ -207,13 +206,13 @@ public class EnemyMeleeAgent : Agent
                 break;
         }
 
-        switch (attack)
-        {
-            case 1: // Basic Attack
-                enemy.attacks[0].OnAttack(this.gameObject);
-                Debug.Log("Attack!");
-                break;
-        }
+        // switch (attack)
+        // {
+        //     case 1: // Basic Attack
+        //         enemy.attacks[0].OnAttack(this.gameObject);
+        //         Debug.Log("Attack!");
+        //         break;
+        // }
         SpeedControl();
     }
 
