@@ -216,7 +216,7 @@ namespace EnemiesScript
             {
                 case 1: // Basic Attack
                     _enemy.attacks[0].OnAttack(gameObject);
-                    // Debug.Log("Attack!");
+                     //Debug.Log("Attack!");
                     break;
             }
             SpeedControl();

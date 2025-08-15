@@ -43,7 +43,10 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log(_stats.currentHP);
         DisplayHP();
     }
-
+    public bool IsDead()
+    {//for use in enemy attaack detection
+        return _stats.currentHP <= 0;
+    }
     private void DisplayHP()
     {
         HPDisplay.text = "Health: " + _stats.currentHP + " / " + _stats.maxHP;

@@ -19,13 +19,18 @@ namespace EnemiesScript
         }
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.tag == "Player")//check if the collided objects are player
+            if (collision.gameObject.tag == "Player" && gameObject.tag != "EnemyAttacks")//check if the collided objects are player
             {
                 PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();//get playerHealth component to deal damage to player
                 if (player)//in case playerHealth is not there
                 {
                     //The damage are stored in children's Atttack component
                     player.TakeDamage(collision.contacts[0].point, GetComponentInChildren<Attacks>().damage);
+                    if (player.IsDead())//ask if the player is dead to the player when hit
+                    {
+                        GetComponentInParent<EnemyMeleeAgent>().OnKillPlayer();//if the player should be dead then add points
+                        return;
+                    }
                     //The parent are the agent who execute the attack
                     GetComponentInParent<EnemyMeleeAgent>().OnAttackSuccess();
                 }
