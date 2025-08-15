@@ -171,7 +171,6 @@ namespace EnemiesScript
             MoveAgent(actions.DiscreteActions);
         
             // Penalty given each step to encourage agent to finish a task quickly
-            AddReward(-2f / MaxStep);
         
             // Update the cumulative reward after adding the step penalty.
             cumulativeReward = GetCumulativeReward();
