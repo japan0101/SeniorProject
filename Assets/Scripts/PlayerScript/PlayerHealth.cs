@@ -8,12 +8,10 @@ public class PlayerHealth : MonoBehaviour
 
     [Header("References")]
     public TextMeshProUGUI HPDisplay;
-    private EnemyMeleeAgent _agent;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _agent = GetComponent<EnemyMeleeAgent>();
         DisplayHP();
     }
     private void OnCollisionEnter(Collision collision)
@@ -42,6 +40,7 @@ public class PlayerHealth : MonoBehaviour
     {
         //GetComponent<DamageTextSpawner>().SpawnDamageText(dmgPos, damage);
         _stats.ModifyHP(-damage);
+        Debug.Log(_stats.currentHP);
         DisplayHP();
     }
 
@@ -54,7 +53,6 @@ public class PlayerHealth : MonoBehaviour
     {
         if (_stats.currentHP <= 0)
         {
-            _agent.OnKillPlayer();
             _stats.currentHP = _stats.maxHP;
         }
     }

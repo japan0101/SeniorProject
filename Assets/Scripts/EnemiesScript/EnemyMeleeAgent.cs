@@ -148,7 +148,7 @@ namespace EnemiesScript
             else if (Input.GetKey(KeyCode.A))
             {
                 discreteActionsOut[1] = 2;
-            } else if (Input.GetKey(KeyCode.Mouse0))
+            } else if (Input.GetKey(KeyCode.Space))
             {
                 discreteActionsOut[2] = 1;
             }

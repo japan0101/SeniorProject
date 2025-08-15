@@ -1040,6 +1040,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stats: {fileID: 11400000, guid: 2b21fef47d5df0e42968e5f5172abf8b, type: 2}
   HPDisplay: {fileID: 1360890207220579044}
+  agent: {fileID: 6100061126781422063}
 --- !u!1001 &8561535124299175226
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1307,6 +1308,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fcb25605abfd8ba43a23ec33d95529de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6100061126781422063 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3225865074697663951, guid: 1f3d0bf546674c34f906476f48e20426, type: 3}
+  m_PrefabInstance: {fileID: 8674872379958672416}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02244288f4b3e1c478478692f6263de3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &8967701768088049601 stripped
