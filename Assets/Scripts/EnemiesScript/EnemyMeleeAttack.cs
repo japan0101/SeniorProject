@@ -17,7 +17,20 @@ namespace EnemiesScript
                 _atk.transform.RotateAround(transform.position, transform.up, 1440f * Time.deltaTime/4f);
             }
         }
-
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.gameObject.tag == "Player")//check if the collided objects are player
+            {
+                PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();//get playerHealth component to deal damage to player
+                if (player)//in case playerHealth is not there
+                {
+                    //The damage are stored in children's Atttack component
+                    player.TakeDamage(collision.contacts[0].point, GetComponentInChildren<Attacks>().damage);
+                    //The parent are the agent who execute the attack
+                    GetComponentInParent<EnemyMeleeAgent>().OnAttackSuccess();
+                }
+            }
+        }
         // Call this to start the slash (e.g., in an animation event or attack script)
         public override void OnAttack(GameObject attackComp)
         {

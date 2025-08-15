@@ -19,15 +19,10 @@ public class PlayerHealth : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // Check if collision is with EnemyAttack layer
-        //Debug.Log(collision.gameObject.layer);
-        if (collision.gameObject.layer == 12)
+        //Debug.Log(collision.gameObject);
+        
+        if (collision.gameObject.tag == "EnemyAttacks")
         {
-            EnemyMeleeAgent attacker = collision.gameObject.GetComponentInParent<EnemyMeleeAttack>().attacker.GetComponent<EnemyMeleeAgent>();
-            if (attacker)
-            {
-                Debug.Log("Player detect hits");
-                attacker.OnAttackSuccess();
-            }
             MainBullet bullet = collision.gameObject.GetComponent<MainBullet>();
             if (bullet != null)
             {
@@ -59,7 +54,6 @@ public class PlayerHealth : MonoBehaviour
     {
         if (_stats.currentHP <= 0)
         {
-            
             _agent.OnKillPlayer();
             _stats.currentHP = _stats.maxHP;
         }
