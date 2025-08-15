@@ -73,7 +73,7 @@ public class AutoShoot : MonoBehaviour
         if (activeReloadRoutine != null)
         {
             StopCoroutine(activeReloadRoutine);
-            Debug.Log("Reload interrupted");
+            // Debug.Log("Reload interrupted");
         }
 
         // Start new reload
@@ -102,7 +102,7 @@ public class AutoShoot : MonoBehaviour
         UpdateAmmoUI();
         activeReloadRoutine = null;
         isReloading = false;
-        Debug.Log("Reload complete");
+        // Debug.Log("Reload complete");
     }
 
     private IEnumerator ShootCooldown(float delay)
@@ -149,7 +149,7 @@ public class AutoShoot : MonoBehaviour
         {
             if (equipedWeapon.CanShoot() && equipedReadyToShoot && activeReloadRoutine == null)
             {
-                Debug.Log("pew");
+                // Debug.Log("pew");
                 ShootWeapon();
             }
             else if(!isReloading)

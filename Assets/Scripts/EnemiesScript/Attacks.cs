@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class Attacks : MonoBehaviour
+namespace EnemiesScript
 {
-    public float damage;
+    public class Attacks : MonoBehaviour
+    {
+        public float damage;
+    }
 }

@@ -1,43 +1,48 @@
+using System.Globalization;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class GUI_EnemyAgent : MonoBehaviour
+namespace EnemiesScript
 {
-    [SerializeField] private EnemyMeleeAgent _enemyMeleeAgent;
+    public class GUIEnemyAgent : MonoBehaviour
+    {
+        [FormerlySerializedAs("_enemyMeleeAgent")] [SerializeField] private EnemyMeleeAgent enemyMeleeAgent;
 
-    private GUIStyle _defaultStyle = new GUIStyle();
-    private GUIStyle _positiveStyle = new GUIStyle();
-    private GUIStyle _negativeStyle = new GUIStyle();
+        private GUIStyle _defaultStyle = new GUIStyle();
+        private GUIStyle _positiveStyle = new GUIStyle();
+        private GUIStyle _negativeStyle = new GUIStyle();
     
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        //Define GUI styles
-        _defaultStyle.fontSize = 40;
-        _defaultStyle.normal.textColor = Color.yellow;
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        private void Start()
+        {
+            //Define GUI styles
+            _defaultStyle.fontSize = 40;
+            _defaultStyle.normal.textColor = Color.yellow;
         
-        _positiveStyle.fontSize = 40;
-        _positiveStyle.normal.textColor = Color.green;
+            _positiveStyle.fontSize = 40;
+            _positiveStyle.normal.textColor = Color.green;
         
-        _negativeStyle.fontSize = 40;
-        _negativeStyle.normal.textColor = Color.red;
-    }
+            _negativeStyle.fontSize = 40;
+            _negativeStyle.normal.textColor = Color.red;
+        }
 
-    private void OnGUI()
-    {
-        string debugEpisode = "Episode: " + _enemyMeleeAgent.CurrentEpisode + " - Step: " + _enemyMeleeAgent.StepCount;
-        string debugReward = "Reward: " + _enemyMeleeAgent.CumulativeReward.ToString();
+        private void OnGUI()
+        {
+            string debugEpisode = "Episode: " + enemyMeleeAgent.currentEpisode + " - Step: " + enemyMeleeAgent.StepCount;
+            string debugReward = "Reward: " + enemyMeleeAgent.cumulativeReward.ToString(CultureInfo.InvariantCulture);
         
-        // Select style based on reward value
-        GUIStyle rewardStyle = _enemyMeleeAgent.CumulativeReward < 0f ? _negativeStyle : _positiveStyle;
+            // Select style based on reward value
+            GUIStyle rewardStyle = enemyMeleeAgent.cumulativeReward < 0f ? _negativeStyle : _positiveStyle;
         
-        // Display the debug text
-        GUI.Label(new Rect(20, 20, 500, 30), debugEpisode, _defaultStyle);
-        GUI.Label(new Rect(20, 60, 500, 30), debugReward, rewardStyle);
-    }
+            // Display the debug text
+            GUI.Label(new Rect(20, 20, 500, 30), debugEpisode, _defaultStyle);
+            GUI.Label(new Rect(20, 60, 500, 30), debugReward, rewardStyle);
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // Update is called once per frame
+        // void Update()
+        // {
+        //
+        // }
     }
 }

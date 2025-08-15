@@ -1,27 +1,31 @@
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class EnemyMeleeAttack : BaseEnemyAttack
+namespace EnemiesScript
 {
-
-    public GameObject Slash;
-    GameObject atk;
-
-    void Update()
+    public class EnemyMeleeAttack : BaseEnemyAttack
     {
-        if (atk != null)
+
+        [FormerlySerializedAs("Slash")] public GameObject slash;
+        private GameObject _atk;
+
+        private void Update()
         {
-            atk.transform.RotateAround(transform.position, transform.up, 1440f * Time.deltaTime);//if there are atttack hitbox available then rotate it around parent object
+            if (_atk)
+            {
+                //if there are attack hitbox available, then rotate it around a parent object
+                _atk.transform.RotateAround(transform.position, transform.up, 1440f * Time.deltaTime/4f);
+            }
         }
-        
-        
-    }
 
-    // Call this to start the slash (e.g., in an animation event or attack script)
-    public override void OnAttack(GameObject attackComp)
-    {
-        Slash.GetComponent<EnemyMeleeAttack>().attacker = attackComp;
-        atk = Instantiate(Slash, transform.position, transform.rotation);//create attack hitbox
-        Destroy(atk, 0.125f);//desqpwn after a certain time
+        // Call this to start the slash (e.g., in an animation event or attack script)
+        public override void OnAttack(GameObject attackComp)
+        {
+            if (_atk) return;
+            slash.GetComponent<EnemyMeleeAttack>().attacker = attackComp;
+            _atk = Instantiate(slash, attackComp.transform); //create attack hitbox
+            Destroy(_atk, 0.5f); //despawn after a certain time
+            
+        }
     }
 }

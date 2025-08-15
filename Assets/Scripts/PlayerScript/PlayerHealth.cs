@@ -1,3 +1,4 @@
+using EnemiesScript;
 using TMPro;
 using UnityEngine;
 
@@ -5,11 +6,14 @@ public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private PlayerStats _stats;
 
-    [Header("Refferences")]
+    [Header("References")]
     public TextMeshProUGUI HPDisplay;
+    private EnemyMeleeAgent _agent;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _agent = GetComponent<EnemyMeleeAgent>();
         DisplayHP();
     }
     private void OnCollisionEnter(Collision collision)
@@ -53,6 +57,11 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (_stats.currentHP <= 0)
+        {
+            
+            _agent.OnKillPlayer();
+            _stats.currentHP = _stats.maxHP;
+        }
     }
 }
