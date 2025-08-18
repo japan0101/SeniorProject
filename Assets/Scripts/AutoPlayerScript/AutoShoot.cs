@@ -10,6 +10,8 @@ public class AutoShoot : MonoBehaviour
     private bool equipedReadyToShoot = true;
     public Color equipedColor = new Color(0f, 1f, 0.5f, 0.5f);
     public Color nonEquipedColor = new Color(0f, 0f, 0f, 0.3921f);
+    [Range(0f, 1f)]
+    public float chanceToShoot = 0.8f;
 
     [Header("Keybinds")]
     //public KeyCode Primary = KeyCode.Mouse0;
@@ -150,7 +152,10 @@ public class AutoShoot : MonoBehaviour
             if (equipedWeapon.CanShoot() && equipedReadyToShoot && activeReloadRoutine == null)
             {
                 // Debug.Log("pew");
-                ShootWeapon();
+                if(UnityEngine.Random.Range(0f,1f) <= chanceToShoot)
+                {
+                    ShootWeapon();
+                }
             }
             else if(!isReloading)
             {
