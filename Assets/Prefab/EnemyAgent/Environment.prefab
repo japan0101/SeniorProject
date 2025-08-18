@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2913292805818733604}
   - component: {fileID: 6022109460744308152}
   - component: {fileID: 4493279345639129561}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wall2
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 9191702321303457431}
   - component: {fileID: 1008767984681016309}
   - component: {fileID: 3413078742574173122}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wall1
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 5278074411336382289}
   - component: {fileID: 6857178214119175462}
   - component: {fileID: 898156550348126335}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wall4
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -508,7 +508,7 @@ GameObject:
   - component: {fileID: 5027928395656720458}
   - component: {fileID: 3190976959796591193}
   - component: {fileID: 2037046139111607497}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wall3
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -650,7 +650,7 @@ GameObject:
   - component: {fileID: 2696808714689563968}
   - component: {fileID: 4136366938637169479}
   - component: {fileID: 8911895109684589382}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -788,7 +788,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6012107188841718723}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -906,7 +906,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2675728725291747891, guid: 3e3173a6dc306434f9231b0f6284658a, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3880061375110339810, guid: 3e3173a6dc306434f9231b0f6284658a, type: 3}
       propertyPath: m_Name
@@ -914,7 +914,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3880061375110339810, guid: 3e3173a6dc306434f9231b0f6284658a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5907028583260193024, guid: 3e3173a6dc306434f9231b0f6284658a, type: 3}
       propertyPath: m_Enabled

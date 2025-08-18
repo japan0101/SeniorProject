@@ -18,7 +18,7 @@ public class PlayerHealth : MonoBehaviour
     {
         // Check if collision is with EnemyAttack layer
         //Debug.Log(collision.gameObject);
-        
+
         if (collision.gameObject.tag == "EnemyAttacks")
         {
             MainBullet bullet = collision.gameObject.GetComponent<MainBullet>();
@@ -31,6 +31,25 @@ public class PlayerHealth : MonoBehaviour
             if (attacks != null)
             {
                 TakeDamage(collision.contacts[0].point, attacks.damage);
+                //attacker.OnHitPlayer();
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "EnemyAttacks")
+        {
+            MainBullet bullet = other.gameObject.GetComponent<MainBullet>();
+            if (bullet != null)
+            {
+                //spawn hit FX then register damage
+                TakeDamage(other.ClosestPointOnBounds(other.transform.position), bullet.damage);
+            }
+            Attacks attacks = other.gameObject.GetComponent<Attacks>();
+            if (attacks != null)
+            {
+                TakeDamage(other.ClosestPointOnBounds(other.transform.position), attacks.damage);
                 //attacker.OnHitPlayer();
             }
         }

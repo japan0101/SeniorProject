@@ -17,20 +17,20 @@ namespace EnemiesScript
                 _atk.transform.RotateAround(transform.position, transform.up, 1440f * Time.deltaTime/4f);
             }
         }
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
-            if (collision.gameObject.CompareTag("Wall"))
+            if (other.gameObject.CompareTag("Wall"))
             {
                 Destroy(_atk);
                 return;
             }
 
-            if (!collision.gameObject.CompareTag("Player") || gameObject.CompareTag("EnemyAttacks")) return; //check if the collided objects are player
-            PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();//get playerHealth component to deal damage to player
+            if (!other.gameObject.CompareTag("Player") || gameObject.CompareTag("EnemyAttacks")) return; //check if the collided objects are player
+            PlayerHealth player = other.gameObject.GetComponent<PlayerHealth>();//get playerHealth component to deal damage to player
             if (player)//in case playerHealth is not there
             {
                 //The damage are stored in children's Atttack component
-                player.TakeDamage(collision.contacts[0].point, GetComponentInChildren<Attacks>().damage);
+                player.TakeDamage(other.ClosestPointOnBounds(transform.position), GetComponentInChildren<Attacks>().damage);
                 if (player.IsDead())//ask if the player is dead to the player when hit
                 {
                     GetComponentInParent<EnemyMeleeAgent>().OnKillPlayer();//if the player should be dead then add points
@@ -40,6 +40,29 @@ namespace EnemiesScript
                 GetComponentInParent<EnemyMeleeAgent>().OnAttackSuccess();
             }
         }
+        //private void OnCollisionEnter(Collision collision)
+        //{
+        //    if (collision.gameObject.CompareTag("Wall"))
+        //    {
+        //        Destroy(_atk);
+        //        return;
+        //    }
+
+        //    if (!collision.gameObject.CompareTag("Player") || gameObject.CompareTag("EnemyAttacks")) return; //check if the collided objects are player
+        //    PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();//get playerHealth component to deal damage to player
+        //    if (player)//in case playerHealth is not there
+        //    {
+        //        //The damage are stored in children's Atttack component
+        //        player.TakeDamage(collision.contacts[0].point, GetComponentInChildren<Attacks>().damage);
+        //        if (player.IsDead())//ask if the player is dead to the player when hit
+        //        {
+        //            GetComponentInParent<EnemyMeleeAgent>().OnKillPlayer();//if the player should be dead then add points
+        //            return;
+        //        }
+        //        //The parent are the agent who execute the attack
+        //        GetComponentInParent<EnemyMeleeAgent>().OnAttackSuccess();
+        //    }
+        //}
         // Call this to start the slash (e.g., in an animation event or attack script)
         public override void OnAttack(GameObject attackComp)
         {

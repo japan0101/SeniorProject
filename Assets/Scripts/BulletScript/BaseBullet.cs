@@ -20,14 +20,21 @@ public class MainBullet : MonoBehaviour
         GetComponents<OnHitBehavior>(hitBehaviors);
         Destroy(gameObject, lifetime);
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        //execute any function that should happend on collision
         foreach (var behavior in hitBehaviors)
         {
-            behavior.OnBulletHit(collision, lastVelocity);
+            behavior.OnBulletHit(other, lastVelocity);
         }
     }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    //execute any function that should happend on collision
+    //    foreach (var behavior in hitBehaviors)
+    //    {
+    //        behavior.OnBulletHit(collision, lastVelocity);
+    //    }
+    //}
     // Update is called once per frame
     void Update()
     {

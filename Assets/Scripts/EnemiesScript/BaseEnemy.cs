@@ -42,7 +42,14 @@ namespace EnemiesScript
             _agent.TakeDamage(damage);
 
         }
-    
+        public void TakeDamage(float damage)
+        {
+            GetComponent<DamageTextSpawner>().SpawnDamageText(new Vector3(transform.position.x, transform.position.y + 5, transform.position.z), damage); //instantiate damage number with DamageTextSpawner component
+            hp -= damage;
+            _agent.TakeDamage(damage);
+
+        }
+
         // Update is called once per frame
         void Update()
         {

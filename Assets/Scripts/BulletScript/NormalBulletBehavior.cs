@@ -12,6 +12,17 @@ public class NormalHit : OnHitBehavior
         {
             Destroy(gameObject);
         }
-        //throw new System.NotImplementedException();
+    }
+
+    public override void OnBulletHit(Collider other, Vector3 lastVelocity)
+    {
+        if (other.gameObject.layer == groundLayer)
+        {
+            Destroy(gameObject);
+        }
+        if (other.gameObject.layer == enemyLayer)
+        {
+            Destroy(gameObject);
+        }
     }
 }
