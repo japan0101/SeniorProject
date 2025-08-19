@@ -171,7 +171,7 @@ namespace EnemiesScript
             MoveAgent(actions.DiscreteActions);
         
             // Penalty given each step to encourage agent to finish a task quickly
-        
+            AddReward(-2f/MaxStep);
             // Update the cumulative reward after adding the step penalty.
             cumulativeReward = GetCumulativeReward();
         }
@@ -215,6 +215,7 @@ namespace EnemiesScript
             {
                 case 1: // Basic Attack
                     _enemy.attacks[0].OnAttack(gameObject);
+                    // AddReward(-0.05f);
                      //Debug.Log("Attack!");
                     break;
             }
@@ -231,18 +232,18 @@ namespace EnemiesScript
 
         public void TakeDamage(float damage)
         {
-            AddReward(-(0.05f * damage));
+            // AddReward(-(0.05f * damage));
         }
 
         public void OnAttackSuccess()
         {
             Debug.Log("Agent sense hit");
-            AddReward(0.1f);
+            AddReward(0.5f);
         }
 
         public void OnKilled()
         {
-            AddReward(0.5f);
+            AddReward(-1f);
             cumulativeReward = GetCumulativeReward();
             EndEpisode();
         }

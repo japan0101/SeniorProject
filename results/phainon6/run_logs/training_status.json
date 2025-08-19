@@ -1,0 +1,65 @@
+{
+    "Phainon1": {
+        "checkpoints": [
+            {
+                "steps": 999955,
+                "file_path": "results\\phainon6\\Phainon1\\Phainon1-999955.onnx",
+                "reward": -2.3821000456809998,
+                "creation_time": 1755608950.8186326,
+                "auxillary_file_paths": [
+                    "results\\phainon6\\Phainon1\\Phainon1-999955.pt"
+                ]
+            },
+            {
+                "steps": 1000019,
+                "file_path": "results\\phainon6\\Phainon1\\Phainon1-1000019.onnx",
+                "reward": -2.3821000456809998,
+                "creation_time": 1755608950.9006512,
+                "auxillary_file_paths": [
+                    "results\\phainon6\\Phainon1\\Phainon1-1000019.pt"
+                ]
+            },
+            {
+                "steps": 1499979,
+                "file_path": "results\\phainon6\\Phainon1\\Phainon1-1499979.onnx",
+                "reward": 1.4123663906450872,
+                "creation_time": 1755610216.7932422,
+                "auxillary_file_paths": [
+                    "results\\phainon6\\Phainon1\\Phainon1-1499979.pt"
+                ]
+            },
+            {
+                "steps": 1999996,
+                "file_path": "results\\phainon6\\Phainon1\\Phainon1-1999996.onnx",
+                "reward": 1.3584524939457576,
+                "creation_time": 1755610959.9901242,
+                "auxillary_file_paths": [
+                    "results\\phainon6\\Phainon1\\Phainon1-1999996.pt"
+                ]
+            },
+            {
+                "steps": 2000060,
+                "file_path": "results\\phainon6\\Phainon1\\Phainon1-2000060.onnx",
+                "reward": 1.3584524939457576,
+                "creation_time": 1755610960.0682604,
+                "auxillary_file_paths": [
+                    "results\\phainon6\\Phainon1\\Phainon1-2000060.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2000060,
+            "file_path": "results\\phainon6\\Phainon1.onnx",
+            "reward": 1.3584524939457576,
+            "creation_time": 1755610960.0682604,
+            "auxillary_file_paths": [
+                "results\\phainon6\\Phainon1\\Phainon1-2000060.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

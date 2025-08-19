@@ -1,0 +1,38 @@
+{
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2+cu121"
+    },
+    "Phainon1": {
+        "checkpoints": [
+            {
+                "steps": 999981,
+                "file_path": "results\\phainon4\\Phainon1\\Phainon1-999981.onnx",
+                "reward": -2.0319296108449207,
+                "creation_time": 1755606085.3164003,
+                "auxillary_file_paths": [
+                    "results\\phainon4\\Phainon1\\Phainon1-999981.pt"
+                ]
+            },
+            {
+                "steps": 1000109,
+                "file_path": "results\\phainon4\\Phainon1\\Phainon1-1000109.onnx",
+                "reward": -2.0319296108449207,
+                "creation_time": 1755606085.3996794,
+                "auxillary_file_paths": [
+                    "results\\phainon4\\Phainon1\\Phainon1-1000109.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1000109,
+            "file_path": "results\\phainon4\\Phainon1.onnx",
+            "reward": -2.0319296108449207,
+            "creation_time": 1755606085.3996794,
+            "auxillary_file_paths": [
+                "results\\phainon4\\Phainon1\\Phainon1-1000109.pt"
+            ]
+        }
+    }
+}

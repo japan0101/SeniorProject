@@ -107,6 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 706603641807010181}
   - component: {fileID: 5383467581015880645}
+  - component: {fileID: 8203179042884709085}
   - component: {fileID: 116878861277677139}
   - component: {fileID: 2617090495452285175}
   - component: {fileID: 5907028583260193024}
@@ -125,7 +126,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3880061375110339810}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.36154395, z: -0, w: 0.9323551}
+  m_LocalRotation: {x: 0, y: -0.36154315, z: 0, w: 0.9323554}
   m_LocalPosition: {x: 7.4, y: 1.48, z: -8.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -164,6 +165,20 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &8203179042884709085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3880061375110339810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf5393e928dcc994a88fe47816e5f3e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stats: {fileID: 11400000, guid: 2b21fef47d5df0e42968e5f5172abf8b, type: 2}
+  HPDisplay: {fileID: 0}
 --- !u!114 &116878861277677139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,6 +194,7 @@ MonoBehaviour:
   rotationOffset: {x: 0, y: 0, z: 0}
   equipedColor: {r: 0, g: 1, b: 0.5, a: 0.5}
   nonEquipedColor: {r: 0, g: 0, b: 0, a: 0.3921}
+  chanceToShoot: 0.8
   gunHolder: {fileID: 3629183661675951634}
   gunPos: {fileID: 5005334545346289202}
   aimLocation: {fileID: 6992689267656786609}
