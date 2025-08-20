@@ -23,11 +23,10 @@ public class ExplodingHit : OnHitBehavior
         //    Debug.LogError("No VisualEffect found in children!", this);
         //}
     }
-
-    public override void OnBulletHit(Collision other, Vector3 lastVelocity) // when the bullet is collsion activated
+    private void PlayVFX()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, blastRadius);
-        //play explosion Visual effect on hitting collision
+        GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+        GetComponent<Rigidbody>().useGravity = false;
         if (blastVFX != null)
         {
             blastVFX.SetFloat("Power", GetComponent<MainBullet>().damage);
@@ -38,6 +37,12 @@ public class ExplodingHit : OnHitBehavior
         {
             Debug.LogWarning("VFX references not set!");
         }
+    }
+    public override void OnBulletHit(Collision other, Vector3 lastVelocity) // when the bullet is collsion activated
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, blastRadius);
+        //play explosion Visual effect on hitting collision
+        PlayVFX();
         foreach (var hitCollider in hitColliders)
         {   
             // Check if the object has a specific component if needed
@@ -91,16 +96,7 @@ public class ExplodingHit : OnHitBehavior
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, blastRadius);
         //play explosion Visual effect on hitting collision
-        if (blastVFX != null)
-        {
-            blastVFX.SetFloat("Power", GetComponent<MainBullet>().damage);
-            blastVFX.SetFloat("Radius", blastRadius);
-            blastVFX.SendEvent("OnExplode");
-        }
-        else
-        {
-            Debug.LogWarning("VFX references not set!");
-        }
+        PlayVFX();
         foreach (var hitCollider in hitColliders)
         {
             // Check if the object has a specific component if needed
