@@ -22,25 +22,16 @@ namespace EnemiesScript
             Destroy(this.gameObject);
         }
 
-        private void Attack()
-        {
-            
-        }
+        protected abstract void Attack();
 
-        private void OnHit(GameObject Other)
-        {
-            
-        }
+        protected abstract void OnHit(GameObject other);
 
-        private void TakeDamage(float damage)
+        protected void TakeDamage(float damage)
         {
             hp -= damage;
         }
 
-        private void OnKilled(GameObject Other)
-        {
-            
-        }
-        
+        protected abstract void OnKilled(GameObject other);
+
     }
 }
