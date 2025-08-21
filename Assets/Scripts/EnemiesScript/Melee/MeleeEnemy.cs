@@ -5,9 +5,12 @@ namespace EnemiesScript.Melee
 {
     public class MeleeEnemy:Enemy
     {
+        private EnemyAttack _atk;
+        float Timer = 0;
         protected override void Attack(int atkIndex)
         {
-            attacks[atkIndex].OnAttack(gameObject);
+            _atk = Instantiate(attacks[atkIndex], gameObject.transform);
+            Destroy(_atk.gameObject, _atk.lifetime);
         }
 
         protected override void MoveAgent(int actionIndex)
@@ -41,7 +44,6 @@ namespace EnemiesScript.Melee
         {
             Debug.Log("Agent sense a kill");
         }
-
         protected override void RotateAgent(int actionIndex)
         {
             switch (actionIndex)
@@ -53,6 +55,17 @@ namespace EnemiesScript.Melee
                     transform.Rotate(0f, rotateSpeed * Time.deltaTime, 0f);
                     break;
             }
+        }
+        public void Update()
+        {
+            //for testing attack comment before commit
+            //if(Timer >= 2)
+            //{
+            //    Attack(0);
+            //    Debug.Log("Attack");
+            //    Timer = 0;
+            //}
+            //Timer += Time.deltaTime;
         }
     }
 }

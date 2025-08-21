@@ -8,10 +8,12 @@ public class PlayerHealth : MonoBehaviour
 
     [Header("References")]
     public TextMeshProUGUI HPDisplay;
+    Rigidbody rb;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         DisplayHP();
     }
     private void OnCollisionEnter(Collision collision)
@@ -46,10 +48,14 @@ public class PlayerHealth : MonoBehaviour
                 //spawn hit FX then register damage
                 TakeDamage(other.ClosestPointOnBounds(other.transform.position), bullet.damage);
             }
-            Attacks attacks = other.gameObject.GetComponent<Attacks>();
+            EnemyAttack attacks = other.gameObject.GetComponent<EnemyAttack>();// checks for attack component that hold the damages
             if (attacks != null)
             {
-                TakeDamage(other.ClosestPointOnBounds(other.transform.position), attacks.damage);
+                TakeDamage(other.ClosestPointOnBounds(other.transform.position), attacks.damage);//deal damages
+                //Direction from attacks to player
+                Vector3 pureDirection = transform.position - other.transform.position;
+                Vector3 normDirection = pureDirection.normalized;
+                TakeKnockback(normDirection, attacks.baseKnockbackForce);
                 //attacker.OnHitPlayer();
             }
         }
@@ -61,6 +67,11 @@ public class PlayerHealth : MonoBehaviour
         _stats.ModifyHP(-damage);
         Debug.Log(_stats.currentHP);
         DisplayHP();
+    }
+    public void TakeKnockback(Vector3 direction, float force)
+    {
+        //knock player with force of the attack in a direction
+        rb.AddForce(direction*force);
     }
     public bool IsDead()
     {//for use in enemy attaack detection

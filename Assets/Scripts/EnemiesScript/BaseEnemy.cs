@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,8 +10,11 @@ namespace EnemiesScript
         public float hp=100;
         public float maxHp=100;
         public List<BaseEnemyAttack> attacks = new List<BaseEnemyAttack>();
+        private BaseEnemyAttack _atk;
 
         private EnemyMeleeAgent _agent;
+        float testTimer = 0f;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -44,7 +48,7 @@ namespace EnemiesScript
         }
         public void TakeDamage(float damage)
         {
-            GetComponent<DamageTextSpawner>().SpawnDamageText(new Vector3(transform.position.x, transform.position.y + 5, transform.position.z), damage); //instantiate damage number with DamageTextSpawner component
+            GetComponent<DamageTextSpawner>().SpawnDamageText(new Vector3(transform.position.x, transform.position.y + 1, transform.position.z), damage); //instantiate damage number with DamageTextSpawner component
             hp -= damage;
             _agent.TakeDamage(damage);
 
@@ -53,10 +57,18 @@ namespace EnemiesScript
         // Update is called once per frame
         void Update()
         {
+            if (testTimer >= 2)
+            {
+                Debug.Log("attacking");
+                _atk = Instantiate(attacks[0], gameObject.transform);
+                testTimer = 0;
+            }
+            testTimer += Time.deltaTime;
             if (!(hp <= 0)) return;
             //Spawn dead FX then delete object
             _agent.OnKilled();
             hp = maxHp;
+            
         }
     }
 }
