@@ -36,26 +36,38 @@ namespace EnemiesScript.Melee
             // Vector3 playerPosNormalized = _player.localPosition.normalized;
 
             // The Enemy's position
-        
-        
+
+
             // The Enemy's direction (on the Y Axis)
 
-        
+
             // sensor.AddObservation(playerPosNormalized.x);
             // sensor.AddObservation(playerPosNormalized.z); 
-        
+
             // Using Ray Perception to identify the goal
+            sensor.AddObservation(transform.localPosition);
         }
         public override void OnActionReceived(ActionBuffers actions)
         {
             // Agent decides what to do about the current state
             // Move the agent using the action
-            // MoveAgent(actions.DiscreteActions);
-        
+             MoveAgent(actions.DiscreteActions);
+
             // Penalty given each step to encourage agent to finish a task quickly
             AddReward(-2f/MaxStep);
             // Update the cumulative reward after adding the step penalty.
             cumulativeReward = GetCumulativeReward();
+        }
+        private void MoveAgent(ActionSegment<int> act)
+        {
+
+            var movement = act[0];
+            var rotation = act[1];
+            var attack = act[2];
+            Debug.Log(act);
+            agent.MoveAgent(movement);
+            agent.RotateAgent(rotation);
+            agent.Attack(attack);
         }
         private IEnumerator FlashGround(Color targetColor, float duration)
         {
@@ -86,6 +98,8 @@ namespace EnemiesScript.Melee
             
             currentEpisode++;
             cumulativeReward = 0f;
+
+            SpawnPlayer();
         }
         
         private void SpawnPlayer()

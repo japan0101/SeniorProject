@@ -26,9 +26,9 @@ namespace EnemiesScript
             CheckDeath();
         }
 
-        protected abstract void MoveAgent(int actionIndex);
-        protected abstract void RotateAgent(int actionIndex);
-        protected abstract void Attack(int atkIndex);
+        public abstract void MoveAgent(int actionIndex);
+        public abstract void RotateAgent(int actionIndex);
+        public abstract void Attack(int atkIndex);
 
         private void OnTriggerEnter(Collider other)
         {
@@ -52,7 +52,7 @@ namespace EnemiesScript
         protected void TakeDamage(float damage)
         {
             //instantiate damage number with DamageTextSpawner component
-            GetComponent<DamageTextSpawner>().SpawnDamageText(new Vector3(transform.position.x, transform.position.y + 5, transform.position.z), damage);
+            GetComponent<DamageTextSpawner>().SpawnDamageText(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damage);
             hp -= damage;// reduce health
         }
 

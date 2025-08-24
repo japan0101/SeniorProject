@@ -7,14 +7,16 @@ namespace EnemiesScript.Melee
     {
         private EnemyAttack _atk;
         float Timer = 0;
-        protected override void Attack(int atkIndex)
+        public override void Attack(int atkIndex)
         {
+            if (attacks[atkIndex] == null) return;
             _atk = Instantiate(attacks[atkIndex], gameObject.transform);
             Destroy(_atk.gameObject, _atk.lifetime);
         }
 
-        protected override void MoveAgent(int actionIndex)
+        public override void MoveAgent(int actionIndex)
         {
+            Debug.Log("Moving Agent");
             switch (actionIndex)
             {
                 case 1: // Move forward
@@ -44,8 +46,9 @@ namespace EnemiesScript.Melee
         {
             Debug.Log("Agent sense a kill");
         }
-        protected override void RotateAgent(int actionIndex)
+        public override void RotateAgent(int actionIndex)
         {
+            Debug.Log("Rotating Agent");
             switch (actionIndex)
             {
                 case 1: // Rotate left
