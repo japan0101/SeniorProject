@@ -13,6 +13,7 @@ namespace EnemiesScript.Melee
         [SerializeField] private GameObject target;
         [SerializeField] private Renderer groundRenderer;
         [SerializeField] private Enemy agent;
+        [SerializeField] private float maxSpeed = 2f;
         
         [HideInInspector] public int currentEpisode;
         [HideInInspector] public float cumulativeReward;
@@ -44,46 +45,54 @@ namespace EnemiesScript.Melee
                 _defaultGroundColor = groundRenderer.material.color;
             }
         }
+
         public override void Heuristic(in ActionBuffers actionsOut)
         {
-            var discreteActionsOut = actionsOut.DiscreteActions;
-
-            discreteActionsOut[0] = 0; // Do nothing
-            discreteActionsOut[1] = 0; // Do nothing
-            discreteActionsOut[2] = 0; // Do nothing
-
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                discreteActionsOut[0] = 1;
-            }
-            else if (Input.GetKey(KeyCode.DownArrow))
-            {
-                discreteActionsOut[0] = 2;
-            }
-            else if (Input.GetKey(KeyCode.RightArrow))
-            {
-                discreteActionsOut[0] = 3;
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                discreteActionsOut[0] = 4;
-            }
-            else if (Input.GetKey(KeyCode.D))
-            {
-                discreteActionsOut[1] = 1;
-            }
-            else if (Input.GetKey(KeyCode.A))
-            {
-                discreteActionsOut[1] = 2;
-            }
-            else if (Input.GetKey(KeyCode.Space))
-            {
-                discreteActionsOut[2] = 1;
-            }
-            agent.MoveAgent(discreteActionsOut[0]);
-            agent.RotateAgent(discreteActionsOut[1]);
-            agent.Attack(discreteActionsOut[2]);
+            var continuousActionsOut = actionsOut.ContinuousActions;
+            continuousActionsOut[0] = Input.GetAxis("Horizontal");
+            continuousActionsOut[1] = Input.GetAxis("Vertical");
         }
+        
+        // public override void Heuristic(in ActionBuffers actionsOut)
+        // {
+        //     var discreteActionsOut = actionsOut.DiscreteActions;
+        //
+        //     discreteActionsOut[0] = 0; // Do nothing
+        //     discreteActionsOut[1] = 0; // Do nothing
+        //     discreteActionsOut[2] = 0; // Do nothing
+        //
+        //     if (Input.GetKey(KeyCode.UpArrow))
+        //     {
+        //         discreteActionsOut[0] = 1;
+        //     }
+        //     else if (Input.GetKey(KeyCode.DownArrow))
+        //     {
+        //         discreteActionsOut[0] = 2;
+        //     }
+        //     else if (Input.GetKey(KeyCode.RightArrow))
+        //     {
+        //         discreteActionsOut[0] = 3;
+        //     }
+        //     else if (Input.GetKey(KeyCode.LeftArrow))
+        //     {
+        //         discreteActionsOut[0] = 4;
+        //     }
+        //     else if (Input.GetKey(KeyCode.D))
+        //     {
+        //         discreteActionsOut[1] = 1;
+        //     }
+        //     else if (Input.GetKey(KeyCode.A))
+        //     {
+        //         discreteActionsOut[1] = 2;
+        //     }
+        //     else if (Input.GetKey(KeyCode.Space))
+        //     {
+        //         discreteActionsOut[2] = 1;
+        //     }
+        //     agent.MoveAgent(discreteActionsOut[0]);
+        //     agent.RotateAgent(discreteActionsOut[1]);
+        //     agent.Attack(discreteActionsOut[2]);
+        // }
         public override void CollectObservations(VectorSensor sensor)
         {
             // Give Agent the information about the state
@@ -104,14 +113,20 @@ namespace EnemiesScript.Melee
         }
         public override void OnActionReceived(ActionBuffers actions)
         {
-            // Agent decides what to do about the current state
-            // Move the agent using the action
-             MoveAgent(actions.DiscreteActions);
-
+            var xVelocity = actions.ContinuousActions[0];
+            var zVelocity = actions.ContinuousActions[1];
+            
+            var xDistance = xVelocity * maxSpeed * Time.fixedDeltaTime;
+            var zDistance = zVelocity * maxSpeed * Time.fixedDeltaTime;
+            
+            transform.localPosition += new Vector3(xDistance, 0, zDistance);
+            
             // Penalty given each step to encourage agent to finish a task quickly
-            AddReward(-2f/MaxStep);
-            // Update the cumulative reward after adding the step penalty.
-            cumulativeReward = GetCumulativeReward();
+            base.OnActionReceived(actions);
+
+            // AddReward(-2f/MaxStep);
+            // // Update the cumulative reward after adding the step penalty.
+            // cumulativeReward = GetCumulativeReward();
         }
         private void MoveAgent(ActionSegment<int> act)
         {

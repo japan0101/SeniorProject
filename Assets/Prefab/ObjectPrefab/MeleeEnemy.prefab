@@ -14,12 +14,11 @@ GameObject:
   - component: {fileID: 2167260827275523200}
   - component: {fileID: 8879771995019802118}
   - component: {fileID: 3475068609550539619}
-  - component: {fileID: 1858242583132030306}
-  - component: {fileID: 3225865074697663951}
-  - component: {fileID: 8721466605024634303}
-  - component: {fileID: 8737346515325468099}
-  - component: {fileID: 8443655869179619361}
   - component: {fileID: 3174504295571058887}
+  - component: {fileID: 1858242583132030306}
+  - component: {fileID: 8721466605024634303}
+  - component: {fileID: 8443655869179619361}
+  - component: {fileID: 8737346515325468099}
   m_Layer: 11
   m_Name: MeleeEnemy
   m_TagString: MeleeEnemy
@@ -163,6 +162,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3174504295571058887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 193917626500851352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f09d5dbc7f49939f0e41c8b8b2a1aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 400
+  maxHp: 400
+  moveSpeed: 5
+  rotateSpeed: 360
+  attacks:
+  - {fileID: 8056371960188120745, guid: b044becc80fe92e429f417a99987414b, type: 3}
 --- !u!114 &1858242583132030306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,13 +196,13 @@ MonoBehaviour:
     VectorObservationSize: 3
     NumStackedVectorObservations: 2
     m_ActionSpec:
-      m_NumContinuousActions: 0
-      BranchSizes: 050000000300000002000000
-    VectorActionSize: 050000000300000002000000
+      m_NumContinuousActions: 1
+      BranchSizes: 
+    VectorActionSize: 01000000
     VectorActionDescriptions: []
-    VectorActionSpaceType: 0
+    VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: b34d6a856325248408e0dfb54426ca05, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: Phainon1
@@ -194,28 +211,6 @@ MonoBehaviour:
   m_UseChildActuators: 1
   m_DeterministicInference: 0
   m_ObservableAttributeHandling: 0
---- !u!114 &3225865074697663951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 193917626500851352}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02244288f4b3e1c478478692f6263de3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentParameters:
-    maxStep: 0
-  hasUpgradedFromAgentParameters: 1
-  MaxStep: 5000
-  player: {fileID: 0}
-  groundRenderer: {fileID: 0}
-  moveSpeed: 3
-  rotateSpeed: 360
-  currentEpisode: 0
-  cumulativeReward: 0
 --- !u!114 &8721466605024634303
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,23 +230,9 @@ MonoBehaviour:
   target: {fileID: 0}
   groundRenderer: {fileID: 0}
   agent: {fileID: 3174504295571058887}
+  maxSpeed: 2
   currentEpisode: 0
   cumulativeReward: 0
---- !u!114 &8737346515325468099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 193917626500851352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DecisionPeriod: 5
-  DecisionStep: 0
-  TakeActionsBetweenDecisions: 1
 --- !u!114 &8443655869179619361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,7 +264,7 @@ MonoBehaviour:
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
   m_StartVerticalOffset: 0.7
   m_EndVerticalOffset: 0.7
---- !u!114 &3174504295571058887
+--- !u!114 &8737346515325468099
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -292,15 +273,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 193917626500851352}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23f09d5dbc7f49939f0e41c8b8b2a1aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 400
-  maxHp: 400
-  moveSpeed: 5
-  rotateSpeed: 360
-  attacks:
-  - {fileID: 8056371960188120745, guid: b044becc80fe92e429f417a99987414b, type: 3}
+  DecisionPeriod: 5
+  DecisionStep: 0
+  TakeActionsBetweenDecisions: 1
 --- !u!1 &596176577218714283
 GameObject:
   m_ObjectHideFlags: 0

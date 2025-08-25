@@ -1,12 +1,13 @@
 using System.Globalization;
+using EnemiesScript.Melee;
+using Unity.MLAgents;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace EnemiesScript
 {
     public class GUIEnemyAgent : MonoBehaviour
     {
-        [FormerlySerializedAs("_enemyMeleeAgent")] [SerializeField] private EnemyMeleeAgent enemyMeleeAgent;
+        [SerializeField] private MeleeEnemyAgent enemyMeleeAgent;
 
         private GUIStyle _defaultStyle = new GUIStyle();
         private GUIStyle _positiveStyle = new GUIStyle();
