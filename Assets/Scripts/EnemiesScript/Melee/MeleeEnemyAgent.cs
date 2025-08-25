@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
@@ -18,7 +19,21 @@ namespace EnemiesScript.Melee
 
         private Color _defaultGroundColor;
         private Coroutine _flashGroundCoroutine;
-        
+
+        float Timer = 0;//for testing agent action remove later
+        private void Update()
+        {
+            //for testing agent action remove later
+            //agent.MoveAgent(Random.Range(0, 5));
+            //if (Timer >= 2)
+            //{
+            //    agent.Attack(0);
+            //    agent.RotateAgent(Random.Range(0, 3));
+            //    Debug.Log("Attack");
+            //    Timer = 0;
+            //}
+            //Timer += Time.deltaTime;
+        }
         public override void Initialize()
         {
             currentEpisode = 0;
@@ -28,6 +43,46 @@ namespace EnemiesScript.Melee
             {
                 _defaultGroundColor = groundRenderer.material.color;
             }
+        }
+        public override void Heuristic(in ActionBuffers actionsOut)
+        {
+            var discreteActionsOut = actionsOut.DiscreteActions;
+
+            discreteActionsOut[0] = 0; // Do nothing
+            discreteActionsOut[1] = 0; // Do nothing
+            discreteActionsOut[2] = 0; // Do nothing
+
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                discreteActionsOut[0] = 1;
+            }
+            else if (Input.GetKey(KeyCode.DownArrow))
+            {
+                discreteActionsOut[0] = 2;
+            }
+            else if (Input.GetKey(KeyCode.RightArrow))
+            {
+                discreteActionsOut[0] = 3;
+            }
+            else if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                discreteActionsOut[0] = 4;
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                discreteActionsOut[1] = 1;
+            }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                discreteActionsOut[1] = 2;
+            }
+            else if (Input.GetKey(KeyCode.Space))
+            {
+                discreteActionsOut[2] = 1;
+            }
+            agent.MoveAgent(discreteActionsOut[0]);
+            agent.RotateAgent(discreteActionsOut[1]);
+            agent.Attack(discreteActionsOut[2]);
         }
         public override void CollectObservations(VectorSensor sensor)
         {

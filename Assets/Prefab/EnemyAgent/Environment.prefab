@@ -909,6 +909,10 @@ PrefabInstance:
       propertyPath: m_BehaviorName
       value: Phainon1
       objectReference: {fileID: 0}
+    - target: {fileID: 1858242583132030306, guid: b98f66ebf0d0e5a439006c613a0bb3a0, type: 3}
+      propertyPath: m_BehaviorType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3225865074697663951, guid: b98f66ebf0d0e5a439006c613a0bb3a0, type: 3}
       propertyPath: player
       value: 

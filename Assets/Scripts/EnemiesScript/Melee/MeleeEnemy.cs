@@ -61,10 +61,12 @@ namespace EnemiesScript.Melee
         }
         public void Update()
         {
-            //for testing attack comment before commit
-            //if(Timer >= 2)
+            ////for testing actions comment before commit
+            //MoveAgent(Random.Range(0, 5));
+            //if (Timer >= 2)
             //{
             //    Attack(0);
+            //    RotateAgent(Random.Range(0, 3));
             //    Debug.Log("Attack");
             //    Timer = 0;
             //}
