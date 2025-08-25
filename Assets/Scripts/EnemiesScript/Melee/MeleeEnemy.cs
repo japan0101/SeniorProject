@@ -9,14 +9,12 @@ namespace EnemiesScript.Melee
         float Timer = 0;
         public override void Attack(int atkIndex)
         {
-            if (attacks[atkIndex] == null) return;
-            _atk = Instantiate(attacks[atkIndex], gameObject.transform);
+            _atk = Instantiate(attacks[atkIndex - 1], gameObject.transform);
             Destroy(_atk.gameObject, _atk.lifetime);
         }
 
         public override void MoveAgent(int actionIndex)
         {
-            Debug.Log("Moving Agent");
             switch (actionIndex)
             {
                 case 1: // Move forward
@@ -48,7 +46,6 @@ namespace EnemiesScript.Melee
         }
         public override void RotateAgent(int actionIndex)
         {
-            Debug.Log("Rotating Agent");
             switch (actionIndex)
             {
                 case 1: // Rotate left
