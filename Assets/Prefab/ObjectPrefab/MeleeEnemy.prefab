@@ -177,7 +177,14 @@ MonoBehaviour:
   hp: 400
   maxHp: 400
   moveSpeed: 5
+  dashSpeed: 8
+  dashCooldown: 0.5
+  dashDuration: 0.2
+  dashConsume: 10
   rotateSpeed: 360
+  defence: 0
+  energy: 100
+  maxEnergy: 100
   attacks:
   - {fileID: 8056371960188120745, guid: b044becc80fe92e429f417a99987414b, type: 3}
 --- !u!114 &1858242583132030306

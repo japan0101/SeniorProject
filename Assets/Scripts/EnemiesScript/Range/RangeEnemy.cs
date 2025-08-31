@@ -1,16 +1,16 @@
 ﻿using Unity.MLAgents.Actuators;
 using UnityEngine;
 
-namespace EnemiesScript.Melee
+namespace EnemiesScript.Range
 {
-    public class MeleeEnemy:Enemy
+    public class RangeEnemy:Enemy
     {
         private EnemyAttack _atk;
         float Timer = 0;
         public override void Attack(int atkIndex)
         {
-            _atk = Instantiate(attacks[atkIndex - 1], gameObject.transform);
-            Destroy(_atk.gameObject, _atk.lifetime);
+            //_atk = Instantiate(attacks[atkIndex - 1], gameObject.transform);
+            //Destroy(_atk.gameObject, _atk.lifetime);
         }
 
         public override void MoveAgent(int actionIndex)
@@ -31,9 +31,6 @@ namespace EnemiesScript.Melee
                     break;
                 case 4: // Stride Left
                     rb.AddForce(-transform.right * realSpeed * 10f, ForceMode.Force);
-                    break;
-                case 5: // Stride Left
-                    Dash();
                     break;
             }
             SpeedControl();

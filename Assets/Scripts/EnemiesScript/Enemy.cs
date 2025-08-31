@@ -10,7 +10,18 @@ namespace EnemiesScript
         public float hp;
         public float maxHp;
         public float moveSpeed;
+        public float dashSpeed;
+        public float dashCooldown;
+        public float dashDuration;
+        public float dashConsume;
         public float rotateSpeed;
+        public float defence;
+        public float energy;
+        public float maxEnergy;
+
+        protected float dashTimer = 0;
+        protected float realSpeed;
+        private bool isDashing = false;
         public List<EnemyAttack> attacks = new List<EnemyAttack>();
         protected Rigidbody rb;
         
@@ -25,11 +36,25 @@ namespace EnemiesScript
         void Update()
         {
             CheckDeath();
+            if (isDashing) {
+                if (dashTimer > dashDuration)//check for dash cooldown when is dashing
+                {
+                    isDashing = false;
+                    dashTimer = 0;
+                    realSpeed = moveSpeed;
+                }
+                dashTimer += Time.deltaTime;
+            }
         }
 
         public abstract void MoveAgent(int actionIndex);
         public abstract void RotateAgent(int actionIndex);
         public abstract void Attack(int atkIndex);
+        public void Dash()
+        {
+            isDashing = true;
+            realSpeed = dashSpeed;
+        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -58,12 +83,13 @@ namespace EnemiesScript
         }
 
         protected abstract void OnKilled(GameObject other);
+
         protected void SpeedControl()
         {
             Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-            if (flatVel.magnitude > moveSpeed)
+            if (flatVel.magnitude > realSpeed)
             {
-                Vector3 limitedVel = flatVel.normalized * moveSpeed;
+                Vector3 limitedVel = flatVel.normalized * realSpeed;
                 rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
             }
         }
