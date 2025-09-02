@@ -77,7 +77,11 @@ namespace EnemiesScript.Melee
             {
                 discreteActionsOut[0] = 4;
             }
-            else if (Input.GetKey(KeyCode.D))
+            else if (Input.GetKey(KeyCode.J))
+            {
+                discreteActionsOut[0] = 5;
+            }
+            if (Input.GetKey(KeyCode.D))
             {
                 discreteActionsOut[1] = 1;
             }
@@ -85,13 +89,13 @@ namespace EnemiesScript.Melee
             {
                 discreteActionsOut[1] = 2;
             }
-            else if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.Space))
             {
                 discreteActionsOut[2] = 1;
             }
-            agent.MoveAgent(discreteActionsOut[0]);
-            agent.RotateAgent(discreteActionsOut[1]);
-            agent.Attack(discreteActionsOut[2]);
+            //agent.MoveAgent(discreteActionsOut[0]);
+            //agent.RotateAgent(discreteActionsOut[1]);
+            //agent.Attack(discreteActionsOut[2]);
         }
         public override void CollectObservations(VectorSensor sensor)
         {

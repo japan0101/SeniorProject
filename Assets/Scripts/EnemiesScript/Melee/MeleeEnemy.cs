@@ -9,13 +9,12 @@ namespace EnemiesScript.Melee
         float Timer = 0;
         public override void Attack(int atkIndex)
         {
-            _atk = Instantiate(attacks[atkIndex - 1], gameObject.transform);
+            _atk = Instantiate(attacks[atkIndex], gameObject.transform);
             Destroy(_atk.gameObject, _atk.lifetime);
         }
 
         public override void MoveAgent(int actionIndex)
         {
-
             switch (actionIndex)
             {
                 case 1: // Move forward
@@ -43,6 +42,7 @@ namespace EnemiesScript.Melee
                     }
                     break;
             }
+            SpeedControl();
         }
 
         protected override void OnHit(GameObject other)

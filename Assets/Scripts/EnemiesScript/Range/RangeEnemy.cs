@@ -16,15 +16,14 @@ namespace EnemiesScript.Range
 
         public override void MoveAgent(int actionIndex)
         {
-            Debug.Log(realSpeed);
             switch (actionIndex)
             {
                 case 1: // Move forward
-                    rb.AddForce(transform.forward * realSpeed * 10f, ForceMode.Force);
+                    rb.AddForce(transform.forward * moveSpeed * 10f, ForceMode.Force);
                     // transform.position += transform.forward * _moveSpeed * Time.deltaTime;
                     break;
                 case 2: // Move Backward
-                    rb.AddForce(-transform.forward * realSpeed * 10f, ForceMode.Force);
+                    rb.AddForce(-transform.forward * moveSpeed * 10f, ForceMode.Force);
                     // transform.position -= transform.forward * _moveSpeed * Time.deltaTime;
                     break;
                 case 3: // Stride Right

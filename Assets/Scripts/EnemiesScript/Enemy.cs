@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.MLAgents.Actuators;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 
 namespace EnemiesScript
 {
@@ -42,12 +43,11 @@ namespace EnemiesScript
                 {
                     isDashing = false;
                     dashTimer = 0;
-                    realSpeed = moveSpeed;
                 }
                 dashTimer += Time.deltaTime;
             }
-            SpeedControl();
             RegenEnergy(2);
+            Debug.Log(realSpeed);
         }
 
         public abstract void MoveAgent(int actionIndex);
@@ -60,7 +60,6 @@ namespace EnemiesScript
         public void Dash()
         {
             isDashing = true;
-            realSpeed = dashSpeed;
             energy -= dashConsume;
         }
 
@@ -94,10 +93,19 @@ namespace EnemiesScript
 
         protected void SpeedControl()
         {
+            rb.linearDamping = 5f;
             Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+            if (isDashing)
+            {
+                realSpeed = dashSpeed;
+            }
+            else
+            {
+                realSpeed = moveSpeed;
+            }
             if (flatVel.magnitude > realSpeed)
             {
-                Vector3 limitedVel = flatVel.normalized * realSpeed;
+                Vector3 limitedVel = flatVel.normalized * moveSpeed;
                 rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
             }
         }
