@@ -8,15 +8,22 @@ namespace EnemiesScript.Range
         [Header("Range config")]
         public float power;
         //public float attack_speed = 1440f;
-
-        //public override void OnAttack(GameObject attacker)
-        //{
-        //    if (_atk) return;
-        //    slash.GetComponent<EnemyMeleeAttack>().attacker = attacker;
-        //    _atk = Instantiate(slash, attacker.transform); //create attack hitbox
-        //    Destroy(_atk, 0.5f); //despawn after a certain time
-        //}
-
+        public override void OnAttack()
+        {
+            Debug.LogWarning("Shooting");
+            Rigidbody rb = GetComponent<Rigidbody>();
+            //rb.freezeRotation = true;
+            Vector3 direction = new Vector3(attacker.transform.forward.x, attacker.transform.forward.y, attacker.transform.forward.z);
+            rb.AddForce(direction * power * 100, ForceMode.Force);
+            Destroy(gameObject, lifetime);
+        }
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.gameObject.tag == "Player" | other.gameObject.tag == "Untagged")
+            {
+                Destroy(gameObject);
+            }
+        }
         void Update()
         {
             

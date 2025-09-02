@@ -63,35 +63,39 @@ namespace EnemiesScript.Range
 
             if (Input.GetKey(KeyCode.UpArrow))
             {
+                //Debug.LogWarning("Up");
                 discreteActionsOut[0] = 1;
             }
             else if (Input.GetKey(KeyCode.DownArrow))
             {
+                //Debug.LogWarning("Down");
                 discreteActionsOut[0] = 2;
             }
             else if (Input.GetKey(KeyCode.RightArrow))
             {
+                //Debug.LogWarning("Right");
                 discreteActionsOut[0] = 3;
             }
             else if (Input.GetKey(KeyCode.LeftArrow))
             {
+                //Debug.LogWarning("Left");
                 discreteActionsOut[0] = 4;
             }
             else if (Input.GetKey(KeyCode.D))
             {
+                //Debug.LogWarning("CW");
                 discreteActionsOut[1] = 1;
             }
             else if (Input.GetKey(KeyCode.A))
             {
+                //Debug.LogWarning("CCW");
                 discreteActionsOut[1] = 2;
             }
             else if (Input.GetKey(KeyCode.Space))
             {
+                Debug.LogWarning("Atk");
                 discreteActionsOut[2] = 1;
             }
-            agent.MoveAgent(discreteActionsOut[0]);
-            agent.RotateAgent(discreteActionsOut[1]);
-            agent.Attack(discreteActionsOut[2]);
         }
         public override void CollectObservations(VectorSensor sensor)
         {

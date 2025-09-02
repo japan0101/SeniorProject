@@ -30,6 +30,7 @@ namespace EnemiesScript
         {
             rb = GetComponent<Rigidbody>();
             rb.freezeRotation = true;
+            realSpeed = moveSpeed;
         }
 
         // Update is called once per frame
@@ -45,15 +46,22 @@ namespace EnemiesScript
                 }
                 dashTimer += Time.deltaTime;
             }
+            SpeedControl();
+            RegenEnergy(2);
         }
 
         public abstract void MoveAgent(int actionIndex);
         public abstract void RotateAgent(int actionIndex);
         public abstract void Attack(int atkIndex);
+        public void RegenEnergy(float amount)
+        {
+            energy = Mathf.Clamp(energy + amount, 0, maxEnergy);
+        }
         public void Dash()
         {
             isDashing = true;
             realSpeed = dashSpeed;
+            energy -= dashConsume;
         }
 
         private void OnTriggerEnter(Collider other)

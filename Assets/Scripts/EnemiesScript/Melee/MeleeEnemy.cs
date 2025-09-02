@@ -32,11 +32,17 @@ namespace EnemiesScript.Melee
                 case 4: // Stride Left
                     rb.AddForce(-transform.right * realSpeed * 10f, ForceMode.Force);
                     break;
-                case 5: // Stride Left
-                    Dash();
+                case 5: // Set the state to dash for 0.2 seconds
+                    if(energy >= dashConsume)
+                    {
+                        Dash();//increase speed of the agent for a duration and consume energy
+                    }
+                    else
+                    {
+                        //should be penalized when dashfailed
+                    }
                     break;
             }
-            SpeedControl();
         }
 
         protected override void OnHit(GameObject other)

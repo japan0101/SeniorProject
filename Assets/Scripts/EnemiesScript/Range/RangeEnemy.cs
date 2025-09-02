@@ -9,13 +9,14 @@ namespace EnemiesScript.Range
         float Timer = 0;
         public override void Attack(int atkIndex)
         {
-            //_atk = Instantiate(attacks[atkIndex - 1], gameObject.transform);
-            //Destroy(_atk.gameObject, _atk.lifetime);
+            _atk = Instantiate(attacks[atkIndex], gameObject.transform.position + transform.forward, gameObject.transform.rotation);
+            _atk.attacker = gameObject;
+            _atk.OnAttack();
         }
 
         public override void MoveAgent(int actionIndex)
         {
-
+            Debug.Log(realSpeed);
             switch (actionIndex)
             {
                 case 1: // Move forward

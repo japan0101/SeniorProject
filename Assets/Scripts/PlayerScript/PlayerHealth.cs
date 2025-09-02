@@ -54,6 +54,7 @@ public class PlayerHealth : MonoBehaviour
                 TakeDamage(other.ClosestPointOnBounds(other.transform.position), attacks.damage);//deal damages
                 //Direction from attacks to player
                 Vector3 pureDirection = transform.position - other.transform.position;
+                pureDirection.y = 0;
                 Vector3 normDirection = pureDirection.normalized;
                 TakeKnockback(normDirection, attacks.baseKnockbackForce);
                 //attacker.OnHitPlayer();

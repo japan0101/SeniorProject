@@ -9,6 +9,6 @@ namespace EnemiesScript
         public float damage;
         public float lifetime;
         public float baseKnockbackForce;
-        //public abstract void OnAttack(GameObject attacker);
+        public abstract void OnAttack();
     }
 }

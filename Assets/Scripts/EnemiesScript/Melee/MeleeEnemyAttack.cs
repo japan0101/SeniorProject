@@ -8,6 +8,11 @@ namespace EnemiesScript.Melee
         [Header("Melee config")]
         public float attack_speed = 1440f;
 
+        public override void OnAttack()
+        {
+            Debug.Log("Slashing");
+        }
+
         //public override void OnAttack(GameObject attacker)
         //{
         //    if (_atk) return;
