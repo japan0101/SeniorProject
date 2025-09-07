@@ -7,6 +7,11 @@ namespace EnemiesScript.Range
     {
         private EnemyAttack _atk;
         float Timer = 0;
+        public override void RotateAgent(float actionValue)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override void Attack(int atkIndex)
         {
             _atk = Instantiate(attacks[atkIndex], gameObject.transform.position + transform.forward, gameObject.transform.rotation);
@@ -14,26 +19,41 @@ namespace EnemiesScript.Range
             _atk.OnAttack();
         }
 
-        public override void MoveAgent(int actionIndex)
+        // public override void MoveAgent(int actionIndex)
+        // {
+        //     switch (actionIndex)
+        //     {
+        //         case 1: // Move forward
+        //             rb.AddForce(transform.forward * moveSpeed * 10f, ForceMode.Force);
+        //             // transform.position += transform.forward * _moveSpeed * Time.deltaTime;
+        //             break;
+        //         case 2: // Move Backward
+        //             rb.AddForce(-transform.forward * moveSpeed * 10f, ForceMode.Force);
+        //             // transform.position -= transform.forward * _moveSpeed * Time.deltaTime;
+        //             break;
+        //         case 3: // Stride Right
+        //             rb.AddForce(transform.right * realSpeed * 10f, ForceMode.Force);
+        //             break;
+        //         case 4: // Stride Left
+        //             rb.AddForce(-transform.right * realSpeed * 10f, ForceMode.Force);
+        //             break;
+        //     }
+        //     SpeedControl();
+        // }
+
+        public override void Specials(int actionIndex)
         {
-            switch (actionIndex)
-            {
-                case 1: // Move forward
-                    rb.AddForce(transform.forward * moveSpeed * 10f, ForceMode.Force);
-                    // transform.position += transform.forward * _moveSpeed * Time.deltaTime;
-                    break;
-                case 2: // Move Backward
-                    rb.AddForce(-transform.forward * moveSpeed * 10f, ForceMode.Force);
-                    // transform.position -= transform.forward * _moveSpeed * Time.deltaTime;
-                    break;
-                case 3: // Stride Right
-                    rb.AddForce(transform.right * realSpeed * 10f, ForceMode.Force);
-                    break;
-                case 4: // Stride Left
-                    rb.AddForce(-transform.right * realSpeed * 10f, ForceMode.Force);
-                    break;
-            }
-            SpeedControl();
+            throw new System.NotImplementedException();
+        }
+
+        public override void MoveAgentX(float actionValue)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void MoveAgentZ(float actionValue)
+        {
+            throw new System.NotImplementedException();
         }
 
         protected override void OnHit(GameObject other)
@@ -45,18 +65,7 @@ namespace EnemiesScript.Range
         {
             Debug.Log("Agent sense a kill");
         }
-        public override void RotateAgent(int actionIndex)
-        {
-            switch (actionIndex)
-            {
-                case 1: // Rotate left
-                    transform.Rotate(0f, -rotateSpeed * Time.deltaTime, 0f);
-                    break;
-                case 2: // Rotate Right
-                    transform.Rotate(0f, rotateSpeed * Time.deltaTime, 0f);
-                    break;
-            }
-        }
+        
         public void Update()
         {
             ////for testing actions comment before commit

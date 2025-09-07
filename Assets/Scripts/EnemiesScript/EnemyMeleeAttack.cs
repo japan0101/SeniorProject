@@ -5,10 +5,9 @@ namespace EnemiesScript
 {
     public class EnemyMeleeAttack : BaseEnemyAttack
     {
-        [Header("Attack config")]
-        public float attack_speed = 1440f;
-
-
+        [FormerlySerializedAs("attack_speed")] [Header("Attack config")]
+        public float attackSpeed = 1440f;
+        
         private void Update()
         {
             //if (_atk)

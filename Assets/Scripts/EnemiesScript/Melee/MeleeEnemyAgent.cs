@@ -4,6 +4,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 namespace EnemiesScript.Melee
@@ -13,8 +14,6 @@ namespace EnemiesScript.Melee
         [SerializeField] private GameObject target;
         [SerializeField] private Renderer groundRenderer;
         [SerializeField] private Enemy agent;
-        [SerializeField] private float maxSpeed = 2f;
-        
         [HideInInspector] public int currentEpisode;
         [HideInInspector] public float cumulativeReward;
 
@@ -22,19 +21,6 @@ namespace EnemiesScript.Melee
         private Coroutine _flashGroundCoroutine;
 
         float Timer = 0;//for testing agent action remove later
-        private void Update()
-        {
-            //for testing agent action remove later
-            //agent.MoveAgent(Random.Range(0, 5));
-            //if (Timer >= 2)
-            //{
-            //    agent.Attack(0);
-            //    agent.RotateAgent(Random.Range(0, 3));
-            //    Debug.Log("Attack");
-            //    Timer = 0;
-            //}
-            //Timer += Time.deltaTime;
-        }
         public override void Initialize()
         {
             currentEpisode = 0;
@@ -55,47 +41,26 @@ namespace EnemiesScript.Melee
         
          public override void Heuristic(in ActionBuffers actionsOut)
         {
+            var continuousActions = actionsOut.ContinuousActions;
             var discreteActionsOut = actionsOut.DiscreteActions;
+            continuousActions[0] = Input.GetAxis("Horizontal");
+            continuousActions[1] = Input.GetAxis("Vertical");
+            continuousActions[2] = Input.GetAxis("Mouse X");
 
             discreteActionsOut[0] = 0; // Do nothing
             discreteActionsOut[1] = 0; // Do nothing
-            discreteActionsOut[2] = 0; // Do nothing
 
-            if (Input.GetKey(KeyCode.UpArrow))
+
+            if (Input.GetKey(KeyCode.LeftShift))
             {
                 discreteActionsOut[0] = 1;
             }
-            else if (Input.GetKey(KeyCode.DownArrow))
-            {
-                discreteActionsOut[0] = 2;
-            }
-            else if (Input.GetKey(KeyCode.RightArrow))
-            {
-                discreteActionsOut[0] = 3;
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                discreteActionsOut[0] = 4;
-            }
-            else if (Input.GetKey(KeyCode.J))
-            {
-                discreteActionsOut[0] = 5;
-            }
-            if (Input.GetKey(KeyCode.D))
+            
+            // Shitty Control Who TF Write this
+            if (Input.GetMouseButton(0))
             {
                 discreteActionsOut[1] = 1;
             }
-            else if (Input.GetKey(KeyCode.A))
-            {
-                discreteActionsOut[1] = 2;
-            }
-            if (Input.GetKey(KeyCode.Space))
-            {
-                discreteActionsOut[2] = 1;
-            }
-            //agent.MoveAgent(discreteActionsOut[0]);
-            //agent.RotateAgent(discreteActionsOut[1]);
-            //agent.Attack(discreteActionsOut[2]);
         }
         public override void CollectObservations(VectorSensor sensor)
         {
@@ -117,7 +82,7 @@ namespace EnemiesScript.Melee
         }
         public override void OnActionReceived(ActionBuffers actions)
         {
-            //var xVelocity = actions.ContinuousActions[0];
+            // var xVelocity = actions.ContinuousActions[0];
             //var zVelocity = actions.ContinuousActions[1];
             
             //var xDistance = xVelocity * maxSpeed * Time.fixedDeltaTime;
@@ -126,33 +91,36 @@ namespace EnemiesScript.Melee
             //transform.localPosition += new Vector3(xDistance, 0, zDistance);
             
             // Penalty given each step to encourage agent to finish a task quickly
-            base.OnActionReceived(actions);
-            var movement = actions.DiscreteActions[0];
-            var rotation = actions.DiscreteActions[1];
-            var attack = actions.DiscreteActions[2];
+            var moveX = actions.ContinuousActions[0];
+            var moveZ = actions.ContinuousActions[1];
+            // var movement = actions.DiscreteActions[0];
+            var rotation = actions.ContinuousActions[2];
+            var special = actions.DiscreteActions[0];
+            var attack = actions.DiscreteActions[1];
 
-            agent.MoveAgent(movement);
+            agent.MoveAgentX(moveX);
+            agent.MoveAgentZ(moveZ);
             agent.RotateAgent(rotation);
+            agent.Specials(special);
+
             if (attack > 0)
             {
                 agent.Attack(attack - 1);
             }
+            base.OnActionReceived(actions);
 
-            // AddReward(-2f/MaxStep);
+            AddReward(-2f/MaxStep);
             // // Update the cumulative reward after adding the step penalty.
-            // cumulativeReward = GetCumulativeReward();
+            cumulativeReward = GetCumulativeReward();
         }
-        private void MoveAgent(ActionSegment<int> act)
-        {
 
-            var movement = act[0];
-            var rotation = act[1];
-            var attack = act[2];
-            Debug.Log(act);
-            agent.MoveAgent(movement);
-            agent.RotateAgent(rotation);
-            agent.Attack(attack);
+        public void OnKilled()
+        {
+            AddReward(-1f);
+            cumulativeReward = GetCumulativeReward();
+            EndEpisode();
         }
+        
         private IEnumerator FlashGround(Color targetColor, float duration)
         {
             float elapsedTime = 0f;
@@ -190,7 +158,9 @@ namespace EnemiesScript.Melee
         {
             transform.localRotation = Quaternion.identity;
             transform.localPosition = new Vector3(0f, 0.5f, 0f);
-        
+            var location = new Vector3(0f, 0.5f, 0f);
+            
+            
             // Randomize the direction on the Y-axis (angle in degrees)
             float randomAngle = Random.Range(0f, 360f);
             Vector3 randomDirection = Quaternion.Euler(0f, randomAngle, 0f) * Vector3.forward;
@@ -199,10 +169,13 @@ namespace EnemiesScript.Melee
             float randomDistance = Random.Range(1f, 10f);
         
             // Calculate the player's position
-            Vector3 playerPosition = transform.localPosition + randomDirection * randomDistance;
+            Vector3 playerPosition = location + randomDirection * randomDistance;
         
             // Apply the calculated position to the player
-            target.gameObject.transform.localPosition = new Vector3(playerPosition.x, 0.5f, playerPosition.z);
+            
+            Instantiate(target, playerPosition, Quaternion.identity);
         }
+
+        
     }
 }

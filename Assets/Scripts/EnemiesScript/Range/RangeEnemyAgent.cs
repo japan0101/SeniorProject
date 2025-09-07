@@ -131,7 +131,7 @@ namespace EnemiesScript.Range
             var rotation = actions.DiscreteActions[1];
             var attack = actions.DiscreteActions[2];
 
-            agent.MoveAgent(movement);
+            // agent.MoveAgent(movement);
             agent.RotateAgent(rotation);
             if (attack > 0)
             {
@@ -149,7 +149,7 @@ namespace EnemiesScript.Range
             var rotation = act[1];
             var attack = act[2];
             Debug.Log(act);
-            agent.MoveAgent(movement);
+            // agent.MoveAgent(movement);
             agent.RotateAgent(rotation);
             agent.Attack(attack);
         }

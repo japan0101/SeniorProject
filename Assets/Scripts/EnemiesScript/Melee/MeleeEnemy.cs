@@ -1,4 +1,5 @@
 ﻿using Unity.MLAgents.Actuators;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace EnemiesScript.Melee
@@ -7,43 +8,44 @@ namespace EnemiesScript.Melee
     {
         private EnemyAttack _atk;
         float Timer = 0;
-        public override void Attack(int atkIndex)
+        private MeleeEnemyAgent _agent;
+        private void Start()
         {
+            _agent = GetComponent<MeleeEnemyAgent>();
+        }
+        public override void Attack(int atkIndex)
+        {   
+            if (_atk) return;
             _atk = Instantiate(attacks[atkIndex], gameObject.transform);
             Destroy(_atk.gameObject, _atk.lifetime);
         }
+        
 
-        public override void MoveAgent(int actionIndex)
+        public override void Specials(int actionIndex)
         {
             switch (actionIndex)
             {
-                case 1: // Move forward
-                    rb.AddForce(transform.forward * realSpeed * 10f, ForceMode.Force);
-                    // transform.position += transform.forward * _moveSpeed * Time.deltaTime;
-                    break;
-                case 2: // Move Backward
-                    rb.AddForce(-transform.forward * realSpeed * 10f, ForceMode.Force);
-                    // transform.position -= transform.forward * _moveSpeed * Time.deltaTime;
-                    break;
-                case 3: // Stride Right
-                    rb.AddForce(transform.right * realSpeed * 10f, ForceMode.Force);
-                    break;
-                case 4: // Stride Left
-                    rb.AddForce(-transform.right * realSpeed * 10f, ForceMode.Force);
-                    break;
-                case 5: // Set the state to dash for 0.2 seconds
+                case 1:
                     if(energy >= dashConsume)
                     {
                         Dash();//increase speed of the agent for a duration and consume energy
                     }
-                    else
-                    {
-                        //should be penalized when dashfailed
-                    }
                     break;
             }
+        }
+
+        public override void MoveAgentX(float actionValue)
+        {
+            rb.AddForce(transform.right * realSpeed * actionValue * maxSpeed, ForceMode.Force);
             SpeedControl();
         }
+
+        public override void MoveAgentZ(float actionValue)
+        {
+            rb.AddForce(transform.forward * realSpeed * actionValue * maxSpeed, ForceMode.Force);
+            SpeedControl();
+        }
+
 
         protected override void OnHit(GameObject other)
         {
@@ -54,30 +56,28 @@ namespace EnemiesScript.Melee
         {
             Debug.Log("Agent sense a kill");
         }
-        public override void RotateAgent(int actionIndex)
+        public override void RotateAgent(float actionValue)
         {
-            switch (actionIndex)
-            {
-                case 1: // Rotate left
-                    transform.Rotate(0f, -rotateSpeed * Time.deltaTime, 0f);
-                    break;
-                case 2: // Rotate Right
-                    transform.Rotate(0f, rotateSpeed * Time.deltaTime, 0f);
-                    break;
-            }
+            // switch (actionIndex)
+            // {
+            //     case 1: // Rotate left
+            //         transform.Rotate(0f, -rotateSpeed * Time.deltaTime, 0f);
+            //         break;
+            //     case 2: // Rotate Right
+            //         transform.Rotate(0f, rotateSpeed * Time.deltaTime, 0f);
+            //         break;
+            // }
+            
+            transform.Rotate(0f, rotateSpeed * actionValue * Time.deltaTime, 0f);
         }
-        public void Update()
+
+        private void Update()
         {
-            ////for testing actions comment before commit
-            //MoveAgent(Random.Range(0, 5));
-            //if (Timer >= 2)
-            //{
-            //    Attack(0);
-            //    RotateAgent(Random.Range(0, 3));
-            //    Debug.Log("Attack");
-            //    Timer = 0;
-            //}
-            //Timer += Time.deltaTime;
+            if (hp <= 0)
+            {
+                _agent.OnKilled();
+                hp = maxHp;
+            }
         }
     }
 }

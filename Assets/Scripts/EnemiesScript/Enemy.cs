@@ -19,7 +19,9 @@ namespace EnemiesScript
         public float defence;
         public float energy;
         public float maxEnergy;
-
+        public float maxSpeed;
+        
+        
         protected float dashTimer = 0;
         protected float realSpeed;
         private bool isDashing = false;
@@ -47,11 +49,14 @@ namespace EnemiesScript
                 dashTimer += Time.deltaTime;
             }
             RegenEnergy(2);
-            Debug.Log(realSpeed);
+            // Debug.Log(realSpeed);
         }
 
-        public abstract void MoveAgent(int actionIndex);
-        public abstract void RotateAgent(int actionIndex);
+
+        public abstract void Specials(int actionIndex);
+        public abstract void MoveAgentX(float actionValue);
+        public abstract void MoveAgentZ(float actionValue);
+        public abstract void RotateAgent(float actionValue);
         public abstract void Attack(int atkIndex);
         public void RegenEnergy(float amount)
         {
@@ -75,10 +80,12 @@ namespace EnemiesScript
                 }
             }
         }
-        private void CheckDeath()
+        protected void CheckDeath()
         {
-            if (!(hp <= 0)) { return; }
-            Destroy(this.gameObject);
+            if (hp <= 0)
+            {
+                Destroy(this.gameObject);
+            }
         }
         protected abstract void OnHit(GameObject other);
 
