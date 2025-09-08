@@ -36,6 +36,7 @@ namespace EnemiesScript.Melee
 
         public override void MoveAgentX(float actionValue)
         {
+            Debug.Log(rb);
             rb.AddForce(transform.right * realSpeed * actionValue * maxSpeed, ForceMode.Force);
             SpeedControl();
         }
