@@ -56,7 +56,7 @@ namespace EnemiesScript.Range
             throw new System.NotImplementedException();
         }
 
-        protected override void OnHit(GameObject other)
+        protected override void OnHurt(GameObject other)
         {
             Debug.Log("Agent sense hit");
         }
@@ -65,7 +65,17 @@ namespace EnemiesScript.Range
         {
             Debug.Log("Agent sense a kill");
         }
-        
+
+        protected override void OnAttackLanded(GameObject other)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override void OnKilledTarget(GameObject other)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void Update()
         {
             ////for testing actions comment before commit

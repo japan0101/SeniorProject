@@ -86,7 +86,10 @@ namespace EnemiesScript
                 Destroy(this.gameObject);
             }
         }
-        protected abstract void OnHit(GameObject other);
+        protected abstract void OnHurt(GameObject other); // Called when Agent getting Hurt
+        protected abstract void OnKilled(GameObject other); // Called when Agent getting Killed
+        protected abstract void OnAttackLanded(GameObject other); // Called when Agent Hit Something
+        protected abstract void OnKilledTarget(GameObject other); // Called when Agent Kill Something
 
         protected void TakeDamage(float damage)
         {
@@ -95,7 +98,6 @@ namespace EnemiesScript
             hp -= damage;// reduce health
         }
 
-        protected abstract void OnKilled(GameObject other);
 
         protected void SpeedControl()
         {

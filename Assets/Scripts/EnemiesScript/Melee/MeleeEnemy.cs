@@ -20,7 +20,27 @@ namespace EnemiesScript.Melee
             _atk = Instantiate(attacks[atkIndex], gameObject.transform);
             Destroy(_atk.gameObject, _atk.lifetime);
         }
-        
+
+        protected override void OnHurt(GameObject other)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override void OnKilled(GameObject other)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override void OnAttackLanded(GameObject other)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override void OnKilledTarget(GameObject other)
+        {
+            throw new System.NotImplementedException();
+        }
+
 
         public override void Specials(int actionIndex)
         {
@@ -46,17 +66,8 @@ namespace EnemiesScript.Melee
             rb.AddForce(transform.forward * realSpeed * actionValue * baseSpeed, ForceMode.Force);
             SpeedControl();
         }
-
-
-        protected override void OnHit(GameObject other)
-        {
-            Debug.Log("Agent sense hit");
-        }
-
-        protected override void OnKilled(GameObject other)
-        {
-            Debug.Log("Agent sense a kill");
-        }
+        
+        
         public override void RotateAgent(float actionValue)
         {
             // switch (actionIndex)

@@ -45,7 +45,7 @@ namespace EnemiesScript.Melee
             var discreteActionsOut = actionsOut.DiscreteActions;
             continuousActions[0] = Input.GetAxis("Horizontal");
             continuousActions[1] = Input.GetAxis("Vertical");
-            continuousActions[2] = Input.GetAxis("Mouse X");
+            continuousActions[2] = Input.GetAxis("Mouse X"); // Shitty Control Who TF Write this
 
             discreteActionsOut[0] = 0; // Do nothing
             discreteActionsOut[1] = 0; // Do nothing
@@ -56,7 +56,6 @@ namespace EnemiesScript.Melee
                 discreteActionsOut[0] = 1;
             }
             
-            // Shitty Control Who TF Write this
             if (Input.GetMouseButton(0))
             {
                 discreteActionsOut[1] = 1;
@@ -116,7 +115,16 @@ namespace EnemiesScript.Melee
 
         public void OnKilled()
         {
+            // Getting Killed
             AddReward(-1f);
+            cumulativeReward = GetCumulativeReward();
+            EndEpisode();
+        }
+
+        public void OnHurt()
+        {
+            // Getting Hurt
+            AddReward(0.2f);
             cumulativeReward = GetCumulativeReward();
             EndEpisode();
         }
