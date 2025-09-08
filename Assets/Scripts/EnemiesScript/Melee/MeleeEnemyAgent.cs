@@ -11,7 +11,7 @@ namespace EnemiesScript.Melee
 {
     public class MeleeEnemyAgent:Agent
     {
-        [SerializeField] private GameObject target;
+        [SerializeField] private GameObject targetPrefab;
         [SerializeField] private Renderer groundRenderer;
         [SerializeField] private Enemy agent;
         [HideInInspector] public int currentEpisode;
@@ -19,7 +19,7 @@ namespace EnemiesScript.Melee
 
         private Color _defaultGroundColor;
         private Coroutine _flashGroundCoroutine;
-
+        private GameObject _target;
         float Timer = 0;//for testing agent action remove later
         public override void Initialize()
         {
@@ -154,10 +154,9 @@ namespace EnemiesScript.Melee
             SpawnPlayer();
         }
         
+        
         private void SpawnPlayer()
         {
-            transform.localRotation = Quaternion.identity;
-            transform.localPosition = new Vector3(0f, 0.5f, 0f);
             var location = new Vector3(0f, 0.5f, 0f);
             
             
@@ -173,9 +172,8 @@ namespace EnemiesScript.Melee
         
             // Apply the calculated position to the player
             
-            Instantiate(target, playerPosition, Quaternion.identity);
+            if (_target) Destroy(_target);
+            _target = Instantiate(targetPrefab, playerPosition, Quaternion.identity);
         }
-
-        
     }
 }

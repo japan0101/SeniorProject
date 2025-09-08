@@ -11,6 +11,7 @@ namespace EnemiesScript.Melee
         private MeleeEnemyAgent _agent;
         private void Start()
         {
+            base.Start();
             _agent = GetComponent<MeleeEnemyAgent>();
         }
         public override void Attack(int atkIndex)
@@ -36,14 +37,13 @@ namespace EnemiesScript.Melee
 
         public override void MoveAgentX(float actionValue)
         {
-            Debug.Log(rb);
-            rb.AddForce(transform.right * realSpeed * actionValue * maxSpeed, ForceMode.Force);
+            rb.AddForce(transform.right * realSpeed * actionValue * baseSpeed, ForceMode.Force);
             SpeedControl();
         }
 
         public override void MoveAgentZ(float actionValue)
         {
-            rb.AddForce(transform.forward * realSpeed * actionValue * maxSpeed, ForceMode.Force);
+            rb.AddForce(transform.forward * realSpeed * actionValue * baseSpeed, ForceMode.Force);
             SpeedControl();
         }
 

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.MLAgents.Actuators;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements.Experimental;
 
 namespace EnemiesScript
@@ -10,7 +11,7 @@ namespace EnemiesScript
         [Header("Enemy Data")]
         public float hp;
         public float maxHp;
-        public float moveSpeed;
+        [FormerlySerializedAs("moveSpeed")] public float baseSpeed;
         public float dashSpeed;
         public float dashCooldown;
         public float dashDuration;
@@ -19,8 +20,6 @@ namespace EnemiesScript
         public float defence;
         public float energy;
         public float maxEnergy;
-        public float maxSpeed;
-        
         
         protected float dashTimer = 0;
         protected float realSpeed;
@@ -29,11 +28,11 @@ namespace EnemiesScript
         protected Rigidbody rb;
         
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        protected void Start()
         {
             rb = GetComponent<Rigidbody>();
             rb.freezeRotation = true;
-            realSpeed = moveSpeed;
+            realSpeed = baseSpeed;
         }
 
         // Update is called once per frame
@@ -108,11 +107,11 @@ namespace EnemiesScript
             }
             else
             {
-                realSpeed = moveSpeed;
+                realSpeed = baseSpeed;
             }
             if (flatVel.magnitude > realSpeed)
             {
-                Vector3 limitedVel = flatVel.normalized * moveSpeed;
+                Vector3 limitedVel = flatVel.normalized * baseSpeed;
                 rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
             }
         }
