@@ -5,6 +5,7 @@ using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
 using UnityEngine.Serialization;
+using static UnityEngine.GraphicsBuffer;
 
 namespace EnemiesScript.Range
 {
@@ -20,109 +21,71 @@ namespace EnemiesScript.Range
 
         private Color _defaultGroundColor;
         private Coroutine _flashGroundCoroutine;
+        private GameObject _target;
+        private PlayerHealth _playerHealthManager;
 
         float Timer = 0;//for testing agent action remove later
-        private void Update()
-        {
-            //for testing agent action remove later
-            //agent.MoveAgent(Random.Range(0, 5));
-            //if (Timer >= 2)
-            //{
-            //    agent.Attack(0);
-            //    agent.RotateAgent(Random.Range(0, 3));
-            //    Debug.Log("Attack");
-            //    Timer = 0;
-            //}
-            //Timer += Time.deltaTime;
-        }
         public override void Initialize()
         {
             currentEpisode = 0;
             cumulativeReward = 0f;
+
+            if (_target)
+            {
+                _playerHealthManager = _target.gameObject.GetComponent<PlayerHealth>();
+                _playerHealthManager.OnPlayerHurt += OnAttackLanded;
+                _playerHealthManager.OnPlayerDie += OnPlayerDie;
+            }
 
             if (groundRenderer)
             {
                 _defaultGroundColor = groundRenderer.material.color;
             }
         }
-
+        protected void OnAttackLanded()// Called when Agent Kill Something
+        {
+            Debug.Log("Get rewards for hurting player based on damage or something");
+        }
+        protected void OnPlayerDie()// Called when Agent Kill Something
+        {
+            Debug.Log("Get rewards for killing player");
+        }
         //public override void Heuristic(in ActionBuffers actionsOut)
         //{
         //    var continuousActionsOut = actionsOut.ContinuousActions;
         //    continuousActionsOut[0] = Input.GetAxis("Horizontal");
         //    continuousActionsOut[1] = Input.GetAxis("Vertical");
         //}
-        
-         public override void Heuristic(in ActionBuffers actionsOut)
+
+        public override void Heuristic(in ActionBuffers actionsOut)
         {
+            var continuousActions = actionsOut.ContinuousActions;
             var discreteActionsOut = actionsOut.DiscreteActions;
+            continuousActions[0] = Input.GetAxis("Horizontal");
+            continuousActions[1] = Input.GetAxis("Vertical");
+            continuousActions[2] = Input.GetAxis("Mouse X"); // Shitty Control Who TF Write this
 
             discreteActionsOut[0] = 0; // Do nothing
             discreteActionsOut[1] = 0; // Do nothing
-            discreteActionsOut[2] = 0; // Do nothing
 
-            if (Input.GetKey(KeyCode.UpArrow))
+
+            if (Input.GetKey(KeyCode.LeftShift))
             {
-                //Debug.LogWarning("Up");
-                discreteActionsOut[0] = 1;
+                discreteActionsOut[0] = 1;//Dash
             }
-            else if (Input.GetKey(KeyCode.DownArrow))
+
+            if (Input.GetMouseButton(0))
             {
-                //Debug.LogWarning("Down");
-                discreteActionsOut[0] = 2;
-            }
-            else if (Input.GetKey(KeyCode.RightArrow))
-            {
-                //Debug.LogWarning("Right");
-                discreteActionsOut[0] = 3;
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                //Debug.LogWarning("Left");
-                discreteActionsOut[0] = 4;
-            }
-            else if (Input.GetKey(KeyCode.D))
-            {
-                //Debug.LogWarning("CW");
                 discreteActionsOut[1] = 1;
-            }
-            else if (Input.GetKey(KeyCode.A))
-            {
-                //Debug.LogWarning("CCW");
-                discreteActionsOut[1] = 2;
-            }
-            else if (Input.GetKey(KeyCode.Space))
-            {
-                Debug.LogWarning("Atk");
-                discreteActionsOut[2] = 1;
             }
         }
         public override void CollectObservations(VectorSensor sensor)
         {
             // Give Agent the information about the state
-            // The Player's position
-            // Vector3 playerPosNormalized = _player.localPosition.normalized;
-
-            // The Enemy's position
-
-
-            // The Enemy's direction (on the Y Axis)
-
-
-            // sensor.AddObservation(playerPosNormalized.x);
-            // sensor.AddObservation(playerPosNormalized.z); 
-
-            // Using Ray Perception to identify the goal
             sensor.AddObservation(transform.localPosition);
         }
         public override void OnActionReceived(ActionBuffers actions)
         {
-            //var xVelocity = actions.ContinuousActions[0];
-            //var zVelocity = actions.ContinuousActions[1];
-            
-            //var xDistance = xVelocity * maxSpeed * Time.fixedDeltaTime;
-            //var zDistance = zVelocity * maxSpeed * Time.fixedDeltaTime;
-            
             //transform.localPosition += new Vector3(xDistance, 0, zDistance);
             
             // Penalty given each step to encourage agent to finish a task quickly
@@ -137,10 +100,6 @@ namespace EnemiesScript.Range
             {
                 agent.Attack(attack - 1);
             }
-
-            // AddReward(-2f/MaxStep);
-            // // Update the cumulative reward after adding the step penalty.
-            // cumulativeReward = GetCumulativeReward();
         }
         private void MoveAgent(ActionSegment<int> act)
         {

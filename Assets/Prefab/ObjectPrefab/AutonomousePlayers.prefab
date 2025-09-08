@@ -178,7 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf5393e928dcc994a88fe47816e5f3e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stats: {fileID: 11400000, guid: 2b21fef47d5df0e42968e5f5172abf8b, type: 2}
+  _stats: {fileID: 11400000, guid: 40b60723c1b10684c81463559da00361, type: 2}
   HPDisplay: {fileID: 862460740785998536}
 --- !u!114 &116878861277677139
 MonoBehaviour:

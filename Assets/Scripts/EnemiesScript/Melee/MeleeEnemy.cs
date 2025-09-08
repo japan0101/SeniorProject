@@ -26,17 +26,17 @@ namespace EnemiesScript.Melee
             throw new System.NotImplementedException();
         }
 
-        protected override void OnKilled(GameObject other)
+        protected override void OnKilled()
         {
             throw new System.NotImplementedException();
         }
 
-        protected override void OnAttackLanded(GameObject other)
+        protected override void OnAttackLanded()
         {
             throw new System.NotImplementedException();
         }
 
-        protected override void OnKilledTarget(GameObject other)
+        protected override void OnKilledTarget()
         {
             throw new System.NotImplementedException();
         }

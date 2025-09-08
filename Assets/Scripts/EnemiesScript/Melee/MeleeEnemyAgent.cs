@@ -6,6 +6,7 @@ using Unity.MLAgents.Sensors;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using static UnityEngine.GraphicsBuffer;
 
 namespace EnemiesScript.Melee
 {
@@ -20,26 +21,33 @@ namespace EnemiesScript.Melee
         private Color _defaultGroundColor;
         private Coroutine _flashGroundCoroutine;
         private GameObject _target;
+        private PlayerHealth _playerHealthManager;
         float Timer = 0;//for testing agent action remove later
         public override void Initialize()
         {
             currentEpisode = 0;
             cumulativeReward = 0f;
-
             if (groundRenderer)
             {
                 _defaultGroundColor = groundRenderer.material.color;
             }
         }
-
+        protected void OnAttackLanded()// Called when Agent Kill Something
+        {
+            Debug.Log("Get rewards for hurting player based on damage or something");
+        }
+        protected void OnKilledTarget()// Called when Agent Kill Something
+        {
+            Debug.Log("Get rewards for killing player");
+        }
         //public override void Heuristic(in ActionBuffers actionsOut)
         //{
         //    var continuousActionsOut = actionsOut.ContinuousActions;
         //    continuousActionsOut[0] = Input.GetAxis("Horizontal");
         //    continuousActionsOut[1] = Input.GetAxis("Vertical");
         //}
-        
-         public override void Heuristic(in ActionBuffers actionsOut)
+
+        public override void Heuristic(in ActionBuffers actionsOut)
         {
             var continuousActions = actionsOut.ContinuousActions;
             var discreteActionsOut = actionsOut.DiscreteActions;
@@ -161,7 +169,13 @@ namespace EnemiesScript.Melee
 
             SpawnPlayer();
         }
-        
+        private void AddListenerToTarget(GameObject _target)
+        {
+            _playerHealthManager = _target.gameObject.GetComponent<PlayerHealth>(); //Get playerHealth Component to listen to
+            _playerHealthManager.OnPlayerHurt += OnAttackLanded; //Add method to run when player health invoke OnPlayerHurt
+            _playerHealthManager.OnPlayerDie += OnKilledTarget; //Add method to run when player health invoke OnPlayerDie
+            agent.AddListenerToTarget(_target);
+        }
         
         private void SpawnPlayer()
         {
@@ -181,7 +195,9 @@ namespace EnemiesScript.Melee
             // Apply the calculated position to the player
             
             if (_target) Destroy(_target);
+
             _target = Instantiate(targetPrefab, playerPosition, Quaternion.identity);
+            AddListenerToTarget(_target);
         }
     }
 }

@@ -19,28 +19,6 @@ namespace EnemiesScript.Range
             _atk.OnAttack();
         }
 
-        // public override void MoveAgent(int actionIndex)
-        // {
-        //     switch (actionIndex)
-        //     {
-        //         case 1: // Move forward
-        //             rb.AddForce(transform.forward * moveSpeed * 10f, ForceMode.Force);
-        //             // transform.position += transform.forward * _moveSpeed * Time.deltaTime;
-        //             break;
-        //         case 2: // Move Backward
-        //             rb.AddForce(-transform.forward * moveSpeed * 10f, ForceMode.Force);
-        //             // transform.position -= transform.forward * _moveSpeed * Time.deltaTime;
-        //             break;
-        //         case 3: // Stride Right
-        //             rb.AddForce(transform.right * realSpeed * 10f, ForceMode.Force);
-        //             break;
-        //         case 4: // Stride Left
-        //             rb.AddForce(-transform.right * realSpeed * 10f, ForceMode.Force);
-        //             break;
-        //     }
-        //     SpeedControl();
-        // }
-
         public override void Specials(int actionIndex)
         {
             throw new System.NotImplementedException();
@@ -58,20 +36,20 @@ namespace EnemiesScript.Range
 
         protected override void OnHurt(GameObject other)
         {
-            Debug.Log("Agent sense hit");
+            throw new System.NotImplementedException();
         }
 
-        protected override void OnKilled(GameObject other)
-        {
-            Debug.Log("Agent sense a kill");
-        }
-
-        protected override void OnAttackLanded(GameObject other)
+        protected override void OnKilled()
         {
             throw new System.NotImplementedException();
         }
 
-        protected override void OnKilledTarget(GameObject other)
+        protected override void OnAttackLanded()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override void OnKilledTarget()
         {
             throw new System.NotImplementedException();
         }

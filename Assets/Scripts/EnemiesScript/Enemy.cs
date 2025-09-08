@@ -26,7 +26,8 @@ namespace EnemiesScript
         private bool isDashing = false;
         public List<EnemyAttack> attacks = new List<EnemyAttack>();
         protected Rigidbody rb;
-        
+        public PlayerHealth _playerHealthManager;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         protected void Start()
         {
@@ -51,7 +52,12 @@ namespace EnemiesScript
             // Debug.Log(realSpeed);
         }
 
-
+        public void AddListenerToTarget(GameObject _target)
+        {
+            _playerHealthManager = _target.gameObject.GetComponent<PlayerHealth>();
+            _playerHealthManager.OnPlayerHurt += OnAttackLanded;
+            _playerHealthManager.OnPlayerDie += OnKilledTarget;
+        }
         public abstract void Specials(int actionIndex);
         public abstract void MoveAgentX(float actionValue);
         public abstract void MoveAgentZ(float actionValue);
@@ -76,7 +82,7 @@ namespace EnemiesScript
                 {
                     //spawn hit FX then register damage
                     TakeDamage(bullet.damage);
-                    OnHit(other.gameObject);
+                    OnHurt(other.gameObject);
                 }
             }
         }
@@ -84,18 +90,21 @@ namespace EnemiesScript
         {
             if (hp <= 0)
             {
-                Destroy(this.gameObject);
+                OnKilled();
+                Destroy(gameObject, 0.1f);
             }
         }
-        //Send to agent to deduct points
-        protected abstract void OnHit(GameObject other);
+        protected abstract void OnHurt(GameObject other); // Called when Agent getting Hurt
+        protected abstract void OnKilled(); // Called when Agent getting Killed
+        protected abstract void OnAttackLanded(); // Called when Agent Hit Something
+        protected abstract void OnKilledTarget(); // Called when Agent Kill Something
 
         protected void TakeDamage(float damage)
         {
             //instantiate damage number with DamageTextSpawner component
             //realDmg = 
             GetComponent<DamageTextSpawner>().SpawnDamageText(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damage);
-            hp -= damage;// reduce health
+            hp -= damage - (defence / 100);// reduce health
         }
 
 
@@ -116,7 +125,7 @@ namespace EnemiesScript
                 Vector3 limitedVel = flatVel.normalized * baseSpeed;
                 rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
             }
-            Debug.Log(realSpeed);
+            //Debug.Log(realSpeed);
         }
     }
 }
