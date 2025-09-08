@@ -14,7 +14,7 @@ public class PlayerHealth : MonoBehaviour
     public event Action OnPlayerHurt;
     public event Action OnPlayerDie;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
         DisplayHP();
@@ -60,7 +60,6 @@ public class PlayerHealth : MonoBehaviour
                 pureDirection.y = 0;
                 Vector3 normDirection = pureDirection.normalized;
                 TakeKnockback(normDirection, attacks.baseKnockbackForce);
-                //attacker.OnHitPlayer();
             }
         }
     }
@@ -75,7 +74,7 @@ public class PlayerHealth : MonoBehaviour
             OnPlayerDie?.Invoke();
             Destroy(gameObject);
         }
-        Debug.Log(_stats.currentHP);
+        // Debug.Log(_stats.currentHP);
         DisplayHP();
     }
     public void TakeKnockback(Vector3 direction, float force)

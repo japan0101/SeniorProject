@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eebf3f769b430f54c9fd4262a97af970, type: 3}
   m_Name: PlayerData 1
   m_EditorClassIdentifier: 
-  maxHP: 20
-  currentHP: 20
+  maxHP: 100
+  currentHP: 90
   maxEnergy: 100
   currentEnergy: 100
   EnergyRegenRate: 5

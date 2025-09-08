@@ -1,6 +1,4 @@
-﻿using Unity.MLAgents.Actuators;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace EnemiesScript.Melee
 {
@@ -9,39 +7,56 @@ namespace EnemiesScript.Melee
         private EnemyAttack _atk;
         float Timer = 0;
         private MeleeEnemyAgent _agent;
-        private void Start()
+        
+        private void Awake()
         {
-            base.Start();
             _agent = GetComponent<MeleeEnemyAgent>();
         }
+        
         public override void Attack(int atkIndex)
         {   
             if (_atk) return;
+            if (_agent.isTraining)
+            {
+                _agent.AddReward(-0.01f);
+                _agent.cumulativeReward = _agent.GetCumulativeReward();
+            }
             _atk = Instantiate(attacks[atkIndex], gameObject.transform);
             Destroy(_atk.gameObject, _atk.lifetime);
         }
 
-        protected override void OnHurt(GameObject other)
+        protected override void OnHurt()
         {
-            throw new System.NotImplementedException();
+            if (_agent.isTraining)
+            {
+                _agent.OnHurt();
+            }
         }
 
         protected override void OnKilled()
         {
-            throw new System.NotImplementedException();
+            if (_agent.isTraining)
+            {
+                _agent.OnKilled();
+            }
         }
 
         protected override void OnAttackLanded()
         {
-            throw new System.NotImplementedException();
+            if (_agent.isTraining)
+            {
+                _agent.OnAttackLanded();
+            }
         }
 
         protected override void OnKilledTarget()
         {
-            throw new System.NotImplementedException();
+            if (_agent.isTraining)
+            {
+                _agent.OnKilledTarget();
+            }
         }
-
-
+        
         public override void Specials(int actionIndex)
         {
             switch (actionIndex)
@@ -50,6 +65,8 @@ namespace EnemiesScript.Melee
                     if(energy >= dashConsume)
                     {
                         Dash();//increase speed of the agent for a duration and consume energy
+                        _agent.AddReward(-Time.deltaTime/10f);
+                        _agent.cumulativeReward = _agent.GetCumulativeReward();
                     }
                     break;
             }
@@ -57,37 +74,27 @@ namespace EnemiesScript.Melee
 
         public override void MoveAgentX(float actionValue)
         {
-            rb.AddForce(transform.right * realSpeed * actionValue * baseSpeed, ForceMode.Force);
             SpeedControl();
+            rb.AddForce(transform.right * realSpeed * actionValue * baseSpeed, ForceMode.Force);
         }
 
         public override void MoveAgentZ(float actionValue)
         {
-            rb.AddForce(transform.forward * realSpeed * actionValue * baseSpeed, ForceMode.Force);
             SpeedControl();
+            rb.AddForce(transform.forward * realSpeed * actionValue * baseSpeed, ForceMode.Force);
         }
-        
         
         public override void RotateAgent(float actionValue)
         {
-            // switch (actionIndex)
-            // {
-            //     case 1: // Rotate left
-            //         transform.Rotate(0f, -rotateSpeed * Time.deltaTime, 0f);
-            //         break;
-            //     case 2: // Rotate Right
-            //         transform.Rotate(0f, rotateSpeed * Time.deltaTime, 0f);
-            //         break;
-            // }
-            
             transform.Rotate(0f, rotateSpeed * actionValue * Time.deltaTime, 0f);
         }
 
         private void Update()
         {
+            base.Update();
             if (hp <= 0)
             {
-                _agent.OnKilled();
+                OnKilled();
                 hp = maxHp;
             }
         }

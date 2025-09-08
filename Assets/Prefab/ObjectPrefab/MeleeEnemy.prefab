@@ -176,18 +176,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 50
   maxHp: 50
-  moveSpeed: 5
-  dashSpeed: 8
+  baseSpeed: 5
+  dashSpeed: 20
   dashCooldown: 0.5
   dashDuration: 0.2
   dashConsume: 10
-  rotateSpeed: 360
+  rotateSpeed: 180
   defence: 0
   energy: 100
   maxEnergy: 100
-  maxSpeed: 5
   attacks:
   - {fileID: 8056371960188120745, guid: b044becc80fe92e429f417a99987414b, type: 3}
+  _playerHealthManager: {fileID: 0}
+  _player: {fileID: 0}
 --- !u!114 &1858242583132030306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,11 +236,12 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 5000
-  target: {fileID: 3880061375110339810, guid: 3e3173a6dc306434f9231b0f6284658a, type: 3}
+  targetPrefab: {fileID: 3880061375110339810, guid: 3e3173a6dc306434f9231b0f6284658a, type: 3}
   groundRenderer: {fileID: 0}
   agent: {fileID: 3174504295571058887}
   currentEpisode: 0
   cumulativeReward: 0
+  isTraining: 1
 --- !u!114 &8443655869179619361
 MonoBehaviour:
   m_ObjectHideFlags: 0

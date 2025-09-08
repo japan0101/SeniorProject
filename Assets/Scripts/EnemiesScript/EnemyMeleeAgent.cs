@@ -102,17 +102,6 @@ namespace EnemiesScript
         public override void CollectObservations(VectorSensor sensor)
         {
             // Give Agent the information about the state
-            // The Player's position
-            // Vector3 playerPosNormalized = _player.localPosition.normalized;
-
-            // The Enemy's position
-        
-        
-            // The Enemy's direction (on the Y Axis)
-
-        
-            // sensor.AddObservation(playerPosNormalized.x);
-            // sensor.AddObservation(playerPosNormalized.z); 
         
             // Using Ray Perception to identify the goal
             sensor.AddObservation(transform.localPosition);

@@ -1,0 +1,65 @@
+{
+    "MeleeEnemy": {
+        "checkpoints": [
+            {
+                "steps": 499974,
+                "file_path": "results\\MeleeEnemy1\\MeleeEnemy\\MeleeEnemy-499974.onnx",
+                "reward": -2.1288000717759132,
+                "creation_time": 1757355055.2939358,
+                "auxillary_file_paths": [
+                    "results\\MeleeEnemy1\\MeleeEnemy\\MeleeEnemy-499974.pt"
+                ]
+            },
+            {
+                "steps": 999970,
+                "file_path": "results\\MeleeEnemy1\\MeleeEnemy\\MeleeEnemy-999970.onnx",
+                "reward": -2.1184000819921494,
+                "creation_time": 1757355682.0716364,
+                "auxillary_file_paths": [
+                    "results\\MeleeEnemy1\\MeleeEnemy\\MeleeEnemy-999970.pt"
+                ]
+            },
+            {
+                "steps": 1499957,
+                "file_path": "results\\MeleeEnemy1\\MeleeEnemy\\MeleeEnemy-1499957.onnx",
+                "reward": null,
+                "creation_time": 1757356315.4542623,
+                "auxillary_file_paths": [
+                    "results\\MeleeEnemy1\\MeleeEnemy\\MeleeEnemy-1499957.pt"
+                ]
+            },
+            {
+                "steps": 1999957,
+                "file_path": "results\\MeleeEnemy1\\MeleeEnemy\\MeleeEnemy-1999957.onnx",
+                "reward": -1.9988000839948654,
+                "creation_time": 1757356882.342561,
+                "auxillary_file_paths": [
+                    "results\\MeleeEnemy1\\MeleeEnemy\\MeleeEnemy-1999957.pt"
+                ]
+            },
+            {
+                "steps": 2476917,
+                "file_path": "results\\MeleeEnemy1\\MeleeEnemy\\MeleeEnemy-2476917.onnx",
+                "reward": -1.998400092124939,
+                "creation_time": 1757357434.622625,
+                "auxillary_file_paths": [
+                    "results\\MeleeEnemy1\\MeleeEnemy\\MeleeEnemy-2476917.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2476917,
+            "file_path": "results\\MeleeEnemy1\\MeleeEnemy.onnx",
+            "reward": -1.998400092124939,
+            "creation_time": 1757357434.622625,
+            "auxillary_file_paths": [
+                "results\\MeleeEnemy1\\MeleeEnemy\\MeleeEnemy-2476917.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.1.0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

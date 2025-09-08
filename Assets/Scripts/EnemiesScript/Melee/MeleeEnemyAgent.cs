@@ -1,12 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
-using static UnityEngine.GraphicsBuffer;
+using UnityEngine.AI;
+using Random = UnityEngine.Random;
+
 
 namespace EnemiesScript.Melee
 {
@@ -17,35 +18,35 @@ namespace EnemiesScript.Melee
         [SerializeField] private Enemy agent;
         [HideInInspector] public int currentEpisode;
         [HideInInspector] public float cumulativeReward;
-
+        private Transform arena;
+        public bool isTraining;
         private Color _defaultGroundColor;
         private Coroutine _flashGroundCoroutine;
-        private GameObject _target;
         private PlayerHealth _playerHealthManager;
+        
         float Timer = 0;//for testing agent action remove later
-        public override void Initialize()
+
+        private void Awake()
         {
-            currentEpisode = 0;
-            cumulativeReward = 0f;
-            if (groundRenderer)
+            if (!isTraining)
             {
-                _defaultGroundColor = groundRenderer.material.color;
+                agent._player = GameObject.FindGameObjectWithTag("Player");
             }
         }
-        protected void OnAttackLanded()// Called when Agent Kill Something
+
+        public override void Initialize()
         {
-            Debug.Log("Get rewards for hurting player based on damage or something");
+            if (isTraining)
+            {
+                arena = this.transform.parent.gameObject.transform;
+                currentEpisode = 0;
+                cumulativeReward = 0f;
+                if (groundRenderer)
+                {
+                    _defaultGroundColor = groundRenderer.material.color;
+                }
+            }
         }
-        protected void OnKilledTarget()// Called when Agent Kill Something
-        {
-            Debug.Log("Get rewards for killing player");
-        }
-        //public override void Heuristic(in ActionBuffers actionsOut)
-        //{
-        //    var continuousActionsOut = actionsOut.ContinuousActions;
-        //    continuousActionsOut[0] = Input.GetAxis("Horizontal");
-        //    continuousActionsOut[1] = Input.GetAxis("Vertical");
-        //}
 
         public override void Heuristic(in ActionBuffers actionsOut)
         {
@@ -53,7 +54,7 @@ namespace EnemiesScript.Melee
             var discreteActionsOut = actionsOut.DiscreteActions;
             continuousActions[0] = Input.GetAxis("Horizontal");
             continuousActions[1] = Input.GetAxis("Vertical");
-            continuousActions[2] = Input.GetAxis("Mouse X"); // Shitty Control Who TF Write this
+            
 
             discreteActionsOut[0] = 0; // Do nothing
             discreteActionsOut[1] = 0; // Do nothing
@@ -63,41 +64,29 @@ namespace EnemiesScript.Melee
             {
                 discreteActionsOut[0] = 1;//Dash
             }
-            
-            if (Input.GetMouseButton(0))
+            if (Input.GetKey(KeyCode.Space))
             {
                 discreteActionsOut[1] = 1;
             }
+            if (Input.GetKey(KeyCode.Q))
+            {
+                continuousActions[2] = -1;
+            }
+            if (Input.GetKey(KeyCode.E))
+            {
+                continuousActions[2] = 1;
+            }
+            
         }
         public override void CollectObservations(VectorSensor sensor)
         {
             // Give Agent the information about the state
-            // The Player's position
-            // Vector3 playerPosNormalized = _player.localPosition.normalized;
-
-            // The Enemy's position
-
-
-            // The Enemy's direction (on the Y Axis)
-
-
-            // sensor.AddObservation(playerPosNormalized.x);
-            // sensor.AddObservation(playerPosNormalized.z); 
-
             // Using Ray Perception to identify the goal
             sensor.AddObservation(transform.localPosition);
         }
         public override void OnActionReceived(ActionBuffers actions)
         {
-            // var xVelocity = actions.ContinuousActions[0];
-            //var zVelocity = actions.ContinuousActions[1];
             
-            //var xDistance = xVelocity * maxSpeed * Time.fixedDeltaTime;
-            //var zDistance = zVelocity * maxSpeed * Time.fixedDeltaTime;
-            
-            //transform.localPosition += new Vector3(xDistance, 0, zDistance);
-            
-            // Penalty given each step to encourage agent to finish a task quickly
             var moveX = actions.ContinuousActions[0];
             var moveZ = actions.ContinuousActions[1];
             // var movement = actions.DiscreteActions[0];
@@ -115,26 +104,43 @@ namespace EnemiesScript.Melee
                 agent.Attack(attack - 1);
             }
             base.OnActionReceived(actions);
-
-            AddReward(-2f/MaxStep);
-            // // Update the cumulative reward after adding the step penalty.
-            cumulativeReward = GetCumulativeReward();
+            
+            if (isTraining)
+            {
+                // Penalty given each step to encourage agent to finish a task quickly
+                AddReward(-2f / MaxStep);
+                // // Update the cumulative reward after adding the step penalty.
+                cumulativeReward = GetCumulativeReward();
+            }
         }
 
+        public void OnAttackLanded()// Called when Agent Hit Something
+        {
+            if (!isTraining) return;
+            AddReward(0.2f);
+            cumulativeReward = GetCumulativeReward();
+        }
+        public void OnKilledTarget()// Called when Agent Kill Something
+        {
+            if (!isTraining) return;
+            AddReward(1f);
+            cumulativeReward = GetCumulativeReward();
+            EndEpisode();
+        }
         public void OnKilled()
         {
             // Getting Killed
+            if (!isTraining) return;
             AddReward(-1f);
             cumulativeReward = GetCumulativeReward();
             EndEpisode();
         }
-
+        
         public void OnHurt()
         {
-            // Getting Hurt
-            AddReward(0.2f);
+            if (!isTraining) return;
+            AddReward(-0.002f);
             cumulativeReward = GetCumulativeReward();
-            EndEpisode();
         }
         
         private IEnumerator FlashGround(Color targetColor, float duration)
@@ -149,10 +155,11 @@ namespace EnemiesScript.Melee
                 yield return null;
             }
         }
-
+        
         public override void OnEpisodeBegin()
         {
-            if (groundRenderer && cumulativeReward != 0f)
+            if (!isTraining) return;
+            if (!groundRenderer.Equals(null) && cumulativeReward != 0f)
             { 
                 Color flashColor = (cumulativeReward > 0f) ? Color.green : Color.red;
 
@@ -169,17 +176,10 @@ namespace EnemiesScript.Melee
 
             SpawnPlayer();
         }
-        private void AddListenerToTarget(GameObject _target)
-        {
-            _playerHealthManager = _target.gameObject.GetComponent<PlayerHealth>(); //Get playerHealth Component to listen to
-            _playerHealthManager.OnPlayerHurt += OnAttackLanded; //Add method to run when player health invoke OnPlayerHurt
-            _playerHealthManager.OnPlayerDie += OnKilledTarget; //Add method to run when player health invoke OnPlayerDie
-            agent.AddListenerToTarget(_target);
-        }
         
         private void SpawnPlayer()
         {
-            var location = new Vector3(0f, 0.5f, 0f);
+            var localOrigin = new Vector3(0f, 0.5f, 0f);
             
             
             // Randomize the direction on the Y-axis (angle in degrees)
@@ -190,14 +190,19 @@ namespace EnemiesScript.Melee
             float randomDistance = Random.Range(1f, 10f);
         
             // Calculate the player's position
-            Vector3 playerPosition = location + randomDirection * randomDistance;
+            Vector3 localPlayerPosition = localOrigin + randomDirection * randomDistance;
         
             // Apply the calculated position to the player
             
-            if (_target) Destroy(_target);
+            
+            if (agent._player) Destroy(agent._player);
 
-            _target = Instantiate(targetPrefab, playerPosition, Quaternion.identity);
-            AddListenerToTarget(_target);
+            agent._player = Instantiate(targetPrefab, arena);
+            var navigation = agent._player.GetComponent<TrainerNavigation>();
+            navigation.EnemyTarget = gameObject;
+            agent._player.transform.localPosition = localPlayerPosition;
+            agent._player.transform.localRotation = Quaternion.identity;
+            agent.AddListenerToTarget(agent._player);
         }
     }
 }

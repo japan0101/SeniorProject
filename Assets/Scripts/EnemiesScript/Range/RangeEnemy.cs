@@ -34,7 +34,7 @@ namespace EnemiesScript.Range
             throw new System.NotImplementedException();
         }
 
-        protected override void OnHurt(GameObject other)
+        protected override void OnHurt()
         {
             throw new System.NotImplementedException();
         }

@@ -22,7 +22,7 @@ public class TrainerNavigation : MonoBehaviour
     public float aimErrorMargin = 2f;
 
     // A reference to the current target GameObject.
-    private GameObject EnemyTarget;
+    [HideInInspector]public GameObject EnemyTarget;
     // A reference to the Rigidbody component for force-based movement.
     private Rigidbody rb;
     // The desired rotation for the agent.
@@ -37,11 +37,6 @@ public class TrainerNavigation : MonoBehaviour
     void Update()
     {
         // Find a target if one doesn't exist.
-        if (EnemyTarget == null)
-        {
-            FindTarget("MeleeEnemy");
-        }
-
         // Only proceed if a target has been found.
         if (EnemyTarget != null)
         {
@@ -146,6 +141,7 @@ public class TrainerNavigation : MonoBehaviour
     /// </summary>
     private void SpeedControl()
     {
+        rb.linearDamping = 2.5f;
         Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         if (flatVel.magnitude > speed)
         {

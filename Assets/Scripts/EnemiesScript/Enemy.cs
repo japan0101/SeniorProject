@@ -27,6 +27,7 @@ namespace EnemiesScript
         public List<EnemyAttack> attacks = new List<EnemyAttack>();
         protected Rigidbody rb;
         public PlayerHealth _playerHealthManager;
+        public GameObject _player;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         protected void Start()
@@ -37,9 +38,8 @@ namespace EnemiesScript
         }
 
         // Update is called once per frame
-        void Update()
+        protected void Update()
         {
-            CheckDeath();
             if (isDashing) {
                 if (dashTimer > dashDuration)//check for dash cooldown when is dashing
                 {
@@ -82,19 +82,11 @@ namespace EnemiesScript
                 {
                     //spawn hit FX then register damage
                     TakeDamage(bullet.damage);
-                    OnHurt(other.gameObject);
+                    OnHurt();
                 }
             }
         }
-        protected void CheckDeath()
-        {
-            if (hp <= 0)
-            {
-                OnKilled();
-                Destroy(gameObject, 0.1f);
-            }
-        }
-        protected abstract void OnHurt(GameObject other); // Called when Agent getting Hurt
+        protected abstract void OnHurt(); // Called when Agent getting Hurt
         protected abstract void OnKilled(); // Called when Agent getting Killed
         protected abstract void OnAttackLanded(); // Called when Agent Hit Something
         protected abstract void OnKilledTarget(); // Called when Agent Kill Something
