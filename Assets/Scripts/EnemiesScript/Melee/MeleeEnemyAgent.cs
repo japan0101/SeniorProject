@@ -53,7 +53,7 @@ namespace EnemiesScript.Melee
 
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                discreteActionsOut[0] = 1;
+                discreteActionsOut[0] = 1;//Dash
             }
             
             if (Input.GetMouseButton(0))

@@ -76,6 +76,7 @@ namespace EnemiesScript
                 {
                     //spawn hit FX then register damage
                     TakeDamage(bullet.damage);
+                    OnHit(other.gameObject);
                 }
             }
         }
@@ -86,14 +87,13 @@ namespace EnemiesScript
                 Destroy(this.gameObject);
             }
         }
-        protected abstract void OnHurt(GameObject other); // Called when Agent getting Hurt
-        protected abstract void OnKilled(GameObject other); // Called when Agent getting Killed
-        protected abstract void OnAttackLanded(GameObject other); // Called when Agent Hit Something
-        protected abstract void OnKilledTarget(GameObject other); // Called when Agent Kill Something
+        //Send to agent to deduct points
+        protected abstract void OnHit(GameObject other);
 
         protected void TakeDamage(float damage)
         {
             //instantiate damage number with DamageTextSpawner component
+            //realDmg = 
             GetComponent<DamageTextSpawner>().SpawnDamageText(new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), damage);
             hp -= damage;// reduce health
         }
@@ -101,7 +101,7 @@ namespace EnemiesScript
 
         protected void SpeedControl()
         {
-            rb.linearDamping = 5f;
+            rb.linearDamping = 2.5f;
             Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
             if (isDashing)
             {
@@ -116,6 +116,7 @@ namespace EnemiesScript
                 Vector3 limitedVel = flatVel.normalized * baseSpeed;
                 rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
             }
+            Debug.Log(realSpeed);
         }
     }
 }
