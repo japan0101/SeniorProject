@@ -20,6 +20,7 @@ namespace EnemiesScript
         public float defence;
         public float energy;
         public float maxEnergy;
+        public float energyRegenPerSecond;
         
         protected float dashTimer = 0;
         protected float realSpeed;
@@ -48,7 +49,7 @@ namespace EnemiesScript
                 }
                 dashTimer += Time.deltaTime;
             }
-            RegenEnergy(2);
+            RegenEnergy(energyRegenPerSecond);
             // Debug.Log(realSpeed);
         }
 
@@ -63,9 +64,9 @@ namespace EnemiesScript
         public abstract void MoveAgentZ(float actionValue);
         public abstract void RotateAgent(float actionValue);
         public abstract void Attack(int atkIndex);
-        public void RegenEnergy(float amount)
+        private void RegenEnergy(float amountPerSecond)
         {
-            energy = Mathf.Clamp(energy + amount, 0, maxEnergy);
+            energy = Mathf.Clamp(energy + amountPerSecond * Time.deltaTime , 0, maxEnergy);
         }
         public void Dash()
         {

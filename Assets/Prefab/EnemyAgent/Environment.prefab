@@ -661,9 +661,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1858242583132030306, guid: b98f66ebf0d0e5a439006c613a0bb3a0, type: 3}
+      propertyPath: m_BehaviorName
+      value: MeleeEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1858242583132030306, guid: b98f66ebf0d0e5a439006c613a0bb3a0, type: 3}
+      propertyPath: m_BehaviorType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3174504295571058887, guid: b98f66ebf0d0e5a439006c613a0bb3a0, type: 3}
-      propertyPath: dashSpeed
-      value: 20
+      propertyPath: dashConsume
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3174504295571058887, guid: b98f66ebf0d0e5a439006c613a0bb3a0, type: 3}
+      propertyPath: energyRegenPerSecond
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8721466605024634303, guid: b98f66ebf0d0e5a439006c613a0bb3a0, type: 3}
+      propertyPath: MaxStep
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 8721466605024634303, guid: b98f66ebf0d0e5a439006c613a0bb3a0, type: 3}
+      propertyPath: isTraining
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8721466605024634303, guid: b98f66ebf0d0e5a439006c613a0bb3a0, type: 3}
       propertyPath: groundRenderer

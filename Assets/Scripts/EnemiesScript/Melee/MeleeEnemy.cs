@@ -18,11 +18,15 @@ namespace EnemiesScript.Melee
             if (_atk) return;
             if (_agent.isTraining)
             {
-                _agent.AddReward(-0.01f);
-                _agent.cumulativeReward = _agent.GetCumulativeReward();
+                _agent.OnAttack();
             }
-            _atk = Instantiate(attacks[atkIndex], gameObject.transform);
-            Destroy(_atk.gameObject, _atk.lifetime);
+
+            if (energy >= 10f)
+            {
+                energy -= 10f;
+                _atk = Instantiate(attacks[atkIndex], gameObject.transform);
+                Destroy(_atk.gameObject, _atk.lifetime);
+            }
         }
 
         protected override void OnHurt()
@@ -65,8 +69,7 @@ namespace EnemiesScript.Melee
                     if(energy >= dashConsume)
                     {
                         Dash();//increase speed of the agent for a duration and consume energy
-                        _agent.AddReward(-Time.deltaTime/10f);
-                        _agent.cumulativeReward = _agent.GetCumulativeReward();
+                        _agent.OnSpecial();
                     }
                     break;
             }

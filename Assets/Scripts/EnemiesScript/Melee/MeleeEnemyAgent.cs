@@ -23,6 +23,9 @@ namespace EnemiesScript.Melee
         private Color _defaultGroundColor;
         private Coroutine _flashGroundCoroutine;
         private PlayerHealth _playerHealthManager;
+        private bool attackedThisStep = false;
+        private float lastDistance;
+        private float minAttackDistance = 1.5f;
         
         float Timer = 0;//for testing agent action remove later
 
@@ -89,7 +92,6 @@ namespace EnemiesScript.Melee
             
             var moveX = actions.ContinuousActions[0];
             var moveZ = actions.ContinuousActions[1];
-            // var movement = actions.DiscreteActions[0];
             var rotation = actions.ContinuousActions[2];
             var special = actions.DiscreteActions[0];
             var attack = actions.DiscreteActions[1];
@@ -98,26 +100,64 @@ namespace EnemiesScript.Melee
             agent.MoveAgentZ(moveZ);
             agent.RotateAgent(rotation);
             agent.Specials(special);
+            
+            attackedThisStep = false;
 
             if (attack > 0)
             {
                 agent.Attack(attack - 1);
+                attackedThisStep = true;
             }
             base.OnActionReceived(actions);
             
-            if (isTraining)
+            if (isTraining & agent._player != null)
             {
+                var player = agent._player;
+                float currentDistance = Vector3.Distance(transform.position, player.transform.position);
+                
+                // Reward moving closer, penalize running away
+                float distanceDelta = lastDistance - currentDistance;
+                AddReward(Mathf.Clamp(distanceDelta * 0.05f, -0.05f, 0.05f));
+
+                // Reward staying in good combat range (not too far, not too close)
+                float idealRange = 2.5f;
+                float rangeScore = 1f - Mathf.Abs(currentDistance - idealRange) / idealRange;
+                AddReward(rangeScore * 0.001f);
+
+
+                // Penalize camping too close without attacking
+                if (currentDistance <= minAttackDistance && !attackedThisStep)
+                    AddReward(-0.002f);
+
+                lastDistance = currentDistance;
+                
                 // Penalty given each step to encourage agent to finish a task quickly
-                AddReward(-2f / MaxStep);
+                AddReward(-1f / MaxStep); 
+                // Survival incentive
+                AddReward(0.0001f);
                 // // Update the cumulative reward after adding the step penalty.
                 cumulativeReward = GetCumulativeReward();
             }
         }
 
+        public void OnAttack()
+        {
+            if (!isTraining) return;
+            AddReward(-0.02f);
+            cumulativeReward = GetCumulativeReward();
+        }
+
+        public void OnSpecial()
+        {
+            if (!isTraining) return;
+            AddReward(-0.01f);
+            cumulativeReward = GetCumulativeReward();
+        }
+        
         public void OnAttackLanded()// Called when Agent Hit Something
         {
             if (!isTraining) return;
-            AddReward(0.2f);
+            AddReward(0.05f);
             cumulativeReward = GetCumulativeReward();
         }
         public void OnKilledTarget()// Called when Agent Kill Something
@@ -139,7 +179,7 @@ namespace EnemiesScript.Melee
         public void OnHurt()
         {
             if (!isTraining) return;
-            AddReward(-0.002f);
+            AddReward(-0.01f);
             cumulativeReward = GetCumulativeReward();
         }
         
@@ -175,6 +215,8 @@ namespace EnemiesScript.Melee
             cumulativeReward = 0f;
 
             SpawnPlayer();
+            if (agent._player != null)
+                lastDistance = Vector3.Distance(transform.position, agent._player.transform.position);
         }
         
         private void SpawnPlayer()

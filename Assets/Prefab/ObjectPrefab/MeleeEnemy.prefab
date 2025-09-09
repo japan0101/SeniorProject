@@ -180,7 +180,7 @@ MonoBehaviour:
   dashSpeed: 20
   dashCooldown: 0.5
   dashDuration: 0.2
-  dashConsume: 10
+  dashConsume: 20
   rotateSpeed: 180
   defence: 0
   energy: 100
@@ -211,10 +211,10 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 9dad557bdca548f4fb35b7cc00796184, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
-  m_BehaviorName: Phainon1
+  m_BehaviorName: MeleeEnemy
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
@@ -235,13 +235,13 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 5000
+  MaxStep: 0
   targetPrefab: {fileID: 3880061375110339810, guid: 3e3173a6dc306434f9231b0f6284658a, type: 3}
   groundRenderer: {fileID: 0}
   agent: {fileID: 3174504295571058887}
   currentEpisode: 0
   cumulativeReward: 0
-  isTraining: 1
+  isTraining: 0
 --- !u!114 &8443655869179619361
 MonoBehaviour:
   m_ObjectHideFlags: 0
