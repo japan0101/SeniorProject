@@ -38,6 +38,10 @@ public class TrainerNavigation : MonoBehaviour
     {
         // Find a target if one doesn't exist.
         // Only proceed if a target has been found.
+        if (EnemyTarget == null)
+        {
+            //FindTarget("MeleeEnemy");
+        }
         if (EnemyTarget != null)
         {
             // Determine the direction to move and rotate.

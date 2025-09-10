@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace EnemiesScript.Melee
@@ -12,7 +13,10 @@ namespace EnemiesScript.Melee
         {
             Debug.Log("Slashing");
         }
-
+        public void OnDestroy()
+        {
+            
+        }
         void Update()
         {
             transform.RotateAround(transform.position, transform.up, attack_speed * Time.deltaTime/4f);
