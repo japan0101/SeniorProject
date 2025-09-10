@@ -13,9 +13,9 @@ namespace EnemiesScript.Melee
         {
             Debug.Log("Slashing");
         }
-        public void OnDestroy()
+        public void OnTriggerEnter(Collider other)
         {
-            
+            isMissed = false;
         }
         void Update()
         {

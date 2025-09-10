@@ -25,6 +25,7 @@ namespace EnemiesScript.Melee
             {
                 energy -= 10f;
                 _atk = Instantiate(attacks[atkIndex], gameObject.transform);
+                _atk.OnMissed += _agent.OnAttackMissed;
                 Destroy(_atk.gameObject, _atk.lifetime);
             }
         }
