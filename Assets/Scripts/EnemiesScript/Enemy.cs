@@ -29,6 +29,8 @@ namespace EnemiesScript
         protected Rigidbody rb;
         public PlayerHealth _playerHealthManager;
         public GameObject _player;
+        private bool attacking = false;
+        private bool missed = false;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         protected void Start()

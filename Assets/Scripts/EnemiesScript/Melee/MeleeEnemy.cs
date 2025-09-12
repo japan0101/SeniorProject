@@ -25,7 +25,7 @@ namespace EnemiesScript.Melee
             {
                 energy -= 10f;
                 _atk = Instantiate(attacks[atkIndex], gameObject.transform);
-                _atk.OnMissed += _agent.OnAttackMissed;
+                _atk.OnMissed += miss;
                 Destroy(_atk.gameObject, _atk.lifetime);
             }
         }
@@ -60,6 +60,11 @@ namespace EnemiesScript.Melee
             {
                 _agent.OnKilledTarget();
             }
+        }
+        public void miss()
+        {
+            Debug.Log("Enemy component acknowledge misses");
+            _agent.OnAttackMissed();
         }
         
         public override void Specials(int actionIndex)

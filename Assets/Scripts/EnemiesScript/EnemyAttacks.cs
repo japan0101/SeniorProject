@@ -18,8 +18,8 @@ namespace EnemiesScript
         {
             if (isMissed)
             {
-                Debug.Log("Missed From Attacks");
                 OnMissed?.Invoke();
+                Debug.Log("Missed From Attacks");
             }
         }
     }
