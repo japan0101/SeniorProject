@@ -153,10 +153,10 @@ namespace EnemiesScript.Melee
             AddReward(-0.01f);
             cumulativeReward = GetCumulativeReward();
         }
-        public void OnAttackMissed()
+        public void OnAttackMissed()//Called by Enemy attack event listener to notify that the attack launched did not and on a player
         {
             if (!isTraining) return;
-            Debug.Log("Aw I Missed");
+            
         }
         public void OnAttackLanded()// Called when Agent Hit Something
         {

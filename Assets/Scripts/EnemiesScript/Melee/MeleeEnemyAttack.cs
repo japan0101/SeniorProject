@@ -15,7 +15,9 @@ namespace EnemiesScript.Melee
         }
         public void OnTriggerEnter(Collider other)
         {
-            isMissed = false;
+            if (other.gameObject.CompareTag("Player")) {
+                isMissed = false;//For using in OnDestroyed checks weather the attack hit a player
+            }
         }
         void Update()
         {

@@ -16,10 +16,10 @@ namespace EnemiesScript
 
         public void OnDestroy()
         {
-            if (isMissed)
+            if (isMissed)// check weather the launced attack have hit an opponent, the logic of this should be done in a child component since some attack might have AOE
             {
-                OnMissed?.Invoke();
-                Debug.Log("Missed From Attacks");
+                OnMissed?.Invoke(); // tell other component that is listening that an attack has missed
+                //Debug.Log("Missed From Attacks");
             }
         }
     }

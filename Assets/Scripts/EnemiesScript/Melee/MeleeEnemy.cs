@@ -25,7 +25,7 @@ namespace EnemiesScript.Melee
             {
                 energy -= 10f;
                 _atk = Instantiate(attacks[atkIndex], gameObject.transform);
-                _atk.OnMissed += miss;
+                _atk.OnMissed += miss;//Add method of missed attack aknowledgement to an event listener of the launched attacks
                 Destroy(_atk.gameObject, _atk.lifetime);
             }
         }
@@ -61,7 +61,7 @@ namespace EnemiesScript.Melee
                 _agent.OnKilledTarget();
             }
         }
-        public void miss()
+        public void miss()//used to acknowledge that an attack launched by this agent has missed
         {
             Debug.Log("Enemy component acknowledge misses");
             _agent.OnAttackMissed();
