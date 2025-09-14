@@ -64,7 +64,6 @@ public class AutoShoot : MonoBehaviour
 
         equipedReadyToShoot = false;
         equipedWeapon.Shoot(shootDirection, gunPos.position);
-        UpdateAmmoUI();
         
         shootCooldownRoutine = StartCoroutine(ShootCooldown(equipedWeapon.cooldown));
     }
@@ -101,7 +100,6 @@ public class AutoShoot : MonoBehaviour
         //yield return new WaitForSeconds(equipedWeapon.reloadTime);
         
         equipedWeapon.FinishReload();
-        UpdateAmmoUI();
         activeReloadRoutine = null;
         isReloading = false;
         // Debug.Log("Reload complete");
@@ -173,8 +171,4 @@ public class AutoShoot : MonoBehaviour
         Debug.DrawRay(gunHolder.position, shootDirection, rayColor);
     }
 
-    private void UpdateAmmoUI()
-    {
-        //GetComponent<ui_DisplayAmmo>().updateAmmo(equipedWeapon.currentAmmo, equipedWeapon.magsSize);
-    }
 }

@@ -15,9 +15,13 @@ public class TrainerNavigation : MonoBehaviour
 
     [Header("Movement Settings")]
     [Tooltip("The movement speed of the trainer.")]
-    public float speed = 10f;
+    public float baseSpeed = 10f;
+    [Tooltip("The rotate speed of the trainer.")]
+    public float rotateSpeed = 10f;
     [Tooltip("The speed at which the trainer can turn.")]
-    public float turnSpeed = 5f;
+    public float turnSpeed = 360;
+    [Tooltip("The speed at which the trainer can turn.")]
+    public float dashSpeed = 8f;
     [Tooltip("The maximum angle (in degrees) to deviate from a perfect aim.")]
     public float aimErrorMargin = 2f;
 
@@ -27,6 +31,8 @@ public class TrainerNavigation : MonoBehaviour
     private Rigidbody rb;
     // The desired rotation for the agent.
     private Quaternion desiredRotation;
+    protected float realSpeed;
+    private bool isDashing = false;
 
     void Start()
     {
@@ -38,40 +44,40 @@ public class TrainerNavigation : MonoBehaviour
     {
         // Find a target if one doesn't exist.
         // Only proceed if a target has been found.
-        if (EnemyTarget == null)
-        {
-            //FindTarget("MeleeEnemy");
-        }
-        if (EnemyTarget != null)
-        {
-            // Determine the direction to move and rotate.
-            Vector3 moveDirection;
-            Vector3 aimDirection;
+        //if (EnemyTarget == null)
+        //{
+        //    //FindTarget("MeleeEnemy");
+        //}
+        //if (EnemyTarget != null)
+        //{
+        //    // Determine the direction to move and rotate.
+        //    Vector3 moveDirection;
+        //    Vector3 aimDirection;
 
-            float distanceToEnemy = Vector3.Distance(transform.position, EnemyTarget.transform.position);
+        //    float distanceToEnemy = Vector3.Distance(transform.position, EnemyTarget.transform.position);
 
-            if (distanceToEnemy < distanceThreshold)
-            {
-                // Flee: Move away from the enemy.
-                moveDirection = transform.position - EnemyTarget.transform.position;
-            }
-            else
-            {
-                // Pursue: Move towards the enemy.
-                moveDirection = EnemyTarget.transform.position - transform.position;
-            }
+        //    if (distanceToEnemy < distanceThreshold)
+        //    {
+        //        // Flee: Move away from the enemy.
+        //        moveDirection = transform.position - EnemyTarget.transform.position;
+        //    }
+        //    else
+        //    {
+        //        // Pursue: Move towards the enemy.
+        //        moveDirection = EnemyTarget.transform.position - transform.position;
+        //    }
 
-            // Set the aim direction to always face the enemy, regardless of movement.
-            aimDirection = EnemyTarget.transform.position - transform.position;
+        //    // Set the aim direction to always face the enemy, regardless of movement.
+        //    aimDirection = EnemyTarget.transform.position - transform.position;
 
-            // Call the movement and aiming methods.
-            MoveDirection(moveDirection);
-            AutoAim(aimDirection);
-        }
-        else
-        {
-            Debug.Log("Enemy not found");
-        }
+        //    // Call the movement and aiming methods.
+        //    //MoveDirection(moveDirection);
+        //    AutoAim(aimDirection);
+        //}
+        //else
+        //{
+        //    Debug.Log("Enemy not found");
+        //}
 
         // Control the agent's speed to prevent it from accelerating infinitely.
         SpeedControl();
@@ -81,76 +87,74 @@ public class TrainerNavigation : MonoBehaviour
     /// Applies force to the Rigidbody to move the agent.
     /// </summary>
     /// <param name="dir">The direction to move.</param>
-    private void MoveDirection(Vector3 dir)
+
+    public void MoveAgentX(float actionValue)
     {
-        Vector3 normalizedDirection = dir.normalized;
-        rb.AddForce(normalizedDirection * speed * 10, ForceMode.Force);
+        SpeedControl();
+        rb.AddForce(transform.right * realSpeed * actionValue * baseSpeed, ForceMode.Force);
+    }
+
+    public void MoveAgentZ(float actionValue)
+    {
+        SpeedControl();
+        rb.AddForce(transform.forward * realSpeed * actionValue * baseSpeed, ForceMode.Force);
+    }
+
+    public void RotateAgent(float actionValue)
+    {
+        transform.Rotate(0f, rotateSpeed * actionValue * Time.deltaTime, 0f);
     }
 
     /// <summary>
     /// Smoothly rotates the agent to face a target direction with a random error margin.
     /// </summary>
     /// <param name="direction">The base direction to aim towards.</param>
-    private void AutoAim(Vector3 direction)
-    {
-        // Keep the rotation horizontal.
-        Vector3 directionToAim = new Vector3(direction.x, 0, direction.z);
-        Vector3 vOrientation = new Vector3(0, direction.y, 0);
+    //private void AutoAim(Vector3 direction)
+    //{
+    //    // Keep the rotation horizontal.
+    //    Vector3 directionToAim = new Vector3(direction.x, 0, direction.z);
+    //    Vector3 vOrientation = new Vector3(0, direction.y, 0);
 
-        // Add a random angle deviation.
-        float randomAngle = Random.Range(-aimErrorMargin, aimErrorMargin);
-        Quaternion randomRotation = Quaternion.Euler(0, randomAngle, 0);
+    //    // Add a random angle deviation.
+    //    float randomAngle = Random.Range(-aimErrorMargin, aimErrorMargin);
+    //    Quaternion randomRotation = Quaternion.Euler(0, randomAngle, 0);
 
-        // Apply the random rotation to the direction vector.
-        Vector3 erroredDirection = randomRotation * directionToAim;
+    //    // Apply the random rotation to the direction vector.
+    //    Vector3 erroredDirection = randomRotation * directionToAim;
 
-        // Calculate the target rotation.
-        if (erroredDirection != Vector3.zero)
-        {
-            desiredRotation = Quaternion.LookRotation(erroredDirection);
-        }
+    //    // Calculate the target rotation.
+    //    if (erroredDirection != Vector3.zero)
+    //    {
+    //        desiredRotation = Quaternion.LookRotation(erroredDirection);
+    //    }
 
-        // Smoothly rotate the agent.
-        transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, turnSpeed * Time.deltaTime);
-        // Aim at enemy
-        //aimOrientation.transform.rotation = Quaternion.Euler(vOrientation.y, 0, 0);
-    }
+    //    // Smoothly rotate the agent.
+    //    transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, turnSpeed * Time.deltaTime);
+    //    // Aim at enemy
+    //    //aimOrientation.transform.rotation = Quaternion.Euler(vOrientation.y, 0, 0);
+    //}
 
-    /// <summary>
-    /// Finds the enemy target based on its tag, either globally or within a specific environment.
-    /// </summary>
-    /// <param name="tags">The tag of the target to find.</param>
-    private void FindTarget(string tags)
-    {
-        // If an environment is set, search within its children.
-        if (environment != null)
-        {
-            foreach (Transform child in environment.transform)
-            {
-                if (child.CompareTag(tags))
-                {
-                    EnemyTarget = child.gameObject;
-                    return; // Exit the function once the first target is found.
-                }
-            }
-        }
-        else // Otherwise, perform a global search.
-        {
-            EnemyTarget = GameObject.FindGameObjectWithTag(tags);
-        }
-    }
 
     /// <summary>
     /// Limits the linear velocity of the Rigidbody to prevent over-acceleration.
     /// </summary>
-    private void SpeedControl()
+    protected void SpeedControl()
     {
         rb.linearDamping = 2.5f;
         Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-        if (flatVel.magnitude > speed)
+        if (isDashing)
         {
-            Vector3 limitedVel = flatVel.normalized * speed;
-            rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, rb.linearVelocity.z);
+            realSpeed = dashSpeed;
         }
+        else
+        {
+            realSpeed = baseSpeed;
+        }
+        if (flatVel.magnitude > realSpeed)
+        {
+            Vector3 limitedVel = flatVel.normalized * baseSpeed;
+            rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
+        }
+        //Debug.Log(realSpeed);
     }
 }
