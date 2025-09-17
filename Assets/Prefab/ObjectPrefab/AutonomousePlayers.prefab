@@ -111,6 +111,9 @@ GameObject:
   - component: {fileID: 116878861277677139}
   - component: {fileID: 2617090495452285175}
   - component: {fileID: 5907028583260193024}
+  - component: {fileID: 6545671478195352403}
+  - component: {fileID: 5769191992727151184}
+  - component: {fileID: 7642755880382284800}
   m_Layer: 0
   m_Name: AutonomousePlayers
   m_TagString: Player
@@ -245,9 +248,80 @@ MonoBehaviour:
   environment: {fileID: 0}
   distanceThreshold: 10
   aimOrientation: {fileID: 1012060537206290185}
-  speed: 4
-  turnSpeed: 20
+  baseSpeed: 8
+  rotateSpeed: 360
+  dashSpeed: 10
   aimErrorMargin: 5
+  EnemyTarget: {fileID: 0}
+--- !u!114 &6545671478195352403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3880061375110339810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_BrainParameters:
+    VectorObservationSize: 1
+    NumStackedVectorObservations: 1
+    m_ActionSpec:
+      m_NumContinuousActions: 3
+      BranchSizes: 02000000
+    VectorActionSize: 
+    VectorActionDescriptions: []
+    VectorActionSpaceType: 1
+    hasUpgradedBrainParametersWithActionSpec: 1
+  m_Model: {fileID: 0}
+  m_InferenceDevice: 0
+  m_BehaviorType: 1
+  m_BehaviorName: AutoPLayer
+  TeamId: 0
+  m_UseChildSensors: 1
+  m_UseChildActuators: 1
+  m_DeterministicInference: 0
+  m_ObservableAttributeHandling: 0
+--- !u!114 &5769191992727151184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3880061375110339810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af256a93a63477f4783102135f05a062, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 50000
+  targetPrefab: {fileID: 0}
+  groundRenderer: {fileID: 0}
+  agent: {fileID: 5907028583260193024}
+  currentEpisode: 0
+  cumulativeReward: 0
+  autoShoot: {fileID: 116878861277677139}
+  isTraining: 0
+--- !u!114 &7642755880382284800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3880061375110339810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a5c9d521e5ef4759a8246a07d52221e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DecisionPeriod: 5
+  DecisionStep: 0
+  TakeActionsBetweenDecisions: 1
 --- !u!1 &4401588218360901725
 GameObject:
   m_ObjectHideFlags: 0

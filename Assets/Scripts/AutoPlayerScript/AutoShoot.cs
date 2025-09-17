@@ -137,6 +137,10 @@ public class AutoShoot : MonoBehaviour
         
     }
 
+    public bool CanShoot()
+    {
+        return equipedWeapon.CanShoot() && equipedReadyToShoot && activeReloadRoutine == null;
+    }
     private void UpdateAiming()
     {
         Ray ray = new Ray(aimLocation.position, aimLocation.transform.forward);
@@ -145,22 +149,22 @@ public class AutoShoot : MonoBehaviour
             ? hit.point 
             : ray.origin + ray.direction * rayLength;
         //Debug.Log($"Rays hit: {Physics.Raycast(ray, out hit, rayLength, detectionLayer)}\nReady to Shoot: {equipedReadyToShoot}\n Can Shoot:{equipedWeapon.CanShoot()}");
-        if (Physics.Raycast(ray, out hit, rayLength, detectionLayer))
-        {
-            if (equipedWeapon.CanShoot() && equipedReadyToShoot && activeReloadRoutine == null)
-            {
-                // Debug.Log("pew");
-                if(UnityEngine.Random.Range(0f,1f) <= chanceToShoot)
-                {
-                    ShootWeapon();
-                }
-            }
-            else if(!isReloading)
-            {
-                isReloading = true;
-                StartReload();
-            }
-        }
+        //if (Physics.Raycast(ray, out hit, rayLength, detectionLayer))
+        //{
+        //    if (equipedWeapon.CanShoot() && equipedReadyToShoot && activeReloadRoutine == null)
+        //    {
+        //        // Debug.Log("pew");
+        //        if(UnityEngine.Random.Range(0f,1f) <= chanceToShoot)
+        //        {
+        //            ShootWeapon();
+        //        }
+        //    }
+        //    else if(!isReloading)
+        //    {
+        //        isReloading = true;
+        //        StartReload();
+        //    }
+        //}
 
         if (visualizer != null)
             visualizer.position = targetPoint;

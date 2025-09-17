@@ -15,13 +15,11 @@ public class TrainerNavigation : MonoBehaviour
 
     [Header("Movement Settings")]
     [Tooltip("The movement speed of the trainer.")]
-    public float baseSpeed = 10f;
+    public float baseSpeed = 8f;
     [Tooltip("The rotate speed of the trainer.")]
-    public float rotateSpeed = 10f;
-    [Tooltip("The speed at which the trainer can turn.")]
-    public float turnSpeed = 360;
-    [Tooltip("The speed at which the trainer can turn.")]
-    public float dashSpeed = 8f;
+    public float rotateSpeed = 360f;
+    [Tooltip("The speed of agent dashing")]
+    public float dashSpeed = 10f;
     [Tooltip("The maximum angle (in degrees) to deviate from a perfect aim.")]
     public float aimErrorMargin = 2f;
 
@@ -104,35 +102,6 @@ public class TrainerNavigation : MonoBehaviour
     {
         transform.Rotate(0f, rotateSpeed * actionValue * Time.deltaTime, 0f);
     }
-
-    /// <summary>
-    /// Smoothly rotates the agent to face a target direction with a random error margin.
-    /// </summary>
-    /// <param name="direction">The base direction to aim towards.</param>
-    //private void AutoAim(Vector3 direction)
-    //{
-    //    // Keep the rotation horizontal.
-    //    Vector3 directionToAim = new Vector3(direction.x, 0, direction.z);
-    //    Vector3 vOrientation = new Vector3(0, direction.y, 0);
-
-    //    // Add a random angle deviation.
-    //    float randomAngle = Random.Range(-aimErrorMargin, aimErrorMargin);
-    //    Quaternion randomRotation = Quaternion.Euler(0, randomAngle, 0);
-
-    //    // Apply the random rotation to the direction vector.
-    //    Vector3 erroredDirection = randomRotation * directionToAim;
-
-    //    // Calculate the target rotation.
-    //    if (erroredDirection != Vector3.zero)
-    //    {
-    //        desiredRotation = Quaternion.LookRotation(erroredDirection);
-    //    }
-
-    //    // Smoothly rotate the agent.
-    //    transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, turnSpeed * Time.deltaTime);
-    //    // Aim at enemy
-    //    //aimOrientation.transform.rotation = Quaternion.Euler(vOrientation.y, 0, 0);
-    //}
 
 
     /// <summary>
