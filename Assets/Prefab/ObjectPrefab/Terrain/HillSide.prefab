@@ -115,10 +115,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 805462954514970602}
-  - component: {fileID: 5071750444433234545}
-  - component: {fileID: 736088146357099599}
+  - component: {fileID: 10046158004388061}
+  - component: {fileID: 5596013763598851136}
   m_Layer: 10
-  m_Name: Valley
+  m_Name: HillSide
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,7 +140,7 @@ Transform:
   - {fileID: 8493536846619217304}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!218 &5071750444433234545
+--- !u!218 &10046158004388061
 Terrain:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,7 +149,7 @@ Terrain:
   m_GameObject: {fileID: 6352229584110614203}
   m_Enabled: 1
   serializedVersion: 6
-  m_TerrainData: {fileID: 15600000, guid: 6ec2111c6a78cd840973c736ee84dfd7, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: 1238dda38f511974faafdac635d86225, type: 2}
   m_TreeDistance: 5000
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
@@ -172,15 +172,15 @@ Terrain:
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
   m_ReceiveGI: 1
-  m_ScaleInLightmap: 0.0256
+  m_ScaleInLightmap: 1
   m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
   m_GroupingID: 0
   m_RenderingLayerMask: 1
-  m_AllowAutoConnect: 1
+  m_AllowAutoConnect: 0
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
---- !u!154 &736088146357099599
+--- !u!154 &5596013763598851136
 TerrainCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -198,7 +198,7 @@ TerrainCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_TerrainData: {fileID: 15600000, guid: 6ec2111c6a78cd840973c736ee84dfd7, type: 2}
+  m_TerrainData: {fileID: 15600000, guid: 1238dda38f511974faafdac635d86225, type: 2}
   m_EnableTreeColliders: 1
 --- !u!1 &7617979548878673874
 GameObject:
