@@ -21,6 +21,7 @@ namespace EnemiesScript.Range
         {
             if(other.gameObject.tag == "Player" | other.gameObject.tag == "Untagged")
             {
+                isMissed = false;//For using in OnDestroyed checks weather the attack hit a player
                 Destroy(gameObject);
             }
         }
