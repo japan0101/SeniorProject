@@ -106,6 +106,9 @@ namespace AutoPlayerScript
                         autoShoot.ShootWeapon();
                     }
                     break;
+                case 2:
+                    autoShoot.ReloadWeapon();
+                    break;
             }
             //agent.Specials(special);
             

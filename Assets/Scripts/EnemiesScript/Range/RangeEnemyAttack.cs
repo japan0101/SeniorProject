@@ -10,7 +10,7 @@ namespace EnemiesScript.Range
         //public float attack_speed = 1440f;
         public override void OnAttack()
         {
-            Debug.LogWarning("Shooting");
+            Debug.Log("Shooting");
             Rigidbody rb = GetComponent<Rigidbody>();
             //rb.freezeRotation = true;
             Vector3 direction = new Vector3(attacker.transform.forward.x, attacker.transform.forward.y, attacker.transform.forward.z);
@@ -21,6 +21,7 @@ namespace EnemiesScript.Range
         {
             if(other.gameObject.tag == "Player" | other.gameObject.tag == "Untagged")
             {
+                isMissed = false;//For using in OnDestroyed checks weather the attack hit a player
                 Destroy(gameObject);
             }
         }

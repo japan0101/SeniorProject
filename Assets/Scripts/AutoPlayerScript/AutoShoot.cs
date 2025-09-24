@@ -148,24 +148,6 @@ public class AutoShoot : MonoBehaviour
         Vector3 targetPoint = Physics.Raycast(ray, out hit, rayLength, detectionLayer) 
             ? hit.point 
             : ray.origin + ray.direction * rayLength;
-        //Debug.Log($"Rays hit: {Physics.Raycast(ray, out hit, rayLength, detectionLayer)}\nReady to Shoot: {equipedReadyToShoot}\n Can Shoot:{equipedWeapon.CanShoot()}");
-        //if (Physics.Raycast(ray, out hit, rayLength, detectionLayer))
-        //{
-        //    if (equipedWeapon.CanShoot() && equipedReadyToShoot && activeReloadRoutine == null)
-        //    {
-        //        // Debug.Log("pew");
-        //        if(UnityEngine.Random.Range(0f,1f) <= chanceToShoot)
-        //        {
-        //            ShootWeapon();
-        //        }
-        //    }
-        //    else if(!isReloading)
-        //    {
-        //        isReloading = true;
-        //        StartReload();
-        //    }
-        //}
-
         if (visualizer != null)
             visualizer.position = targetPoint;
 
