@@ -33,7 +33,7 @@ namespace EnemiesScript
         private bool missed = false;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-        protected void Start()
+        protected void Awake()
         {
             rb = GetComponent<Rigidbody>();
             rb.freezeRotation = true;

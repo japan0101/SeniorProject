@@ -85,7 +85,7 @@ namespace EnemiesScript.Melee
         {
             // Give Agent the information about the state
             // Using Ray Perception to identify the goal
-            sensor.AddObservation(transform.localPosition);
+            sensor.AddObservation(agent.energy);
         }
         public override void OnActionReceived(ActionBuffers actions)
         {
@@ -244,8 +244,6 @@ namespace EnemiesScript.Melee
             if (agent._player) Destroy(agent._player);
 
             agent._player = Instantiate(targetPrefab, arena);
-            var navigation = agent._player.GetComponent<TrainerNavigation>();
-            navigation.EnemyTarget = gameObject;
             agent._player.transform.localPosition = localPlayerPosition;
             agent._player.transform.localRotation = Quaternion.identity;
             agent.AddListenerToTarget(agent._player);

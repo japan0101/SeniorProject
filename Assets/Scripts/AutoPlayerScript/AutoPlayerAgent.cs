@@ -9,7 +9,7 @@ using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 
-namespace EnemiesScript.Melee
+namespace AutoPlayerScript
 {
     public class AutoPlayerAgent:Agent
     {
@@ -24,9 +24,8 @@ namespace EnemiesScript.Melee
         private Color _defaultGroundColor;
         private Coroutine _flashGroundCoroutine;
         private PlayerHealth _playerHealthManager;
-        private bool attackedThisStep = false;
-        private float lastDistance;
-        private float minAttackDistance = 1.5f;
+        private GameObject _enemy1;
+        private GameObject _enemy2;
         
         float Timer = 0;//for testing agent action remove later
 
@@ -110,7 +109,6 @@ namespace EnemiesScript.Melee
             }
             //agent.Specials(special);
             
-            attackedThisStep = false;
 
             //if (attack > 0)
             //{
@@ -134,11 +132,7 @@ namespace EnemiesScript.Melee
             AddReward(-0.01f);
             cumulativeReward = GetCumulativeReward();
         }
-        public void OnAttackMissed()//Called by Enemy attack event listener to notify that the attack launched did not and on a player
-        {
-            if (!isTraining) return;
-            
-        }
+       
         public void OnAttackLanded()// Called when Agent Hit Something
         {
             if (!isTraining) return;
@@ -183,10 +177,53 @@ namespace EnemiesScript.Melee
         
         public override void OnEpisodeBegin()
         {
+            if (!isTraining) return;
+            if (!groundRenderer.Equals(null) && cumulativeReward != 0f)
+            { 
+                Color flashColor = (cumulativeReward > 0f) ? Color.green : Color.red;
+
+                if (_flashGroundCoroutine != null)
+                {
+                    StopCoroutine(_flashGroundCoroutine);                    
+                }
+
+                _flashGroundCoroutine = StartCoroutine(FlashGround(flashColor, 1.0f));
+            }
+            
+            currentEpisode++;
+            cumulativeReward = 0f;
+
+            // SpawnEnemy();
         }
         
-        private void SpawnPlayer()
+        private void SpawnEnemy()
         {
+            var localOrigin = new Vector3(0f, 0.5f, 0f);
+            
+            
+            // Randomize the direction on the Y-axis (angle in degrees)
+            float randomAngle1 = Random.Range(0f, 360f);
+            Vector3 randomDirection1 = Quaternion.Euler(0f, randomAngle1, 0f) * Vector3.forward;
+            
+            float randomAngle2 = Random.Range(0f, 360f);
+            Vector3 randomDirection2 = Quaternion.Euler(0f, randomAngle2, 0f) * Vector3.forward;
+        
+            // Randomize the distance within range [1, 2.5]
+            float randomDistance1 = Random.Range(1f, 10f);
+            float randomDistance2 = Random.Range(1f, 10f);
+        
+            // Calculate the player's position
+            Vector3 localEnemyPosition1 = localOrigin + randomDirection1 * randomDistance1;
+            Vector3 localEnemyPosition2 = localOrigin + randomDirection2 * randomDistance2;
+        
+            // Apply the calculated position to the player
+            
+            if (_enemy1) Destroy(_enemy1);
+            if (_enemy2) Destroy(_enemy2);
+            
+            _enemy1 = Instantiate(targetPrefab, localEnemyPosition1, Quaternion.identity);
+            _enemy2 = Instantiate(targetPrefab, localEnemyPosition2, Quaternion.identity);
+            
         }
     }
 }

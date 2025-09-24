@@ -103,8 +103,13 @@ namespace EnemiesScript.Melee
             base.Update();
             if (hp <= 0)
             {
-                OnKilled();
-                hp = maxHp;
+                if (_agent.isTraining)
+                {
+                    OnKilled();
+                    hp = maxHp;
+                    return;
+                }
+                Destroy(gameObject);
             }
         }
     }
