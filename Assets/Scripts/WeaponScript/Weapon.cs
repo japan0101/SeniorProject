@@ -60,16 +60,12 @@ public class Weapon : MonoBehaviour
     public void Shoot(Vector3 shootDirection, Vector3 shotPosition)
     {
         //create bullet then add force to it
-        //Vector3 shootDirection = playerCam.transform.forward;
         currentAmmo -= 1;
         muzzleFlash.SendEvent("OnPlay");
         var bulletInstance = Instantiate(bullet, shotPosition, Quaternion.LookRotation(shootDirection));
         var bulletRB = bulletInstance.GetComponentInChildren<Rigidbody>();
         //bulletRB.AddForce(orientation.forward * 20 + orientation.up * 10, ForceMode.Impulse);
         bulletRB.AddForce(shootDirection * power, ForceMode.Impulse);
-
-        //casting rays to check hit direction currently as debug
-        //Debug.DrawRay(shotPosition, shootDirection * 5, Color.red, 1f);
     }
     void Update()
     {

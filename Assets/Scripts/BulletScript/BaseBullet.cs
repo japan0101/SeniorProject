@@ -1,5 +1,6 @@
-using System.Collections.Generic;
 using NUnit.Framework;
+using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Collections;
 using UnityEngine;
 using static UnityEngine.InputSystem.OnScreen.OnScreenStick;
 
@@ -13,6 +14,7 @@ public class MainBullet : MonoBehaviour
 
     private int groundLayer = 10;
     private Vector3 lastVelocity;
+    protected bool isMissed = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -26,15 +28,25 @@ public class MainBullet : MonoBehaviour
         {
             behavior.OnBulletHit(other, lastVelocity);
         }
+        if (other.CompareTag("Enemy"))
+        {
+            isMissed = false;
+        }
     }
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    //execute any function that should happend on collision
-    //    foreach (var behavior in hitBehaviors)
-    //    {
-    //        behavior.OnBulletHit(collision, lastVelocity);
-    //    }
-    //}
+    private void OnDestroy()
+    {
+        // This method is called when the bullet GameObject is destroyed.
+        // We check the flag to see if it was a hit or a miss.
+        if (isMissed)
+        {
+            // If the bullet was destroyed and hasHit is false, it means it missed.
+            TrainerManager.BulletMiss();
+        }
+        else
+        {
+            TrainerManager.BulletHitEnemy();
+        }
+    }
     // Update is called once per frame
     void Update()
     {

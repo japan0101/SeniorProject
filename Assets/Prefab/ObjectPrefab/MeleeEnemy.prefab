@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 8737346515325468099}
   m_Layer: 11
   m_Name: MeleeEnemy
-  m_TagString: MeleeEnemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -185,6 +185,7 @@ MonoBehaviour:
   defence: 0
   energy: 100
   maxEnergy: 100
+  energyRegenPerSecond: 0
   attacks:
   - {fileID: 8056371960188120745, guid: b044becc80fe92e429f417a99987414b, type: 3}
   _playerHealthManager: {fileID: 0}

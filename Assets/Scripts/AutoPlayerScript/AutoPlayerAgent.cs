@@ -41,6 +41,8 @@ namespace AutoPlayerScript
         {
             if (isTraining)
             {
+                TrainerManager.OnBulletHitEnemy += OnAttackLanded;
+                TrainerManager.OnBulletMiss+=OnMissed;
                 arena = this.transform.parent.gameObject.transform;
                 currentEpisode = 0;
                 cumulativeReward = 0f;
@@ -104,6 +106,7 @@ namespace AutoPlayerScript
                     if (autoShoot.CanShoot())
                     {
                         autoShoot.ShootWeapon();
+                        OnAttack();
                     }
                     break;
                 case 2:
@@ -128,6 +131,13 @@ namespace AutoPlayerScript
             AddReward(-0.02f);
             cumulativeReward = GetCumulativeReward();
         }
+        public void OnMissed()
+        {
+            Debug.Log("Autoplayer missed attacks");
+            if (!isTraining) return;
+            AddReward(-0.02f);
+            cumulativeReward = GetCumulativeReward();
+        }
 
         public void OnSpecial()
         {
@@ -138,6 +148,7 @@ namespace AutoPlayerScript
        
         public void OnAttackLanded()// Called when Agent Hit Something
         {
+            Debug.Log("Autoplayer landed attacks");
             if (!isTraining) return;
             AddReward(0.05f);
             cumulativeReward = GetCumulativeReward();

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using AutoPlayerScript;
 
 public class AutoShoot : MonoBehaviour
 {
@@ -13,12 +14,6 @@ public class AutoShoot : MonoBehaviour
     [Range(0f, 1f)]
     public float chanceToShoot = 0.8f;
 
-    [Header("Keybinds")]
-    //public KeyCode Primary = KeyCode.Mouse0;
-    //public KeyCode ReloadKey = KeyCode.R;
-    //public KeyCode EquipPrimary = KeyCode.Alpha1;
-    //public KeyCode EquipSecondary = KeyCode.Alpha2;
-
     [Header("References")]
     [SerializeField] public Transform gunHolder;
     [SerializeField] public Transform gunPos;
@@ -26,6 +21,7 @@ public class AutoShoot : MonoBehaviour
     [SerializeField] public Transform visualizer;
     [SerializeField] public Weapon primaryWeapon;
     [SerializeField] public Weapon secondaryWeapon;
+    [SerializeField] public AutoPlayerAgent agent;
 
     [Header("Ray Settings")]
     public float rayLength = 10f;
