@@ -8,9 +8,10 @@ namespace EnemiesScript.Melee
         float Timer = 0;
         private MeleeEnemyAgent _agent;
         
-        private void Awake()
+        private new void Awake()
         {
             _agent = GetComponent<MeleeEnemyAgent>();
+            base.Awake();
         }
         
         public override void Attack(int atkIndex)
