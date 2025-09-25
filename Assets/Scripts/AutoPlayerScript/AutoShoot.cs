@@ -67,9 +67,13 @@ public class AutoShoot : MonoBehaviour
         
         shootCooldownRoutine = StartCoroutine(ShootCooldown(equipedWeapon.cooldown));
     }
-
-    private void StartReload()
+    public bool canReload()
     {
+        return equipedWeapon.CanReload() && !isReloading;
+    }
+    public void StartReload()
+    {
+        isReloading = true;
         // Cancel existing reload if in progress
         if (activeReloadRoutine != null)
         {

@@ -110,6 +110,10 @@ namespace AutoPlayerScript
                     }
                     break;
                 case 2:
+                    if(autoShoot.canReload())
+                    {
+                        autoShoot.StartReload();
+                    }
                     autoShoot.ReloadWeapon();
                     break;
             }
