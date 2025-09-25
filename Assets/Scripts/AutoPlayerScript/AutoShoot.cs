@@ -53,6 +53,10 @@ public class AutoShoot : MonoBehaviour
         //transform.Rotate(0, 20 * Time.deltaTime, 0);
     }
 
+    public int GetCurrentAmmo()
+    {
+        return equipedWeapon.currentAmmo;
+    }
     public void ShootWeapon()
     {
         if (shootCooldownRoutine != null)

@@ -53,6 +53,7 @@ namespace EnemiesScript
                 dashTimer += Time.deltaTime;
             }
             RegenEnergy(energyRegenPerSecond);
+            
             // Debug.Log(realSpeed);
         }
 
@@ -122,6 +123,10 @@ namespace EnemiesScript
                 rb.linearVelocity = new Vector3(limitedVel.x, rb.linearVelocity.y, limitedVel.z);
             }
             //Debug.Log(realSpeed);
+        }
+        private void OnDestroy()
+        {
+            
         }
     }
 }

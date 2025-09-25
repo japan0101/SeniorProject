@@ -29,14 +29,6 @@ namespace AutoPlayerScript
         
         float Timer = 0;//for testing agent action remove later
 
-        private void Awake()
-        {
-            if (!isTraining)
-            {
-                //agent._player = GameObject.FindGameObjectWithTag("Enemy");
-            }
-        }
-
         public override void Initialize()
         {
             if (isTraining)
@@ -86,7 +78,7 @@ namespace AutoPlayerScript
         {
             // Give Agent the information about the state
             // Using Ray Perception to identify the goal
-            sensor.AddObservation(transform.localPosition);
+            sensor.AddObservation(autoShoot.GetCurrentAmmo());
         }
         public override void OnActionReceived(ActionBuffers actions)
         {
@@ -134,9 +126,9 @@ namespace AutoPlayerScript
         public void OnMissed()
         {
             Debug.Log("Autoplayer missed attacks");
-            if (!isTraining) return;
-            AddReward(-0.02f);
-            cumulativeReward = GetCumulativeReward();
+            //if (!isTraining) return;
+            //AddReward(-0.02f);
+            //cumulativeReward = GetCumulativeReward();
         }
 
         public void OnSpecial()
