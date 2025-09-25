@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using AutoPlayerScript;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 
@@ -18,19 +16,21 @@ namespace EnemiesScript.Melee
         [SerializeField] private Enemy agent;
         [HideInInspector] public int currentEpisode;
         [HideInInspector] public float cumulativeReward;
-        private Transform arena;
+        private Transform _arena;
         public bool isTraining;
         private Color _defaultGroundColor;
         private Coroutine _flashGroundCoroutine;
         private PlayerHealth _playerHealthManager;
-        private bool attackedThisStep = false;
-        private float lastDistance;
-        private float minAttackDistance = 1.5f;
+        private bool _attackedThisStep = false;
+        private float _lastDistance;
+        private float _minAttackDistance = 1.5f;
+        [SerializeField]private AutoPlayerAgent shooter;
         
         float Timer = 0;//for testing agent action remove later
 
-        private void Awake()
+        private new void Awake()
         {
+            base.Awake();
             if (!isTraining)
             {
                 agent._player = GameObject.FindGameObjectWithTag("Player");
@@ -41,7 +41,7 @@ namespace EnemiesScript.Melee
         {
             if (isTraining)
             {
-                arena = this.transform.parent.gameObject.transform;
+                _arena = this.transform.parent.gameObject.transform;
                 currentEpisode = 0;
                 cumulativeReward = 0f;
                 if (groundRenderer)
@@ -101,12 +101,12 @@ namespace EnemiesScript.Melee
             agent.RotateAgent(rotation);
             agent.Specials(special);
             
-            attackedThisStep = false;
+            _attackedThisStep = false;
 
             if (attack > 0)
             {
                 agent.Attack(attack - 1);
-                attackedThisStep = true;
+                _attackedThisStep = true;
             }
             base.OnActionReceived(actions);
             
@@ -116,7 +116,7 @@ namespace EnemiesScript.Melee
                 float currentDistance = Vector3.Distance(transform.position, player.transform.position);
                 
                 // Reward moving closer, penalize running away
-                float distanceDelta = lastDistance - currentDistance;
+                float distanceDelta = _lastDistance - currentDistance;
                 AddReward(Mathf.Clamp(distanceDelta * 0.05f, -0.05f, 0.05f));
 
                 // Reward staying in good combat range (not too far, not too close)
@@ -126,10 +126,10 @@ namespace EnemiesScript.Melee
 
 
                 // Penalize camping too close without attacking
-                if (currentDistance <= minAttackDistance && !attackedThisStep)
+                if (currentDistance <= _minAttackDistance && !_attackedThisStep)
                     AddReward(-0.002f);
 
-                lastDistance = currentDistance;
+                _lastDistance = currentDistance;
                 
                 // Penalty given each step to encourage agent to finish a task quickly
                 AddReward(-1f / MaxStep); 
@@ -156,7 +156,6 @@ namespace EnemiesScript.Melee
         public void OnAttackMissed()//Called by Enemy attack event listener to notify that the attack launched did not and on a player
         {
             if (!isTraining) return;
-            
         }
         public void OnAttackLanded()// Called when Agent Hit Something
         {
@@ -220,7 +219,7 @@ namespace EnemiesScript.Melee
 
             SpawnPlayer();
             if (agent._player != null)
-                lastDistance = Vector3.Distance(transform.position, agent._player.transform.position);
+                _lastDistance = Vector3.Distance(transform.position, agent._player.transform.position);
         }
         
         private void SpawnPlayer()
@@ -243,7 +242,7 @@ namespace EnemiesScript.Melee
             
             if (agent._player) Destroy(agent._player);
 
-            agent._player = Instantiate(targetPrefab, arena);
+            agent._player = Instantiate(targetPrefab, _arena);
             agent._player.transform.localPosition = localPlayerPosition;
             agent._player.transform.localRotation = Quaternion.identity;
             agent.AddListenerToTarget(agent._player);

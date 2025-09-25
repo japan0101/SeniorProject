@@ -65,6 +65,11 @@ namespace AutoPlayerScript
             {
                 discreteActionsOut[0] = 1;
             }
+            if (Input.GetKey(KeyCode.R))
+            {
+                Debug.Log("Reloading");
+                discreteActionsOut[0] = 2;
+            }
             if (Input.GetKey(KeyCode.Q))
             {
                 continuousActions[2] = -1;
@@ -73,12 +78,14 @@ namespace AutoPlayerScript
             {
                 continuousActions[2] = 1;
             }
+
             
         }
         public override void CollectObservations(VectorSensor sensor)
         {
             // Give Agent the information about the state
             // Using Ray Perception to identify the goal
+            base.CollectObservations(sensor);
             sensor.AddObservation(autoShoot.GetCurrentAmmo());
         }
         public override void OnActionReceived(ActionBuffers actions)

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using AutoPlayerScript;
 using UnityEngine;
 
 namespace EnemiesScript.Melee
@@ -8,6 +8,7 @@ namespace EnemiesScript.Melee
         private EnemyAttack _atk;
         float Timer = 0;
         private MeleeEnemyAgent _agent;
+        [SerializeField]private AutoPlayerAgent agent;
         
         private new void Awake()
         {
@@ -27,7 +28,7 @@ namespace EnemiesScript.Melee
             {
                 energy -= 10f;
                 _atk = Instantiate(attacks[atkIndex], gameObject.transform);
-                _atk.OnMissed += miss;//Add method of missed attack aknowledgement to an event listener of the launched attacks
+                _atk.OnMissed += Miss;//Add method of missed attack aknowledgement to an event listener of the launched attacks
                 Destroy(_atk.gameObject, _atk.lifetime);
             }
         }
@@ -44,7 +45,7 @@ namespace EnemiesScript.Melee
         {
             if (_agent.isTraining)
             {
-                TrainerManager.KillEnemy();
+                TrainerManager.KillEnemy(agent);
                 _agent.OnKilled();
             }
         }
@@ -64,7 +65,7 @@ namespace EnemiesScript.Melee
                 _agent.OnKilledTarget();
             }
         }
-        public void miss()//used to acknowledge that an attack launched by this agent has missed
+        public void Miss()//used to acknowledge that an attack launched by this agent has missed
         {
             Debug.Log("Enemy component acknowledge misses");
             _agent.OnAttackMissed();
@@ -101,7 +102,7 @@ namespace EnemiesScript.Melee
             transform.Rotate(0f, rotateSpeed * actionValue * Time.deltaTime, 0f);
         }
 
-        private void Update()
+        private new void Update()
         {
             base.Update();
             if (hp <= 0)

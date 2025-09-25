@@ -244,11 +244,11 @@ namespace EnemiesScript.Range
             if (agent._player) Destroy(agent._player);
 
             agent._player = Instantiate(targetPrefab, arena);
-            var navigation = agent._player.GetComponent<TrainerNavigation>();
-            navigation.EnemyTarget = gameObject;
-            agent._player.transform.localPosition = localPlayerPosition;
-            agent._player.transform.localRotation = Quaternion.identity;
-            agent.AddListenerToTarget(agent._player);
+            // var navigation = agent._player.GetComponent<TrainerNavigation>();
+            // navigation.EnemyTarget = gameObject;
+            // agent._player.transform.localPosition = localPlayerPosition;
+            // agent._player.transform.localRotation = Quaternion.identity;
+            // agent.AddListenerToTarget(agent._player);
         }
     }
 }

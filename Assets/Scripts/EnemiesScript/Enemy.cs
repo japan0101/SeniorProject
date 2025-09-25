@@ -28,7 +28,7 @@ namespace EnemiesScript
         public List<EnemyAttack> attacks = new List<EnemyAttack>();
         protected Rigidbody rb;
         public PlayerHealth _playerHealthManager;
-        public GameObject _player;
+        [HideInInspector]public GameObject _player;
         private bool attacking = false;
         private bool missed = false;
 
