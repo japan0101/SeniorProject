@@ -34,7 +34,8 @@ namespace AutoPlayerScript
             if (isTraining)
             {
                 TrainerManager.OnBulletHitEnemy += OnAttackLanded;
-                TrainerManager.OnBulletMiss+=OnMissed;
+                TrainerManager.OnBulletMiss += OnMissed;
+                TrainerManager.OnKillEnemy += OnKilledTarget;
                 arena = this.transform.parent.gameObject.transform;
                 currentEpisode = 0;
                 cumulativeReward = 0f;
@@ -123,12 +124,12 @@ namespace AutoPlayerScript
             AddReward(-0.02f);
             cumulativeReward = GetCumulativeReward();
         }
-        public void OnMissed()
+        public void OnMissed(AutoPlayerAgent shooter)
         {
+            if (!isTraining || shooter != this) return;
             Debug.Log("Autoplayer missed attacks");
-            //if (!isTraining) return;
-            //AddReward(-0.02f);
-            //cumulativeReward = GetCumulativeReward();
+            AddReward(-0.02f);
+            cumulativeReward = GetCumulativeReward();
         }
 
         public void OnSpecial()
@@ -138,16 +139,17 @@ namespace AutoPlayerScript
             cumulativeReward = GetCumulativeReward();
         }
        
-        public void OnAttackLanded()// Called when Agent Hit Something
+        public void OnAttackLanded(AutoPlayerAgent shooter)// Called when Agent Hit Something
         {
+            if (!isTraining || shooter != this) return;
             Debug.Log("Autoplayer landed attacks");
-            if (!isTraining) return;
             AddReward(0.05f);
             cumulativeReward = GetCumulativeReward();
         }
-        public void OnKilledTarget()// Called when Agent Kill Something
+        public void OnKilledTarget(AutoPlayerAgent shooter)// Called when Agent Kill Something
         {
-            if (!isTraining) return;
+            if (!isTraining || shooter != this) return;
+            Debug.Log("Autoplayer killed a target");
             AddReward(1f);
             cumulativeReward = GetCumulativeReward();
             EndEpisode();

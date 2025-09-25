@@ -44,6 +44,7 @@ namespace EnemiesScript.Melee
         {
             if (_agent.isTraining)
             {
+                TrainerManager.KillEnemy();
                 _agent.OnKilled();
             }
         }

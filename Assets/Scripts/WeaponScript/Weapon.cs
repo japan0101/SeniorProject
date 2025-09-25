@@ -1,3 +1,4 @@
+using AutoPlayerScript;
 using System;
 using System.Diagnostics.Tracing;
 using Unity.VisualScripting;
@@ -64,6 +65,17 @@ public class Weapon : MonoBehaviour
         muzzleFlash.SendEvent("OnPlay");
         var bulletInstance = Instantiate(bullet, shotPosition, Quaternion.LookRotation(shootDirection));
         var bulletRB = bulletInstance.GetComponentInChildren<Rigidbody>();
+        //bulletRB.AddForce(orientation.forward * 20 + orientation.up * 10, ForceMode.Impulse);
+        bulletRB.AddForce(shootDirection * power, ForceMode.Impulse);
+    }
+    public void Shoot(Vector3 shootDirection, Vector3 shotPosition, AutoPlayerAgent shooter)
+    {
+        //create bullet then add force to it
+        currentAmmo -= 1;
+        muzzleFlash.SendEvent("OnPlay");
+        var bulletInstance = Instantiate(bullet, shotPosition, Quaternion.LookRotation(shootDirection));
+        var bulletRB = bulletInstance.GetComponentInChildren<Rigidbody>();
+        bulletInstance.GetComponent<MainBullet>().agent = shooter;
         //bulletRB.AddForce(orientation.forward * 20 + orientation.up * 10, ForceMode.Impulse);
         bulletRB.AddForce(shootDirection * power, ForceMode.Impulse);
     }

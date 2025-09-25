@@ -205,6 +205,7 @@ MonoBehaviour:
   visualizer: {fileID: 0}
   primaryWeapon: {fileID: 1813053710022886696}
   secondaryWeapon: {fileID: 1469548863772599917}
+  agent: {fileID: 5769191992727151184}
   rayLength: 10
   detectionLayer:
     serializedVersion: 2

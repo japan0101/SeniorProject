@@ -63,7 +63,7 @@ public class AutoShoot : MonoBehaviour
             StopCoroutine(shootCooldownRoutine);
 
         equipedReadyToShoot = false;
-        equipedWeapon.Shoot(shootDirection, gunPos.position);
+        equipedWeapon.Shoot(shootDirection, gunPos.position, agent);
         
         shootCooldownRoutine = StartCoroutine(ShootCooldown(equipedWeapon.cooldown));
     }

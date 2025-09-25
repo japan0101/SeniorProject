@@ -1,3 +1,4 @@
+using AutoPlayerScript;
 using NUnit.Framework;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Collections;
@@ -15,6 +16,7 @@ public class MainBullet : MonoBehaviour
     private int groundLayer = 10;
     private Vector3 lastVelocity;
     protected bool isMissed = true;
+    public AutoPlayerAgent agent;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -37,14 +39,14 @@ public class MainBullet : MonoBehaviour
     {
         // This method is called when the bullet GameObject is destroyed.
         // We check the flag to see if it was a hit or a miss.
-        if (isMissed)
+        if (isMissed && agent)
         {
             // If the bullet was destroyed and hasHit is false, it means it missed.
-            TrainerManager.BulletMiss();
+            TrainerManager.BulletMiss(agent);
         }
         else
         {
-            TrainerManager.BulletHitEnemy();
+            TrainerManager.BulletHitEnemy(agent);
         }
     }
     // Update is called once per frame

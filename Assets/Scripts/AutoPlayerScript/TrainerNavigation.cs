@@ -38,6 +38,11 @@ public class TrainerNavigation : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+    void Awake()
+    {
+        // Get the Rigidbody component once at the start.
+        rb = GetComponent<Rigidbody>();
+    }
     void Update()
     {
         // Find a target if one doesn't exist.
