@@ -19,6 +19,7 @@ namespace AutoPlayerScript
         [HideInInspector] public int currentEpisode;
         [HideInInspector] public float cumulativeReward;
         [SerializeField] public AutoShoot autoShoot;
+        [SerializeField] private GameObject environment;
         private Transform arena;
         public bool isTraining;
         private Color _defaultGroundColor;
@@ -119,9 +120,10 @@ namespace AutoPlayerScript
             }
             base.OnActionReceived(actions);
             
-            float minSafeDistance = 1.0f;   // too close if closer than this
-            float idealCombatDistance = 3.0f; // encourage hovering around this range
-
+            float minSafeDistance = 3.0f;   // too close if closer than this
+            float idealCombatDistance = 5.0f; // encourage hovering around this range
+            
+            if (!isTraining) return;
             if (_enemy1 != null)
             {
                 HandleSpacingReward(_enemy1.transform, minSafeDistance, idealCombatDistance);
@@ -163,8 +165,8 @@ namespace AutoPlayerScript
         public void OnAttack()
         {
             if (!isTraining) return;
-            AddReward(-0.02f);
-            cumulativeReward = GetCumulativeReward();
+            // AddReward(-0.02f);
+            // cumulativeReward = GetCumulativeReward();
         }
         public void OnMissed(AutoPlayerAgent shooter)
         {
@@ -192,7 +194,7 @@ namespace AutoPlayerScript
         {
             if (!isTraining || shooter != this) return;
             Debug.Log("Autoplayer killed a target");
-            AddReward(1f);
+            AddReward(5f);
             cumulativeReward = GetCumulativeReward();
             EndEpisode();
         }
@@ -271,9 +273,11 @@ namespace AutoPlayerScript
             if (_enemy1) Destroy(_enemy1);
             if (_enemy2) Destroy(_enemy2);
             
-            _enemy1 = Instantiate(targetPrefab, localEnemyPosition1, Quaternion.identity);
-            _enemy2 = Instantiate(targetPrefab, localEnemyPosition2, Quaternion.identity);
-            
+            _enemy1 = Instantiate(targetPrefab, environment.transform);
+            _enemy1.transform.localPosition = localEnemyPosition1;
+
+            _enemy2 = Instantiate(targetPrefab, environment.transform);
+            _enemy2.transform.localPosition = localEnemyPosition2;
         }
     }
 }
