@@ -114,6 +114,8 @@ GameObject:
   - component: {fileID: 6545671478195352403}
   - component: {fileID: 5769191992727151184}
   - component: {fileID: 7642755880382284800}
+  - component: {fileID: 3788045894941951985}
+  - component: {fileID: 2510714681876408050}
   m_Layer: 0
   m_Name: AutonomousePlayers
   m_TagString: Player
@@ -253,7 +255,7 @@ MonoBehaviour:
   rotateSpeed: 360
   dashSpeed: 10
   aimErrorMargin: 5
-  EnemyTarget: {fileID: 0}
+  enemyTarget: {fileID: 0}
 --- !u!114 &6545671478195352403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,7 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 1
+    VectorObservationSize: 3
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 3
@@ -278,7 +280,7 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_BehaviorType: 1
+  m_BehaviorType: 0
   m_BehaviorName: AutoPLayer
   TeamId: 0
   m_UseChildSensors: 1
@@ -301,13 +303,13 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 50000
-  targetPrefab: {fileID: 0}
+  targetPrefab: {fileID: 193917626500851352, guid: b98f66ebf0d0e5a439006c613a0bb3a0, type: 3}
   groundRenderer: {fileID: 0}
   agent: {fileID: 5907028583260193024}
   currentEpisode: 0
   cumulativeReward: 0
   autoShoot: {fileID: 116878861277677139}
-  isTraining: 0
+  isTraining: 1
 --- !u!114 &7642755880382284800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,6 +325,64 @@ MonoBehaviour:
   DecisionPeriod: 5
   DecisionStep: 0
   TakeActionsBetweenDecisions: 1
+--- !u!114 &3788045894941951985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3880061375110339810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: Behind
+  m_DetectableTags: []
+  m_RaysPerDirection: 5
+  m_MaxRayDegrees: 120
+  m_SphereCastRadius: 0.92
+  m_RayLength: 20
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967291
+  m_ObservationStacks: 1
+  m_AlternatingRayOrder: 1
+  m_UseBatchedRaycasts: 0
+  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
+  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+  m_StartVerticalOffset: 0
+  m_EndVerticalOffset: 0
+--- !u!114 &2510714681876408050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3880061375110339810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6b867a41448888c1cd4f99643ad71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: Top
+  m_DetectableTags:
+  - Wall
+  - Enemy
+  m_RaysPerDirection: 4
+  m_MaxRayDegrees: 56.3
+  m_SphereCastRadius: 1.05
+  m_RayLength: 20
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967291
+  m_ObservationStacks: 1
+  m_AlternatingRayOrder: 1
+  m_UseBatchedRaycasts: 0
+  rayHitColor: {r: 1, g: 0, b: 0, a: 1}
+  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+  m_StartVerticalOffset: 1
+  m_EndVerticalOffset: -0.52
 --- !u!1 &4401588218360901725
 GameObject:
   m_ObjectHideFlags: 0

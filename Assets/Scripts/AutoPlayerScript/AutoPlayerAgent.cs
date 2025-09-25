@@ -117,15 +117,14 @@ namespace AutoPlayerScript
                     autoShoot.ReloadWeapon();
                     break;
             }
-            //agent.Specials(special);
-            
-
-            //if (attack > 0)
-            //{
-            //    agent.Attack(attack - 1);
-            //    attackedThisStep = true;
-            //}
             base.OnActionReceived(actions);
+            
+            // Penalty given each step to encourage agent to finish a task quickly
+            AddReward(-1f / MaxStep); 
+            // Survival incentive
+            AddReward(0.0001f);
+            // // Update the cumulative reward after adding the step penalty.
+            cumulativeReward = GetCumulativeReward();
             
         }
 
@@ -138,9 +137,9 @@ namespace AutoPlayerScript
         public void OnMissed(AutoPlayerAgent shooter)
         {
             if (!isTraining || shooter != this) return;
-            Debug.Log("Autoplayer missed attacks");
-            AddReward(-0.02f);
-            cumulativeReward = GetCumulativeReward();
+            //Debug.Log("Autoplayer missed attacks");
+            //AddReward(-0.02f);
+            //cumulativeReward = GetCumulativeReward();
         }
 
         public void OnSpecial()
@@ -212,7 +211,7 @@ namespace AutoPlayerScript
             currentEpisode++;
             cumulativeReward = 0f;
 
-            // SpawnEnemy();
+            SpawnEnemy();
         }
         
         private void SpawnEnemy()

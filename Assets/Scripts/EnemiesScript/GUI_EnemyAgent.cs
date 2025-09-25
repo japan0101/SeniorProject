@@ -1,4 +1,5 @@
 using System.Globalization;
+using AutoPlayerScript;
 using EnemiesScript.Melee;
 using Unity.MLAgents;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace EnemiesScript
 {
     public class GUIEnemyAgent : MonoBehaviour
     {
-        [SerializeField] private MeleeEnemyAgent enemyMeleeAgent;
+        [SerializeField] private AutoPlayerAgent autoPlayerAgent;
 
         private GUIStyle _defaultStyle = new GUIStyle();
         private GUIStyle _positiveStyle = new GUIStyle();
@@ -29,11 +30,11 @@ namespace EnemiesScript
 
         private void OnGUI()
         {
-            string debugEpisode = "Episode: " + enemyMeleeAgent.currentEpisode + " - Step: " + enemyMeleeAgent.StepCount;
-            string debugReward = "Reward: " + enemyMeleeAgent.cumulativeReward.ToString(CultureInfo.InvariantCulture);
+            string debugEpisode = "Episode: " + autoPlayerAgent.currentEpisode + " - Step: " + autoPlayerAgent.StepCount;
+            string debugReward = "Reward: " + autoPlayerAgent.cumulativeReward.ToString(CultureInfo.InvariantCulture);
         
             // Select style based on reward value
-            GUIStyle rewardStyle = enemyMeleeAgent.cumulativeReward < 0f ? _negativeStyle : _positiveStyle;
+            GUIStyle rewardStyle = autoPlayerAgent.cumulativeReward < 0f ? _negativeStyle : _positiveStyle;
         
             // Display the debug text
             GUI.Label(new Rect(20, 20, 500, 30), debugEpisode, _defaultStyle);

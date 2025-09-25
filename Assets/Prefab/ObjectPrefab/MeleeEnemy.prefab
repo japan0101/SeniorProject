@@ -190,6 +190,7 @@ MonoBehaviour:
   - {fileID: 8056371960188120745, guid: b044becc80fe92e429f417a99987414b, type: 3}
   _playerHealthManager: {fileID: 0}
   _player: {fileID: 0}
+  agent: {fileID: 0}
 --- !u!114 &1858242583132030306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,7 +215,7 @@ MonoBehaviour:
     hasUpgradedBrainParametersWithActionSpec: 1
   m_Model: {fileID: 5022602860645237092, guid: 9dad557bdca548f4fb35b7cc00796184, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
+  m_BehaviorType: 2
   m_BehaviorName: MeleeEnemy
   TeamId: 0
   m_UseChildSensors: 1
@@ -243,6 +244,7 @@ MonoBehaviour:
   currentEpisode: 0
   cumulativeReward: 0
   isTraining: 0
+  shooter: {fileID: 0}
 --- !u!114 &8443655869179619361
 MonoBehaviour:
   m_ObjectHideFlags: 0
