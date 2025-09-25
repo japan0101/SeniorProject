@@ -119,6 +119,19 @@ namespace AutoPlayerScript
             }
             base.OnActionReceived(actions);
             
+            float minSafeDistance = 1.0f;   // too close if closer than this
+            float idealCombatDistance = 3.0f; // encourage hovering around this range
+
+            if (_enemy1 != null)
+            {
+                HandleSpacingReward(_enemy1.transform, minSafeDistance, idealCombatDistance);
+            }
+
+            if (_enemy2 != null)
+            {
+                HandleSpacingReward(_enemy2.transform, minSafeDistance, idealCombatDistance);
+            }
+            
             // Penalty given each step to encourage agent to finish a task quickly
             AddReward(-1f / MaxStep); 
             // Survival incentive
@@ -126,6 +139,25 @@ namespace AutoPlayerScript
             // // Update the cumulative reward after adding the step penalty.
             cumulativeReward = GetCumulativeReward();
             
+        }
+        
+        private void HandleSpacingReward(Transform enemy, float minSafeDistance, float idealDistance)
+        {
+            float currentDistance = Vector3.Distance(transform.position, enemy.position);
+
+            // Penalize being too close (inside min safe distance)
+            if (currentDistance < minSafeDistance)
+            {
+                AddReward(-0.002f);
+            }
+
+            // Small reward for being near the "ideal combat distance"
+            float rangeScore = 1f - Mathf.Abs(currentDistance - idealDistance) / idealDistance;
+            AddReward(rangeScore * 0.001f);
+
+            // Optional: reward moving closer (not circling forever)
+            // float distanceDelta = lastDistance1 - currentDistance;
+            // AddReward(Mathf.Clamp(distanceDelta * 0.01f, -0.01f, 0.01f));
         }
 
         public void OnAttack()
