@@ -15,10 +15,10 @@ namespace AutoPlayerScript
     {
         [SerializeField] private GameObject targetPrefab;
         [SerializeField] private Renderer groundRenderer;
-        [SerializeField] private TrainerNavigation agent;
+        private TrainerNavigation agent;
         [HideInInspector] public int currentEpisode;
         [HideInInspector] public float cumulativeReward;
-        [SerializeField] public AutoShoot autoShoot;
+        private AutoShoot autoShoot;
         [SerializeField] private GameObject environment;
         private Transform arena;
         public bool isTraining;
@@ -30,8 +30,15 @@ namespace AutoPlayerScript
         
         float Timer = 0;//for testing agent action remove later
 
+        new void Awake()
+        {
+            base.Awake();
+            autoShoot = GetComponent<AutoShoot>();
+            agent = GetComponent<TrainerNavigation>();
+        }
         public override void Initialize()
         {
+            if (agent == null) Debug.LogError($"{name}: TrainerNavigation not found on {gameObject}");
             if (isTraining)
             {
                 TrainerManager.OnBulletHitEnemy += OnAttackLanded;

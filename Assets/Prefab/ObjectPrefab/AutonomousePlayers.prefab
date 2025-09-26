@@ -278,10 +278,10 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 429d28ff9d6c4b542ad1baebecfe459e, type: 3}
   m_InferenceDevice: 0
-  m_BehaviorType: 0
-  m_BehaviorName: AutoPLayer
+  m_BehaviorType: 2
+  m_BehaviorName: AutoPlayer
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
@@ -302,14 +302,13 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 50000
+  MaxStep: 0
   targetPrefab: {fileID: 193917626500851352, guid: b98f66ebf0d0e5a439006c613a0bb3a0, type: 3}
   groundRenderer: {fileID: 0}
-  agent: {fileID: 5907028583260193024}
   currentEpisode: 0
   cumulativeReward: 0
-  autoShoot: {fileID: 116878861277677139}
-  isTraining: 1
+  environment: {fileID: 0}
+  isTraining: 0
 --- !u!114 &7642755880382284800
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -127,10 +127,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 332238798430839737}
     - target: {fileID: 5769191992727151184, guid: 3e3173a6dc306434f9231b0f6284658a, type: 3}
-      propertyPath: targetPrefab
-      value: 
-      objectReference: {fileID: 193917626500851352, guid: b98f66ebf0d0e5a439006c613a0bb3a0, type: 3}
-    - target: {fileID: 5769191992727151184, guid: 3e3173a6dc306434f9231b0f6284658a, type: 3}
       propertyPath: groundRenderer
       value: 
       objectReference: {fileID: 4011538255663886709}
@@ -141,14 +137,6 @@ PrefabInstance:
     - target: {fileID: 6545671478195352403, guid: 3e3173a6dc306434f9231b0f6284658a, type: 3}
       propertyPath: m_BehaviorName
       value: AutoPlayer
-      objectReference: {fileID: 0}
-    - target: {fileID: 6545671478195352403, guid: 3e3173a6dc306434f9231b0f6284658a, type: 3}
-      propertyPath: m_BehaviorType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6545671478195352403, guid: 3e3173a6dc306434f9231b0f6284658a, type: 3}
-      propertyPath: m_BrainParameters.VectorObservationSize
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

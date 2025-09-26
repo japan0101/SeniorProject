@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 using System;
 using AutoPlayerScript;
+using Unity.VisualScripting;
 
 public class AutoShoot : MonoBehaviour
 {
@@ -40,10 +41,15 @@ public class AutoShoot : MonoBehaviour
 
     public bool IsReloading() => activeReloadRoutine != null;
 
-    void Start()
+    private void Awake()
     {
         GetComponent<Rigidbody>().freezeRotation=true;
         SwitchWeapon(true);
+    }
+
+    void Start()
+    {
+        
         //UpdateAmmoUI();
     }
 
@@ -55,6 +61,11 @@ public class AutoShoot : MonoBehaviour
 
     public int GetCurrentAmmo()
     {
+        if (equipedWeapon == null)
+        {
+            Debug.Log("Not equiped");
+            return 0;
+        }
         return equipedWeapon.currentAmmo;
     }
     public void ShootWeapon()
