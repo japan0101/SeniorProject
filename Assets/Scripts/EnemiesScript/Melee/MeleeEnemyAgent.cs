@@ -9,22 +9,8 @@ using Random = UnityEngine.Random;
 
 namespace EnemiesScript.Melee
 {
-    public class MeleeEnemyAgent:Agent
+    public class MeleeEnemyAgent:EnemyAgent
     {
-        [SerializeField] private GameObject targetPrefab;
-        [SerializeField] private Renderer groundRenderer;
-        [SerializeField] private Enemy agent;
-        [HideInInspector] public int currentEpisode;
-        [HideInInspector] public float cumulativeReward;
-        private Transform _arena;
-        public bool isTraining;
-        private Color _defaultGroundColor;
-        private Coroutine _flashGroundCoroutine;
-        private PlayerHealth _playerHealthManager;
-        private bool _attackedThisStep = false;
-        private float _lastDistance;
-        private float _minAttackDistance = 1.5f;
-        [SerializeField]private AutoPlayerAgent shooter;
         
         float Timer = 0;//for testing agent action remove later
 
@@ -140,37 +126,37 @@ namespace EnemiesScript.Melee
             }
         }
 
-        public void OnAttack()
+        public override void OnAttack()
         {
             if (!isTraining) return;
             AddReward(-0.02f);
             cumulativeReward = GetCumulativeReward();
         }
 
-        public void OnSpecial()
+        public override void OnSpecial()
         {
             if (!isTraining) return;
             AddReward(-0.01f);
             cumulativeReward = GetCumulativeReward();
         }
-        public void OnAttackMissed()//Called by Enemy attack event listener to notify that the attack launched did not and on a player
+        public override void OnAttackMissed()//Called by Enemy attack event listener to notify that the attack launched did not and on a player
         {
             if (!isTraining) return;
         }
-        public void OnAttackLanded()// Called when Agent Hit Something
+        public override void OnAttackLanded()// Called when Agent Hit Something
         {
             if (!isTraining) return;
             AddReward(0.05f);
             cumulativeReward = GetCumulativeReward();
         }
-        public void OnKilledTarget()// Called when Agent Kill Something
+        public override void OnKilledTarget()// Called when Agent Kill Something
         {
             if (!isTraining) return;
             AddReward(1f);
             cumulativeReward = GetCumulativeReward();
             EndEpisode();
         }
-        public void OnKilled()
+        public override void OnKilled()
         {
             // Getting Killed
             if (!isTraining) return;
@@ -178,9 +164,10 @@ namespace EnemiesScript.Melee
             cumulativeReward = GetCumulativeReward();
             EndEpisode();
         }
-        
-        public void OnHurt()
+
+        public override void OnHurt()
         {
+            Debug.Log("Ouchie");
             if (!isTraining) return;
             AddReward(-0.01f);
             cumulativeReward = GetCumulativeReward();

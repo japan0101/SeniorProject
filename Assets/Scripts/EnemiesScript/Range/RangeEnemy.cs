@@ -1,5 +1,6 @@
 ﻿using EnemiesScript.Melee;
 using Unity.MLAgents.Actuators;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace EnemiesScript.Range
@@ -10,13 +11,15 @@ namespace EnemiesScript.Range
         float Timer = 0;
         private RangeEnemyAgent _agent;
 
-        private void Awake()
+        private new void Awake()
         {
+            base.Awake();
             _agent = GetComponent<RangeEnemyAgent>();
         }
 
         public override void Attack(int atkIndex)
         {
+            Debug.Log(atkIndex);
             if (_atk) return;
             if (_agent.isTraining)
             {
@@ -27,6 +30,8 @@ namespace EnemiesScript.Range
             {
                 energy -= 10f;
                 _atk = Instantiate(attacks[atkIndex], gameObject.transform);
+                _atk.attacker = gameObject;
+                _atk.OnAttack();
                 _atk.OnMissed += miss;//Add method of missed attack aknowledgement to an event listener of the launched attacks
                 Destroy(_atk.gameObject, _atk.lifetime);
             }
@@ -100,7 +105,7 @@ namespace EnemiesScript.Range
             transform.Rotate(0f, rotateSpeed * actionValue * Time.deltaTime, 0f);
         }
 
-        private void Update()
+        private new void Update()
         {
             base.Update();
             if (hp <= 0)
@@ -108,6 +113,7 @@ namespace EnemiesScript.Range
                 OnKilled();
                 hp = maxHp;
             }
+            energy = Mathf.Clamp(energy + (energyRegenPerSecond * Time.deltaTime), 0, maxEnergy);
         }
     }
 }

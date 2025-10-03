@@ -380,7 +380,7 @@ MonoBehaviour:
   textOffset: {x: 0, y: 2, z: 0}
   textColor: {r: 1, g: 0, b: 0, a: 1}
   fontSize: 36
-  textPrefab: {fileID: 0}
+  textPrefab: {fileID: 492262720368131801, guid: 198e0dbc2c3bdf147b9d54feb374ca3b, type: 3}
 --- !u!114 &4494571649546192720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -462,6 +462,7 @@ MonoBehaviour:
   currentEpisode: 0
   cumulativeReward: 0
   isTraining: 0
+  shooter: {fileID: 0}
 --- !u!114 &2973356864719870214
 MonoBehaviour:
   m_ObjectHideFlags: 0

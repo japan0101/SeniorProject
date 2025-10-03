@@ -12,7 +12,10 @@ namespace EnemiesScript
         public float baseKnockbackForce;
         protected bool isMissed = true;
         public event Action OnMissed;
-        public abstract void OnAttack();
+        public virtual void OnAttack()
+        {
+
+        }
 
         public void OnDestroy()
         {

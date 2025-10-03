@@ -12,10 +12,7 @@ namespace EnemiesScript.Range
         {
             Debug.Log("Shooting");
             Rigidbody rb = GetComponent<Rigidbody>();
-            //rb.freezeRotation = true;
-            Vector3 direction = new Vector3(attacker.transform.forward.x, attacker.transform.forward.y, attacker.transform.forward.z);
-            rb.AddForce(direction * power * 100, ForceMode.Force);
-            Destroy(gameObject, lifetime);
+            rb.AddForce(attacker.transform.forward * power * 100, ForceMode.Force);
         }
         private void OnTriggerEnter(Collider other)
         {

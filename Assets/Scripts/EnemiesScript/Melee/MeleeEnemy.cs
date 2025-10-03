@@ -12,6 +12,7 @@ namespace EnemiesScript.Melee
         
         private new void Awake()
         {
+            Debug.Log("Hello");
             _agent = GetComponent<MeleeEnemyAgent>();
             base.Awake();
         }
@@ -115,6 +116,7 @@ namespace EnemiesScript.Melee
                 }
                 Destroy(gameObject);
             }
+            energy = Mathf.Clamp(energy + (energyRegenPerSecond * Time.deltaTime), 0, maxEnergy);
         }
         
     }

@@ -11,26 +11,17 @@ using Random = UnityEngine.Random;
 
 namespace EnemiesScript.Range
 {
-    public class RangeEnemyAgent : Agent
+    public class RangeEnemyAgent : EnemyAgent
     {
-        [SerializeField] private GameObject targetPrefab;
-        [SerializeField] private Renderer groundRenderer;
-        [SerializeField] private Enemy agent;
-        [HideInInspector] public int currentEpisode;
-        [HideInInspector] public float cumulativeReward;
-        private Transform arena;
-        public bool isTraining;
-        private Color _defaultGroundColor;
-        private Coroutine _flashGroundCoroutine;
-        private PlayerHealth _playerHealthManager;
         private bool attackedThisStep = false;
         private float lastDistance;
         private float minAttackDistance = 1.5f;
 
         float Timer = 0;//for testing agent action remove later
 
-        private void Awake()
+        private new void Awake()
         {
+            base.Awake();
             if (!isTraining)
             {
                 agent._player = GameObject.FindGameObjectWithTag("Player");
@@ -41,7 +32,7 @@ namespace EnemiesScript.Range
         {
             if (isTraining)
             {
-                arena = this.transform.parent.gameObject.transform;
+                _arena = this.transform.parent.gameObject.transform;
                 currentEpisode = 0;
                 cumulativeReward = 0f;
                 if (groundRenderer)
@@ -69,15 +60,15 @@ namespace EnemiesScript.Range
             }
             if (Input.GetKey(KeyCode.Space))
             {
-                discreteActionsOut[1] = 1;
+                discreteActionsOut[1] = 1;//attack
             }
             if (Input.GetKey(KeyCode.Q))
             {
-                continuousActions[2] = -1;
+                continuousActions[2] = -1;//ccwspin
             }
             if (Input.GetKey(KeyCode.E))
             {
-                continuousActions[2] = 1;
+                continuousActions[2] = 1;//cwspin
             }
 
         }
@@ -105,6 +96,7 @@ namespace EnemiesScript.Range
 
             if (attack > 0)
             {
+                Debug.Log("Attacking");
                 agent.Attack(attack - 1);
                 attackedThisStep = true;
             }
@@ -140,38 +132,38 @@ namespace EnemiesScript.Range
             }
         }
 
-        public void OnAttack()
+        public override void OnAttack()
         {
             if (!isTraining) return;
             AddReward(-0.02f);
             cumulativeReward = GetCumulativeReward();
         }
 
-        public void OnSpecial()
+        public override void OnSpecial()
         {
             if (!isTraining) return;
             AddReward(-0.01f);
             cumulativeReward = GetCumulativeReward();
         }
-        public void OnAttackMissed()//Called by Enemy attack event listener to notify that the attack launched did not and on a player
+        public override void OnAttackMissed()//Called by Enemy attack event listener to notify that the attack launched did not and on a player
         {
             if (!isTraining) return;
 
         }
-        public void OnAttackLanded()// Called when Agent Hit Something
+        public override void OnAttackLanded()// Called when Agent Hit Something
         {
             if (!isTraining) return;
             AddReward(0.05f);
             cumulativeReward = GetCumulativeReward();
         }
-        public void OnKilledTarget()// Called when Agent Kill Something
+        public override void OnKilledTarget()// Called when Agent Kill Something
         {
             if (!isTraining) return;
             AddReward(1f);
             cumulativeReward = GetCumulativeReward();
             EndEpisode();
         }
-        public void OnKilled()
+        public override void OnKilled()
         {
             // Getting Killed
             if (!isTraining) return;
@@ -180,7 +172,7 @@ namespace EnemiesScript.Range
             EndEpisode();
         }
 
-        public void OnHurt()
+        public override void OnHurt()
         {
             if (!isTraining) return;
             AddReward(-0.01f);
@@ -243,7 +235,7 @@ namespace EnemiesScript.Range
 
             if (agent._player) Destroy(agent._player);
 
-            agent._player = Instantiate(targetPrefab, arena);
+            agent._player = Instantiate(targetPrefab, _arena);
             // var navigation = agent._player.GetComponent<TrainerNavigation>();
             // navigation.EnemyTarget = gameObject;
             // agent._player.transform.localPosition = localPlayerPosition;
