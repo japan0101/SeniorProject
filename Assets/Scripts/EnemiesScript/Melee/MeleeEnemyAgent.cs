@@ -203,10 +203,11 @@ namespace EnemiesScript.Melee
             
             currentEpisode++;
             cumulativeReward = 0f;
-
-            SpawnPlayer();
-            if (agent._player != null)
-                _lastDistance = Vector3.Distance(transform.position, agent._player.transform.position);
+            
+            // Using the TrainingController the Handle the Spawn Logic
+            // SpawnPlayer();
+            // if (agent._player != null)
+            //     _lastDistance = Vector3.Distance(transform.position, agent._player.transform.position);
         }
         
         private void SpawnPlayer()

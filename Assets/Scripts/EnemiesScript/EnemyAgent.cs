@@ -21,7 +21,7 @@ public abstract class EnemyAgent : Agent
     protected bool _attackedThisStep = false;
     protected float _lastDistance;
     protected float _minAttackDistance = 1.5f;
-    [SerializeField] protected AutoPlayerAgent shooter;
+    public TrainingArena arenaController;
     public abstract void OnAttack();
 
     public abstract void OnSpecial();

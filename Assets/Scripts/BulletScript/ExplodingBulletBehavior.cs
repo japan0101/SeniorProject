@@ -46,7 +46,7 @@ public class ExplodingHit : OnHitBehavior
         foreach (var hitCollider in hitColliders)
         {   
             // Check if the object has a specific component if needed
-            if (hitCollider.GetComponent<BaseEnemy>() != null)
+            if (hitCollider.GetComponent<Enemy>() != null)
             {
                 hitCollider.GetComponent<BaseEnemy>().TakeDamage(hitCollider.ClosestPoint(transform.position), GetComponent<MainBullet>().damage * blastDamageMultiplier);
                 //Debug.Log("Enemy detected: " + hitCollider.name);

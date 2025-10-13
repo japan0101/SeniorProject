@@ -27,6 +27,7 @@ namespace AutoPlayerScript
         private PlayerHealth _playerHealthManager;
         private GameObject _enemy1;
         private GameObject _enemy2;
+        public TrainingArena arenaController;
         
         float Timer = 0;//for testing agent action remove later
 
@@ -251,8 +252,9 @@ namespace AutoPlayerScript
             
             currentEpisode++;
             cumulativeReward = 0f;
-
-            SpawnEnemy();
+            
+            // The Training Manager Handle the Spawning Logic
+            // SpawnEnemy();
         }
         
         private void SpawnEnemy()
