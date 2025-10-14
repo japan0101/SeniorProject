@@ -48,7 +48,7 @@ public class ExplodingHit : OnHitBehavior
             // Check if the object has a specific component if needed
             if (hitCollider.GetComponent<Enemy>() != null)
             {
-                hitCollider.GetComponent<BaseEnemy>().TakeDamage(hitCollider.ClosestPoint(transform.position), GetComponent<MainBullet>().damage * blastDamageMultiplier);
+                // hitCollider.GetComponent<BaseEnemy>().TakeDamage(hitCollider.ClosestPoint(transform.position), GetComponent<MainBullet>().damage * blastDamageMultiplier);
                 //Debug.Log("Enemy detected: " + hitCollider.name);
             }
             if (hitCollider.GetComponent<PlayerHealth>() != null)
@@ -100,11 +100,11 @@ public class ExplodingHit : OnHitBehavior
         foreach (var hitCollider in hitColliders)
         {
             // Check if the object has a specific component if needed
-            if (hitCollider.GetComponent<BaseEnemy>() != null)
-            {
-                hitCollider.GetComponent<BaseEnemy>().TakeDamage(hitCollider.ClosestPoint(transform.position), GetComponent<MainBullet>().damage * blastDamageMultiplier);
-                //Debug.Log("Enemy detected: " + hitCollider.name);
-            }
+            // if (hitCollider.GetComponent<BaseEnemy>() != null)
+            // {
+            //     hitCollider.GetComponent<BaseEnemy>().TakeDamage(hitCollider.ClosestPoint(transform.position), GetComponent<MainBullet>().damage * blastDamageMultiplier);
+            //     //Debug.Log("Enemy detected: " + hitCollider.name);
+            // }
             if (hitCollider.GetComponent<PlayerHealth>() != null)
             {
                 hitCollider.GetComponent<PlayerHealth>().TakeDamage(hitCollider.ClosestPoint(transform.position), (GetComponent<MainBullet>().damage * blastDamageMultiplier) / 2);

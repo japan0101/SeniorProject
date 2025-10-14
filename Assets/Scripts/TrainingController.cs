@@ -1,10 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 using AutoPlayerScript;
-using EnemiesScript;
 using Unity.MLAgents;
 
-public class TrainingArena : MonoBehaviour
+public class TrainingController : MonoBehaviour
 {
     [Header("Agent Prefabs")]
     [SerializeField] private GameObject playerPrefab;
@@ -62,6 +61,7 @@ public class TrainingArena : MonoBehaviour
         if (matchIsOver) return;
         // Only remove from the list of ACTIVE enemies.
         activeEnemies.Remove(defeatedEnemy);
+        Debug.Log(activeEnemies.Count);
 
         if (activeEnemies.Count == 0)
         {
@@ -78,6 +78,7 @@ public class TrainingArena : MonoBehaviour
     private void HandlePlayerWin()
     {
         matchIsOver = true;
+        Debug.Log("Player Won");
         // Safely find the player reference from our participant list.
         var player = episodeParticipants.Find(p => p is AutoPlayerAgent) as AutoPlayerAgent;
         if (player != null) player.AddReward(1.0f);
@@ -87,6 +88,7 @@ public class TrainingArena : MonoBehaviour
     private void HandleEnemiesWin()
     {
         matchIsOver = true;
+        Debug.Log("Enemies Won");
         foreach (var enemy in activeEnemies) // Reward only surviving enemies
         {
             enemy.AddReward(1.0f);
@@ -127,6 +129,8 @@ public class TrainingArena : MonoBehaviour
         GameObject enemyObj = Instantiate(prefab, GetRandomSpawnPosition(), Quaternion.identity, transform);
         EnemyAgent newEnemy = enemyObj.GetComponent<EnemyAgent>();
         newEnemy.arenaController = this;
+        var player = episodeParticipants.Find(p => p is AutoPlayerAgent) as AutoPlayerAgent;
+        newEnemy.agent.AddListenerToTarget(player?.gameObject);
         
         // --- MODIFIED ---
         // Add to BOTH lists.

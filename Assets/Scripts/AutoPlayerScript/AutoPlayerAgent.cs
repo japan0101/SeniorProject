@@ -20,14 +20,11 @@ namespace AutoPlayerScript
         [HideInInspector] public float cumulativeReward;
         private AutoShoot autoShoot;
         [SerializeField] private GameObject environment;
-        private Transform arena;
         public bool isTraining;
-        private Color _defaultGroundColor;
-        private Coroutine _flashGroundCoroutine;
         private PlayerHealth _playerHealthManager;
         private GameObject _enemy1;
         private GameObject _enemy2;
-        public TrainingArena arenaController;
+        public TrainingController arenaController;
         
         float Timer = 0;//for testing agent action remove later
 
@@ -45,13 +42,8 @@ namespace AutoPlayerScript
                 TrainerManager.OnBulletHitEnemy += OnAttackLanded;
                 TrainerManager.OnBulletMiss += OnMissed;
                 TrainerManager.OnKillEnemy += OnKilledTarget;
-                arena = this.transform.parent.gameObject.transform;
                 currentEpisode = 0;
                 cumulativeReward = 0f;
-                if (groundRenderer)
-                {
-                    _defaultGroundColor = groundRenderer.material.color;
-                }
             }
         }
 
@@ -143,9 +135,9 @@ namespace AutoPlayerScript
             }
             
             // Penalty given each step to encourage agent to finish a task quickly
-            AddReward(-1f / MaxStep); 
+            AddReward(-0.0001f);
             // Survival incentive
-            AddReward(0.0001f);
+            // AddReward(0.0001f);
             // // Update the cumulative reward after adding the step penalty.
             cumulativeReward = GetCumulativeReward();
             
@@ -201,10 +193,8 @@ namespace AutoPlayerScript
         public void OnKilledTarget(AutoPlayerAgent shooter)// Called when Agent Kill Something
         {
             if (!isTraining || shooter != this) return;
-            Debug.Log("Autoplayer killed a target");
             AddReward(5f);
             cumulativeReward = GetCumulativeReward();
-            EndEpisode();
         }
         public void OnKilled()
         {
@@ -212,7 +202,7 @@ namespace AutoPlayerScript
             if (!isTraining) return;
             AddReward(-1f);
             cumulativeReward = GetCumulativeReward();
-            EndEpisode();
+            arenaController?.PlayerDefeated(this);
         }
         
         public void OnHurt()
@@ -222,34 +212,10 @@ namespace AutoPlayerScript
             cumulativeReward = GetCumulativeReward();
         }
         
-        private IEnumerator FlashGround(Color targetColor, float duration)
-        {
-            float elapsedTime = 0f;
-        
-            groundRenderer.material.color = targetColor;
-            while (elapsedTime < duration)
-            {
-                elapsedTime += Time.deltaTime;
-                groundRenderer.material.color = Color.Lerp(targetColor, _defaultGroundColor, elapsedTime / duration);
-                yield return null;
-            }
-        }
         
         public override void OnEpisodeBegin()
         {
             if (!isTraining) return;
-            if (!groundRenderer.Equals(null) && cumulativeReward != 0f)
-            { 
-                Color flashColor = (cumulativeReward > 0f) ? Color.green : Color.red;
-
-                if (_flashGroundCoroutine != null)
-                {
-                    StopCoroutine(_flashGroundCoroutine);                    
-                }
-
-                _flashGroundCoroutine = StartCoroutine(FlashGround(flashColor, 1.0f));
-            }
-            
             currentEpisode++;
             cumulativeReward = 0f;
             

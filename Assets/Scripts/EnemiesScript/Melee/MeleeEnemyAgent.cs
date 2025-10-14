@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using AutoPlayerScript;
-using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
@@ -17,23 +15,15 @@ namespace EnemiesScript.Melee
         private new void Awake()
         {
             base.Awake();
-            if (!isTraining)
-            {
-                agent._player = GameObject.FindGameObjectWithTag("Player");
-            }
+            agent._player = GameObject.FindGameObjectWithTag("Player");
         }
 
         public override void Initialize()
         {
             if (isTraining)
             {
-                _arena = this.transform.parent.gameObject.transform;
                 currentEpisode = 0;
                 cumulativeReward = 0f;
-                if (groundRenderer)
-                {
-                    _defaultGroundColor = groundRenderer.material.color;
-                }
             }
         }
 
@@ -118,9 +108,9 @@ namespace EnemiesScript.Melee
                 _lastDistance = currentDistance;
                 
                 // Penalty given each step to encourage agent to finish a task quickly
-                AddReward(-1f / MaxStep); 
+                AddReward(-0.0001f);
                 // Survival incentive
-                AddReward(0.0001f);
+                // AddReward(0.0001f);
                 // // Update the cumulative reward after adding the step penalty.
                 cumulativeReward = GetCumulativeReward();
             }
@@ -129,7 +119,7 @@ namespace EnemiesScript.Melee
         public override void OnAttack()
         {
             if (!isTraining) return;
-            AddReward(-0.02f);
+            // AddReward(-0.02f);
             cumulativeReward = GetCumulativeReward();
         }
 
@@ -152,9 +142,8 @@ namespace EnemiesScript.Melee
         public override void OnKilledTarget()// Called when Agent Kill Something
         {
             if (!isTraining) return;
-            AddReward(1f);
+            AddReward(5f);
             cumulativeReward = GetCumulativeReward();
-            EndEpisode();
         }
         public override void OnKilled()
         {
@@ -162,44 +151,20 @@ namespace EnemiesScript.Melee
             if (!isTraining) return;
             AddReward(-1f);
             cumulativeReward = GetCumulativeReward();
-            EndEpisode();
+            arenaController?.EnemyDefeated(this);
         }
 
         public override void OnHurt()
         {
-            Debug.Log("Ouchie");
             if (!isTraining) return;
             AddReward(-0.01f);
             cumulativeReward = GetCumulativeReward();
         }
         
-        private IEnumerator FlashGround(Color targetColor, float duration)
-        {
-            float elapsedTime = 0f;
-        
-            groundRenderer.material.color = targetColor;
-            while (elapsedTime < duration)
-            {
-                elapsedTime += Time.deltaTime;
-                groundRenderer.material.color = Color.Lerp(targetColor, _defaultGroundColor, elapsedTime / duration);
-                yield return null;
-            }
-        }
         
         public override void OnEpisodeBegin()
         {
             if (!isTraining) return;
-            if (!groundRenderer.Equals(null) && cumulativeReward != 0f)
-            { 
-                Color flashColor = (cumulativeReward > 0f) ? Color.green : Color.red;
-
-                if (_flashGroundCoroutine != null)
-                {
-                    StopCoroutine(_flashGroundCoroutine);                    
-                }
-
-                _flashGroundCoroutine = StartCoroutine(FlashGround(flashColor, 1.0f));
-            }
             
             currentEpisode++;
             cumulativeReward = 0f;
@@ -229,8 +194,7 @@ namespace EnemiesScript.Melee
             
             
             if (agent._player) Destroy(agent._player);
-
-            agent._player = Instantiate(targetPrefab, _arena);
+            
             agent._player.transform.localPosition = localPlayerPosition;
             agent._player.transform.localRotation = Quaternion.identity;
             agent.AddListenerToTarget(agent._player);

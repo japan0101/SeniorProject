@@ -278,10 +278,10 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 429d28ff9d6c4b542ad1baebecfe459e, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 0
-  m_BehaviorType: 2
-  m_BehaviorName: AutoPlayer
+  m_BehaviorType: 0
+  m_BehaviorName: PlayerAI
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
@@ -308,7 +308,8 @@ MonoBehaviour:
   currentEpisode: 0
   cumulativeReward: 0
   environment: {fileID: 0}
-  isTraining: 0
+  isTraining: 1
+  arenaController: {fileID: 0}
 --- !u!114 &7642755880382284800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,11 +338,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SensorName: Behind
-  m_DetectableTags: []
+  m_DetectableTags:
+  - Wall
+  - Enemy
   m_RaysPerDirection: 5
   m_MaxRayDegrees: 120
-  m_SphereCastRadius: 0.92
-  m_RayLength: 20
+  m_SphereCastRadius: 1
+  m_RayLength: 200
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 4294967291
@@ -369,9 +372,9 @@ MonoBehaviour:
   - Wall
   - Enemy
   m_RaysPerDirection: 4
-  m_MaxRayDegrees: 56.3
-  m_SphereCastRadius: 1.05
-  m_RayLength: 20
+  m_MaxRayDegrees: 58.8
+  m_SphereCastRadius: 1
+  m_RayLength: 200
   m_RayLayerMask:
     serializedVersion: 2
     m_Bits: 4294967291
@@ -381,7 +384,7 @@ MonoBehaviour:
   rayHitColor: {r: 1, g: 0, b: 0, a: 1}
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
   m_StartVerticalOffset: 1
-  m_EndVerticalOffset: -0.52
+  m_EndVerticalOffset: 1
 --- !u!1 &4401588218360901725
 GameObject:
   m_ObjectHideFlags: 0

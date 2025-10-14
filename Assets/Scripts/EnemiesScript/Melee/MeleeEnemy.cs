@@ -108,12 +108,7 @@ namespace EnemiesScript.Melee
             base.Update();
             if (hp <= 0)
             {
-                if (_agent.isTraining)
-                {
-                    OnKilled();
-                    hp = maxHp;
-                    return;
-                }
+                OnKilled();
                 Destroy(gameObject);
             }
             energy = Mathf.Clamp(energy + (energyRegenPerSecond * Time.deltaTime), 0, maxEnergy);

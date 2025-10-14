@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections;
-using Unity.MLAgents;
+﻿using System.Collections;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 
@@ -32,13 +28,8 @@ namespace EnemiesScript.Range
         {
             if (isTraining)
             {
-                _arena = this.transform.parent.gameObject.transform;
                 currentEpisode = 0;
                 cumulativeReward = 0f;
-                if (groundRenderer)
-                {
-                    _defaultGroundColor = groundRenderer.material.color;
-                }
             }
         }
 
@@ -112,7 +103,7 @@ namespace EnemiesScript.Range
                 AddReward(Mathf.Clamp(distanceDelta * 0.05f, -0.05f, 0.05f));
 
                 // Reward staying in good combat range (not too far, not too close)
-                float idealRange = 2.5f;
+                float idealRange = 5f;
                 float rangeScore = 1f - Mathf.Abs(currentDistance - idealRange) / idealRange;
                 AddReward(rangeScore * 0.001f);
 
@@ -124,9 +115,9 @@ namespace EnemiesScript.Range
                 lastDistance = currentDistance;
 
                 // Penalty given each step to encourage agent to finish a task quickly
-                AddReward(-1f / MaxStep);
+                AddReward(-0.0001f);
                 // Survival incentive
-                AddReward(0.0001f);
+                // AddReward(0.0001f);
                 // // Update the cumulative reward after adding the step penalty.
                 cumulativeReward = GetCumulativeReward();
             }
@@ -135,7 +126,7 @@ namespace EnemiesScript.Range
         public override void OnAttack()
         {
             if (!isTraining) return;
-            AddReward(-0.02f);
+            // AddReward(-0.02f);
             cumulativeReward = GetCumulativeReward();
         }
 
@@ -159,9 +150,8 @@ namespace EnemiesScript.Range
         public override void OnKilledTarget()// Called when Agent Kill Something
         {
             if (!isTraining) return;
-            AddReward(1f);
+            AddReward(5f);
             cumulativeReward = GetCumulativeReward();
-            EndEpisode();
         }
         public override void OnKilled()
         {
@@ -169,7 +159,7 @@ namespace EnemiesScript.Range
             if (!isTraining) return;
             AddReward(-1f);
             cumulativeReward = GetCumulativeReward();
-            EndEpisode();
+            arenaController?.EnemyDefeated(this);
         }
 
         public override void OnHurt()
@@ -178,41 +168,16 @@ namespace EnemiesScript.Range
             AddReward(-0.01f);
             cumulativeReward = GetCumulativeReward();
         }
-
-        private IEnumerator FlashGround(Color targetColor, float duration)
-        {
-            float elapsedTime = 0f;
-
-            groundRenderer.material.color = targetColor;
-            while (elapsedTime < duration)
-            {
-                elapsedTime += Time.deltaTime;
-                groundRenderer.material.color = Color.Lerp(targetColor, _defaultGroundColor, elapsedTime / duration);
-                yield return null;
-            }
-        }
+        
 
         public override void OnEpisodeBegin()
         {
             if (!isTraining) return;
-            if (!groundRenderer.Equals(null) && cumulativeReward != 0f)
-            {
-                Color flashColor = (cumulativeReward > 0f) ? Color.green : Color.red;
-
-                if (_flashGroundCoroutine != null)
-                {
-                    StopCoroutine(_flashGroundCoroutine);
-                }
-
-                _flashGroundCoroutine = StartCoroutine(FlashGround(flashColor, 1.0f));
-            }
-
+            
             currentEpisode++;
             cumulativeReward = 0f;
 
-            SpawnPlayer();
-            if (agent._player != null)
-                lastDistance = Vector3.Distance(transform.position, agent._player.transform.position);
+            // SpawnPlayer();
         }
 
         private void SpawnPlayer()
@@ -231,11 +196,8 @@ namespace EnemiesScript.Range
             Vector3 localPlayerPosition = localOrigin + randomDirection * randomDistance;
 
             // Apply the calculated position to the player
-
-
-            if (agent._player) Destroy(agent._player);
-
-            agent._player = Instantiate(targetPrefab, _arena);
+            
+            
             // var navigation = agent._player.GetComponent<TrainerNavigation>();
             // navigation.EnemyTarget = gameObject;
             // agent._player.transform.localPosition = localPlayerPosition;

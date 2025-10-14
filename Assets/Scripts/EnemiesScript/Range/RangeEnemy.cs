@@ -111,7 +111,7 @@ namespace EnemiesScript.Range
             if (hp <= 0)
             {
                 OnKilled();
-                hp = maxHp;
+                Destroy(gameObject);
             }
             energy = Mathf.Clamp(energy + (energyRegenPerSecond * Time.deltaTime), 0, maxEnergy);
         }
