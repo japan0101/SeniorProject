@@ -33,6 +33,7 @@ namespace AutoPlayerScript
             base.Awake();
             autoShoot = GetComponent<AutoShoot>();
             agent = GetComponent<TrainerNavigation>();
+            _playerHealthManager = GetComponent<PlayerHealth>();
         }
         public override void Initialize()
         {
