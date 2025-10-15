@@ -42,6 +42,8 @@ namespace AutoPlayerScript
                 TrainerManager.OnBulletHitEnemy += OnAttackLanded;
                 TrainerManager.OnBulletMiss += OnMissed;
                 TrainerManager.OnKillEnemy += OnKilledTarget;
+                _playerHealthManager.OnPlayerDie += OnKilled;
+                _playerHealthManager.OnPlayerHurt += OnHurt;
                 currentEpisode = 0;
                 cumulativeReward = 0f;
             }
