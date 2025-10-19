@@ -1,11 +1,70 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="AutoPlayerScript.AutoPlayerAgent">
-    <Position X="8" Y="1.5" Width="1.5" />
+    <Position X="6.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAgACAACIogAwwCAAAgAEABBAACAAABAAAgAAEG0AEA=</HashCode>
       <FileName>Assets\Scripts\AutoPlayerScript\AutoPlayerAgent.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="autoShoot" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PlayerHealth">
+    <Position X="4.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAAAAAAAAAAAEIAAgGAAAAAAAAAAIQAAIgQAAAEA=</HashCode>
+      <FileName>Assets\Scripts\PlayerScript\PlayerHealth.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_stats" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EnergyManager">
+    <Position X="2.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQAAAAASAACAAAAAACCAAAAAAAAAAAAAAAAAQQAAA=</HashCode>
+      <FileName>Assets\Scripts\PlayerScript\EnergyManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_stats" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AutoPlayerScript.TrainerManager">
+    <Position X="4.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAJAAAgAAAAAAAAAAAAAAAAAAAgAAAAAACAAAEA=</HashCode>
+      <FileName>Assets\Scripts\AutoPlayerScript\TrainerManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AutoPlayerScript.TrainerNavigation">
+    <Position X="10.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEQAACBAoEAAAgAAIAAAAAAAAAQAAEAAACAMAACAAMA=</HashCode>
+      <FileName>Assets\Scripts\AutoPlayerScript\TrainerNavigation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerStats" Collapsed="true">
+    <Position X="2.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAGAECEAEAAAAAEgAAGAABAAEEAAAAAABoAAAgA=</HashCode>
+      <FileName>Assets\Scripts\PlayerScript\PlayerStats.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AutoShoot">
+    <Position X="9" Y="1.5" Width="1.5" />
+    <Members>
+      <Method Name="GetCurrentAmmo" Hidden="true" />
+      <Method Name="GetReloadProgress" Hidden="true" />
+      <Method Name="UpdateAiming" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>CAQAAKEQBKACAQABAYIBEAIAoAAAZAAEAGIASggACEA=</HashCode>
+      <FileName>Assets\Scripts\AutoPlayerScript\AutoShoot.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="agent" />
+    </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
