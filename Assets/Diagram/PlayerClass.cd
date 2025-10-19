@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="EnergyManager">
+    <Position X="69.5" Y="18.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQQAAAAASAACAAAAAACCAAAAAAAAAAAAAAAAAQQAAA=</HashCode>
+      <FileName>Assets\Scripts\PlayerScript\EnergyManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_stats" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PlayerHealth">
+    <Position X="69.75" Y="28.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQBAAAAAAAAAAAEIAAgGAAAAAAAAAAIQAAIgQAAAEA=</HashCode>
+      <FileName>Assets\Scripts\PlayerScript\PlayerHealth.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_stats" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PlayerMovement">
+    <Position X="65.75" Y="21.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAQgEQwAEmEAIABUAQAGmACAQAQAAQAoAAAAgAFoEAg=</HashCode>
+      <FileName>Assets\Scripts\PlayerScript\PlayerMovement.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="energyManager" />
+      <Field Name="zoomMnger" />
+      <Field Name="_stats" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PlayerShoot">
+    <Position X="76.25" Y="21.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>GAQAAIGQAeACAABBAMoBEAIAoACAZAAAAGIASgiACAA=</HashCode>
+      <FileName>Assets\Scripts\PlayerScript\PlayerShoot.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="equipedWeapon" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PlayerStats">
+    <Position X="69.75" Y="22.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAGAECEAEAAAAAEgAAGAABAAEEAAAAAABoAAAgA=</HashCode>
+      <FileName>Assets\Scripts\PlayerScript\PlayerStats.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlayerStatsUI">
+    <Position X="72.5" Y="22.5" Width="3.5" />
+    <NestedTypes>
+      <Enum Name="PlayerStatsUI.TextMeshUI" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\PlayerScript\PlayerStatsUI.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="PlayerStatsUI.WeaponStatList" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Assets\Scripts\PlayerScript\PlayerStatsUI.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>BAQQIACEACAAACEIAIAAAAAAGAAARAkIAAIAAAAACBE=</HashCode>
+      <FileName>Assets\Scripts\PlayerScript\PlayerStatsUI.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="playerData" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Zoom">
+    <Position X="62.75" Y="24" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAACAAgAAAAAAAAAAAABgAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\PlayerScript\Zoom.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CameraMovement">
+    <Position X="62.75" Y="20.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAYAQAACAAAAAAAAAHAAAAAAAAAAAAAAAAAAAAEgA=</HashCode>
+      <FileName>Assets\Scripts\CameraMovement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CamMover">
+    <Position X="66" Y="19.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\CamMover.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Weapon" Collapsed="true">
+    <Position X="73.75" Y="21.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQAEAgABCEmBACAAAAAAAAQACEAAAIAABAAAIAAAAA=</HashCode>
+      <FileName>Assets\Scripts\WeaponScript\Weapon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

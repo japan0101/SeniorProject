@@ -13,6 +13,7 @@ public class PlayerHealth : MonoBehaviour
 
     public event Action OnPlayerHurt;
     public event Action OnPlayerDie;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {

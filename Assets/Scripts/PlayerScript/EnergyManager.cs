@@ -5,6 +5,7 @@ public class EnergyManager : MonoBehaviour
 {
     [SerializeField] private PlayerStats _stats;
     public Image energyDisplay;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

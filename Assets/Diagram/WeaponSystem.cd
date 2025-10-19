@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EnemiesScript.Attacks">
+    <Position X="8.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\Attacks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MainBullet">
+    <Position X="10.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAAAAACAAgQAAAAAAAAAAAQgAAABAYAAAAABAAAA=</HashCode>
+      <FileName>Assets\Scripts\BulletScript\BaseBullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExplodingHit">
+    <Position X="4.5" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQgAAAAAAAAAAAAAAAAIICEBAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\BulletScript\ExplodingBulletBehavior.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="NormalHit">
+    <Position X="7.5" Y="4.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\BulletScript\NormalBulletBehavior.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OnHitBehavior">
+    <Position X="6" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAEAQAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\BulletScript\OnHitBehavior.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Weapon">
+    <Position X="12" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>IAQAEAgABCEmBACAAAAAAAAQACEAAAIAABAAAIAAAAA=</HashCode>
+      <FileName>Assets\Scripts\WeaponScript\Weapon.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ui_DisplayAmmo">
+    <Position X="14.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\WeaponScript\ui_DisplayAmmo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ui_ReloadIndicator">
+    <Position X="14.25" Y="4" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAFA=</HashCode>
+      <FileName>Assets\Scripts\WeaponScript\ui_ReloadIndicator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

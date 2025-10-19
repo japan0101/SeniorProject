@@ -42,6 +42,7 @@ public class PlayerMovement : MonoBehaviour
     private Coroutine resetDashRoutine;
 
     Rigidbody rb;
+
     private void Start()
     {
         //set up regid body

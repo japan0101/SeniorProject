@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EnemiesScript.Enemy" Collapsed="true">
+    <Position X="6" Y="1.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>EAQBCQBBoEEgAAWMAAggGAEQAJSAAAAgQAhQgACgAMI=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemiesScript.Melee.MeleeEnemy">
+    <Position X="6.25" Y="3" Width="1.5" />
+    <InheritanceLine Type="EnemiesScript.Enemy" FixedToPoint="true">
+      <Path>
+        <Point X="7" Y="2.441" />
+        <Point X="7" Y="3" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AISACAAAoAAAAQAAAAAAEAAAAJQgAAAAAAgAAACEAEA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\Melee\MeleeEnemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemiesScript.Melee.MeleeEnemyAgent">
+    <Position X="8.5" Y="1" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAIIAAAQCAAAAAEAABAAAAAABAAAgAAAGEAUA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\Melee\MeleeEnemyAgent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemiesScript.Melee.MeleeEnemyAttack">
+    <Position X="8.5" Y="5.25" Width="2.25" />
+    <InheritanceLine Type="EnemiesScript.EnemyAttack" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.75" Y="8.062" />
+        <Point X="8.125" Y="8.062" />
+        <Point X="8.125" Y="6.437" />
+        <Point X="8.5" Y="6.437" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAACAAAAIAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\Melee\MeleeEnemyAttack.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemiesScript.EnemyAttack" Collapsed="true">
+    <Position X="6.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAFgACAAAAAAABAAAgAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\EnemyAttacks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemyAgent" Collapsed="true">
+    <Position X="6.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAgACAgAAhAAAQCAAAgAEAAAAAAAAABAAAgAAAGgAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\EnemyAgent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EnemiesScript.Enemy">
+    <Position X="11.75" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>EAQBCQBBoEEgAAWMAAggGAEQAJSAAAAgQAhQgACgAMI=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemiesScript.Melee.MeleeEnemy" Collapsed="true">
+    <Position X="9.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AISACAAAoAAAAQAAAAAAEAAAAJQgAAAAAAgAAACEAEA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\Melee\MeleeEnemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemiesScript.Range.RangeEnemy" Collapsed="true">
+    <Position X="9.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQACAAAoAAAAAAAAAAAEAAAAJQgAAAAAAgAAACEAEA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\Range\RangeEnemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemiesScript.Melee.MeleeEnemyAttack" Collapsed="true">
+    <Position X="14" Y="7.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAACAAAAIAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\Melee\MeleeEnemyAttack.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemiesScript.Range.RangeEnemyAttack" Collapsed="true">
+    <Position X="17.5" Y="7.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAACAAAAAAAAAAAEAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\Range\RangeEnemyAttack.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemiesScript.EnemyAttack">
+    <Position X="15.5" Y="3.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAFgACAAAAAAABAAAgAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\EnemyAttacks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
