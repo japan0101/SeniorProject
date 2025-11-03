@@ -1,0 +1,184 @@
+{
+    "PlayerAI": {
+        "checkpoints": [
+            {
+                "steps": 2499980,
+                "file_path": "results\\comp2\\PlayerAI\\PlayerAI-2499980.onnx",
+                "reward": -5.158100064843893,
+                "creation_time": 1762101288.9149988,
+                "auxillary_file_paths": [
+                    "results\\comp2\\PlayerAI\\PlayerAI-2499980.pt"
+                ]
+            },
+            {
+                "steps": 2999948,
+                "file_path": "results\\comp2\\PlayerAI\\PlayerAI-2999948.onnx",
+                "reward": -5.158100064843893,
+                "creation_time": 1762108103.082652,
+                "auxillary_file_paths": [
+                    "results\\comp2\\PlayerAI\\PlayerAI-2999948.pt"
+                ]
+            },
+            {
+                "steps": 3088140,
+                "file_path": "results\\comp2\\PlayerAI\\PlayerAI-3088140.onnx",
+                "reward": -5.158100064843893,
+                "creation_time": 1762108980.3665974,
+                "auxillary_file_paths": [
+                    "results\\comp2\\PlayerAI\\PlayerAI-3088140.pt"
+                ]
+            },
+            {
+                "steps": 3499980,
+                "file_path": "results\\comp2\\PlayerAI\\PlayerAI-3499980.onnx",
+                "reward": null,
+                "creation_time": 1762114054.540976,
+                "auxillary_file_paths": [
+                    "results\\comp2\\PlayerAI\\PlayerAI-3499980.pt"
+                ]
+            },
+            {
+                "steps": 3839820,
+                "file_path": "results\\comp2\\PlayerAI\\PlayerAI-3839820.onnx",
+                "reward": null,
+                "creation_time": 1762117696.9189575,
+                "auxillary_file_paths": [
+                    "results\\comp2\\PlayerAI\\PlayerAI-3839820.pt"
+                ]
+            }
+        ],
+        "elo": 1190.4132160338536,
+        "final_checkpoint": {
+            "steps": 3839820,
+            "file_path": "results\\comp2\\PlayerAI.onnx",
+            "reward": null,
+            "creation_time": 1762117696.9189575,
+            "auxillary_file_paths": [
+                "results\\comp2\\PlayerAI\\PlayerAI-3839820.pt"
+            ]
+        }
+    },
+    "MeleeAI": {
+        "checkpoints": [
+            {
+                "steps": 999995,
+                "file_path": "results\\comp2\\MeleeAI\\MeleeAI-999995.onnx",
+                "reward": -3.544558525085449,
+                "creation_time": 1762093586.7406504,
+                "auxillary_file_paths": [
+                    "results\\comp2\\MeleeAI\\MeleeAI-999995.pt"
+                ]
+            },
+            {
+                "steps": 1499963,
+                "file_path": "results\\comp2\\MeleeAI\\MeleeAI-1499963.onnx",
+                "reward": null,
+                "creation_time": 1762105998.8984568,
+                "auxillary_file_paths": [
+                    "results\\comp2\\MeleeAI\\MeleeAI-1499963.pt"
+                ]
+            },
+            {
+                "steps": 1503227,
+                "file_path": "results\\comp2\\MeleeAI\\MeleeAI-1503227.onnx",
+                "reward": null,
+                "creation_time": 1762108980.579131,
+                "auxillary_file_paths": [
+                    "results\\comp2\\MeleeAI\\MeleeAI-1503227.pt"
+                ]
+            },
+            {
+                "steps": 1999971,
+                "file_path": "results\\comp2\\MeleeAI\\MeleeAI-1999971.onnx",
+                "reward": null,
+                "creation_time": 1762117696.7557957,
+                "auxillary_file_paths": [
+                    "results\\comp2\\MeleeAI\\MeleeAI-1999971.pt"
+                ]
+            },
+            {
+                "steps": 2000099,
+                "file_path": "results\\comp2\\MeleeAI\\MeleeAI-2000099.onnx",
+                "reward": null,
+                "creation_time": 1762117697.0645423,
+                "auxillary_file_paths": [
+                    "results\\comp2\\MeleeAI\\MeleeAI-2000099.pt"
+                ]
+            }
+        ],
+        "elo": 1204.0572930662363,
+        "final_checkpoint": {
+            "steps": 2000099,
+            "file_path": "results\\comp2\\MeleeAI.onnx",
+            "reward": null,
+            "creation_time": 1762117697.0645423,
+            "auxillary_file_paths": [
+                "results\\comp2\\MeleeAI\\MeleeAI-2000099.pt"
+            ]
+        }
+    },
+    "RangeAI": {
+        "checkpoints": [
+            {
+                "steps": 999993,
+                "file_path": "results\\comp2\\RangeAI\\RangeAI-999993.onnx",
+                "reward": null,
+                "creation_time": 1762096195.1914892,
+                "auxillary_file_paths": [
+                    "results\\comp2\\RangeAI\\RangeAI-999993.pt"
+                ]
+            },
+            {
+                "steps": 1499961,
+                "file_path": "results\\comp2\\RangeAI\\RangeAI-1499961.onnx",
+                "reward": null,
+                "creation_time": 1762106015.545519,
+                "auxillary_file_paths": [
+                    "results\\comp2\\RangeAI\\RangeAI-1499961.pt"
+                ]
+            },
+            {
+                "steps": 1502521,
+                "file_path": "results\\comp2\\RangeAI\\RangeAI-1502521.onnx",
+                "reward": null,
+                "creation_time": 1762108980.6959388,
+                "auxillary_file_paths": [
+                    "results\\comp2\\RangeAI\\RangeAI-1502521.pt"
+                ]
+            },
+            {
+                "steps": 1999993,
+                "file_path": "results\\comp2\\RangeAI\\RangeAI-1999993.onnx",
+                "reward": null,
+                "creation_time": 1762115999.4206803,
+                "auxillary_file_paths": [
+                    "results\\comp2\\RangeAI\\RangeAI-1999993.pt"
+                ]
+            },
+            {
+                "steps": 2045689,
+                "file_path": "results\\comp2\\RangeAI\\RangeAI-2045689.onnx",
+                "reward": null,
+                "creation_time": 1762117697.1557972,
+                "auxillary_file_paths": [
+                    "results\\comp2\\RangeAI\\RangeAI-2045689.pt"
+                ]
+            }
+        ],
+        "elo": 1205.7119115294095,
+        "final_checkpoint": {
+            "steps": 2045689,
+            "file_path": "results\\comp2\\RangeAI.onnx",
+            "reward": null,
+            "creation_time": 1762117697.1557972,
+            "auxillary_file_paths": [
+                "results\\comp2\\RangeAI\\RangeAI-2045689.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.2.0.dev0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

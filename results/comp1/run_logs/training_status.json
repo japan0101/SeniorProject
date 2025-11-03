@@ -1,0 +1,76 @@
+{
+    "PlayerAI": {
+        "elo": 1196.028655291826,
+        "checkpoints": [
+            {
+                "steps": 481774,
+                "file_path": "results\\comp1\\PlayerAI\\PlayerAI-481774.onnx",
+                "reward": null,
+                "creation_time": 1760413357.5495057,
+                "auxillary_file_paths": [
+                    "results\\comp1\\PlayerAI\\PlayerAI-481774.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 481774,
+            "file_path": "results\\comp1\\PlayerAI.onnx",
+            "reward": null,
+            "creation_time": 1760413357.5495057,
+            "auxillary_file_paths": [
+                "results\\comp1\\PlayerAI\\PlayerAI-481774.pt"
+            ]
+        }
+    },
+    "MeleeAI": {
+        "elo": 1201.980679101653,
+        "checkpoints": [
+            {
+                "steps": 250560,
+                "file_path": "results\\comp1\\MeleeAI\\MeleeAI-250560.onnx",
+                "reward": null,
+                "creation_time": 1760413357.6603916,
+                "auxillary_file_paths": [
+                    "results\\comp1\\MeleeAI\\MeleeAI-250560.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 250560,
+            "file_path": "results\\comp1\\MeleeAI.onnx",
+            "reward": null,
+            "creation_time": 1760413357.6603916,
+            "auxillary_file_paths": [
+                "results\\comp1\\MeleeAI\\MeleeAI-250560.pt"
+            ]
+        }
+    },
+    "RangeA": {
+        "elo": 1199.4964188029335,
+        "checkpoints": [
+            {
+                "steps": 238785,
+                "file_path": "results\\comp1\\RangeA\\RangeA-238785.onnx",
+                "reward": null,
+                "creation_time": 1760413357.7493267,
+                "auxillary_file_paths": [
+                    "results\\comp1\\RangeA\\RangeA-238785.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 238785,
+            "file_path": "results\\comp1\\RangeA.onnx",
+            "reward": null,
+            "creation_time": 1760413357.7493267,
+            "auxillary_file_paths": [
+                "results\\comp1\\RangeA\\RangeA-238785.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.2.0.dev0",
+        "torch_version": "2.2.2+cu121"
+    }
+}
