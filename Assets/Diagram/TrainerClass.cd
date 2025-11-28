@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
   <Class Name="AutoPlayerScript.AutoPlayerAgent">
-    <Position X="6.5" Y="1.5" Width="1.5" />
+    <Position X="2.75" Y="1.5" Width="5.75" />
     <TypeIdentifier>
       <HashCode>AAgACAACIogAwwCAAAgAEABBAACAAABAAAgAAEG0AEA=</HashCode>
       <FileName>Assets\Scripts\AutoPlayerScript\AutoPlayerAgent.cs</FileName>
@@ -11,7 +11,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="PlayerHealth">
-    <Position X="4.5" Y="4" Width="1.5" />
+    <Position X="13.25" Y="1.5" Width="3.5" />
     <TypeIdentifier>
       <HashCode>AAQBAAAAAAAAAAAEIAAgGAAAAAAAAAAIQAAIgQAAAEA=</HashCode>
       <FileName>Assets\Scripts\PlayerScript\PlayerHealth.cs</FileName>
@@ -21,7 +21,7 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="EnergyManager">
-    <Position X="2.25" Y="5.25" Width="1.5" />
+    <Position X="17" Y="6.5" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAQQAAAAASAACAAAAAACCAAAAAAAAAAAAAAAAAQQAAA=</HashCode>
       <FileName>Assets\Scripts\PlayerScript\EnergyManager.cs</FileName>
@@ -31,28 +31,28 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="AutoPlayerScript.TrainerManager">
-    <Position X="4.5" Y="1.5" Width="1.5" />
+    <Position X="13.25" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAJAAAgAAAAAAAAAAAAAAAAAAAgAAAAAACAAAEA=</HashCode>
       <FileName>Assets\Scripts\AutoPlayerScript\TrainerManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AutoPlayerScript.TrainerNavigation">
-    <Position X="10.75" Y="1.5" Width="1.5" />
+    <Position X="17" Y="1.5" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AEQAACBAoEAAAgAAIAAAAAAAAAQAAEAAACAMAACAAMA=</HashCode>
       <FileName>Assets\Scripts\AutoPlayerScript\TrainerNavigation.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PlayerStats" Collapsed="true">
-    <Position X="2.25" Y="4.25" Width="1.5" />
+    <Position X="15.25" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAgAAGAECEAEAAAAAEgAAGAABAAEEAAAAAABoAAAgA=</HashCode>
       <FileName>Assets\Scripts\PlayerScript\PlayerStats.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AutoShoot">
-    <Position X="9" Y="1.5" Width="1.5" />
+    <Position X="9.75" Y="1.5" Width="3" />
     <Members>
       <Method Name="GetCurrentAmmo" Hidden="true" />
       <Method Name="GetReloadProgress" Hidden="true" />

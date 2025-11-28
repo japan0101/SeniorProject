@@ -1,0 +1,80 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1758862737",
+        "python_version": "3.10.12 | packaged by Anaconda, Inc. | (main, Jul  5 2023, 19:01:18) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\Doomf\\miniconda3\\envs\\mlagents4\\Scripts\\mlagents-learn .\\config\\PPO\\MeleeEnemyConfig.yaml --run-id=NewMeleeEnemy --force",
+        "mlagents_version": "1.2.0.dev0",
+        "mlagents_envs_version": "1.2.0.dev0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "2.2.2+cu121",
+        "numpy_version": "1.23.5",
+        "end_time_seconds": "1758862755"
+    },
+    "total": 18.12674479999987,
+    "count": 1,
+    "self": 0.006947500000023865,
+    "children": {
+        "run_training.setup": {
+            "total": 0.10309469999992871,
+            "count": 1,
+            "self": 0.10309469999992871
+        },
+        "TrainerController.start_learning": {
+            "total": 18.016702599999917,
+            "count": 1,
+            "self": 0.0003276999996160157,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 8.825892099999692,
+                    "count": 1,
+                    "self": 8.825892099999692
+                },
+                "TrainerController.advance": {
+                    "total": 9.02799589999995,
+                    "count": 1,
+                    "self": 1.4299999747890979e-05,
+                    "children": {
+                        "env_step": {
+                            "total": 9.027981600000203,
+                            "count": 1,
+                            "self": 8.90252849999888,
+                            "children": {
+                                "SubprocessEnvManager._take_step": {
+                                    "total": 0.12545310000132304,
+                                    "count": 1,
+                                    "self": 9.990000035031699e-05,
+                                    "children": {
+                                        "TorchPolicy.evaluate": {
+                                            "total": 0.12535320000097272,
+                                            "count": 1,
+                                            "self": 0.12535320000097272
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "trainer_threads": {
+                    "total": 8.999995770864189e-07,
+                    "count": 1,
+                    "self": 8.999995770864189e-07
+                },
+                "TrainerController._save_models": {
+                    "total": 0.16248600000108127,
+                    "count": 1,
+                    "self": 0.001448400002118433,
+                    "children": {
+                        "RLTrainer._checkpoint": {
+                            "total": 0.16103759999896283,
+                            "count": 1,
+                            "self": 0.16103759999896283
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

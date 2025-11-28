@@ -1,0 +1,65 @@
+{
+    "AutoPlayer": {
+        "checkpoints": [
+            {
+                "steps": 499896,
+                "file_path": "results\\player02\\AutoPlayer\\AutoPlayer-499896.onnx",
+                "reward": 6.2079136419730885,
+                "creation_time": 1758802914.0994775,
+                "auxillary_file_paths": [
+                    "results\\player02\\AutoPlayer\\AutoPlayer-499896.pt"
+                ]
+            },
+            {
+                "steps": 999896,
+                "file_path": "results\\player02\\AutoPlayer\\AutoPlayer-999896.onnx",
+                "reward": 5.757564291590825,
+                "creation_time": 1758803681.438182,
+                "auxillary_file_paths": [
+                    "results\\player02\\AutoPlayer\\AutoPlayer-999896.pt"
+                ]
+            },
+            {
+                "steps": 1499896,
+                "file_path": "results\\player02\\AutoPlayer\\AutoPlayer-1499896.onnx",
+                "reward": 5.395536555442959,
+                "creation_time": 1758804489.0535555,
+                "auxillary_file_paths": [
+                    "results\\player02\\AutoPlayer\\AutoPlayer-1499896.pt"
+                ]
+            },
+            {
+                "steps": 1999896,
+                "file_path": "results\\player02\\AutoPlayer\\AutoPlayer-1999896.onnx",
+                "reward": 6.20082126177537,
+                "creation_time": 1758805278.9381373,
+                "auxillary_file_paths": [
+                    "results\\player02\\AutoPlayer\\AutoPlayer-1999896.pt"
+                ]
+            },
+            {
+                "steps": 2003200,
+                "file_path": "results\\player02\\AutoPlayer\\AutoPlayer-2003200.onnx",
+                "reward": null,
+                "creation_time": 1758805286.9360545,
+                "auxillary_file_paths": [
+                    "results\\player02\\AutoPlayer\\AutoPlayer-2003200.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2003200,
+            "file_path": "results\\player02\\AutoPlayer.onnx",
+            "reward": null,
+            "creation_time": 1758805286.9360545,
+            "auxillary_file_paths": [
+                "results\\player02\\AutoPlayer\\AutoPlayer-2003200.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.2.0.dev0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
   <Class Name="EnemiesScript.Enemy">
-    <Position X="11.75" Y="3" Width="2" />
+    <Position X="11.75" Y="3" Width="3.25" />
     <TypeIdentifier>
       <HashCode>EAQBCQBBoEEgAAWMAAggGAEQAJSAAAAgQAhQgACgAMI=</HashCode>
       <FileName>Assets\Scripts\EnemiesScript\Enemy.cs</FileName>
@@ -22,21 +22,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="EnemiesScript.Melee.MeleeEnemyAttack" Collapsed="true">
-    <Position X="14" Y="7.5" Width="1.75" />
+    <Position X="18" Y="7.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAACAAAAIAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\EnemiesScript\Melee\MeleeEnemyAttack.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EnemiesScript.Range.RangeEnemyAttack" Collapsed="true">
-    <Position X="17.5" Y="7.5" Width="1.75" />
+    <Position X="15.75" Y="7.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAACAAAAAAAAAAAEAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\EnemiesScript\Range\RangeEnemyAttack.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EnemiesScript.EnemyAttack">
-    <Position X="15.5" Y="3.5" Width="1.75" />
+    <Position X="15.5" Y="3.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAABAAAAAAAFgACAAAAAAABAAAgAAAAAAAAAAABAAAA=</HashCode>
       <FileName>Assets\Scripts\EnemiesScript\EnemyAttacks.cs</FileName>

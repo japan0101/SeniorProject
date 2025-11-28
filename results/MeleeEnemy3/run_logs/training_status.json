@@ -1,0 +1,47 @@
+{
+    "MeleeEnemy": {
+        "checkpoints": [
+            {
+                "steps": 499955,
+                "file_path": "results\\MeleeEnemy3\\MeleeEnemy\\MeleeEnemy-499955.onnx",
+                "reward": -104.49152886325663,
+                "creation_time": 1757656164.1548405,
+                "auxillary_file_paths": [
+                    "results\\MeleeEnemy3\\MeleeEnemy\\MeleeEnemy-499955.pt"
+                ]
+            },
+            {
+                "steps": 999957,
+                "file_path": "results\\MeleeEnemy3\\MeleeEnemy\\MeleeEnemy-999957.onnx",
+                "reward": -88.73803979158401,
+                "creation_time": 1757657086.7647293,
+                "auxillary_file_paths": [
+                    "results\\MeleeEnemy3\\MeleeEnemy\\MeleeEnemy-999957.pt"
+                ]
+            },
+            {
+                "steps": 1431897,
+                "file_path": "results\\MeleeEnemy3\\MeleeEnemy\\MeleeEnemy-1431897.onnx",
+                "reward": -67.10148683786392,
+                "creation_time": 1757657908.5049667,
+                "auxillary_file_paths": [
+                    "results\\MeleeEnemy3\\MeleeEnemy\\MeleeEnemy-1431897.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1431897,
+            "file_path": "results\\MeleeEnemy3\\MeleeEnemy.onnx",
+            "reward": -67.10148683786392,
+            "creation_time": 1757657908.5049667,
+            "auxillary_file_paths": [
+                "results\\MeleeEnemy3\\MeleeEnemy\\MeleeEnemy-1431897.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.2.0.dev0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

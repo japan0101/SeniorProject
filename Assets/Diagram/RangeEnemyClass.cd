@@ -1,21 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
   <Class Name="EnemiesScript.Range.RangeEnemy">
-    <Position X="10" Y="3.75" Width="1.5" />
+    <Position X="9" Y="3.75" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AIQACAAAoAAAAAAAAAAAEAAAAJQgAAAAAAgAAACEAEA=</HashCode>
       <FileName>Assets\Scripts\EnemiesScript\Range\RangeEnemy.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EnemiesScript.Range.RangeEnemyAgent">
-    <Position X="12" Y="2.75" Width="1.75" />
+    <Position X="12" Y="2.75" Width="3.25" />
     <TypeIdentifier>
       <HashCode>AAAACAAAIIAAAQCAAAAAEAABAEAAAABAAAgAAAGGCUA=</HashCode>
       <FileName>Assets\Scripts\EnemiesScript\Range\RangeEnemyAgent.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EnemiesScript.Range.RangeEnemyAttack">
-    <Position X="12" Y="8" Width="1.75" />
+    <Position X="15.5" Y="2.75" Width="2.75" />
+    <InheritanceLine Type="EnemiesScript.EnemyAttack" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="16.75" Y="2.191" />
+        <Point X="16.75" Y="2.75" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAACAAAAAAAAAAAEAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Assets\Scripts\EnemiesScript\Range\RangeEnemyAttack.cs</FileName>
@@ -29,14 +35,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="EnemyAgent" Collapsed="true">
-    <Position X="10" Y="1.5" Width="1.75" />
+    <Position X="10" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>BAgACAgAAhAAAQCAAAgAEAAAAAAAAABAAAgAAAGgAAA=</HashCode>
       <FileName>Assets\Scripts\EnemiesScript\EnemyAgent.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EnemiesScript.EnemyAttack" Collapsed="true">
-    <Position X="10" Y="8.25" Width="1.5" />
+    <Position X="16" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAAAAAAAFgACAAAAAAABAAAgAAAAAAAAAAABAAAA=</HashCode>
       <FileName>Assets\Scripts\EnemiesScript\EnemyAttacks.cs</FileName>
