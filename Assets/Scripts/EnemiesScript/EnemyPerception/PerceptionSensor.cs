@@ -1,6 +1,7 @@
 using System;
 using Unity.Mathematics;
 using Unity.MLAgents.Sensors;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PerceptionSensor : ISensor
@@ -23,6 +24,10 @@ public class PerceptionSensor : ISensor
     }
     public int Write(ObservationWriter writer)
     {
+        if (Time.frameCount % 60 == 0)
+        {
+            Debug.Log($"writing observations");
+        }
         bool seePlayer = m_Detector.IsTargetVisible;
         Vector3 relativePosition = m_Detector.targetPosition - m_Detector.origin.position;
         writer[0] = seePlayer ? 1.0f : 0.0f;
