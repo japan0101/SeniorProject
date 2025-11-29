@@ -7,11 +7,19 @@ public class PerceptionSensor : ISensor
 {
     private SightDetector m_Detector;
     private string m_name;
+    private Vector3 m_ObservationRange;
 
     public PerceptionSensor(SightDetector detector, string name)
     {
         m_Detector = detector;
         m_name = name;
+        m_ObservationRange = new Vector3(30f, 5f, 30f);
+    }
+    public PerceptionSensor(SightDetector detector, string name, Vector3 ObservationRange)
+    {
+        m_Detector = detector;
+        m_name = name;
+        m_ObservationRange = ObservationRange;
     }
     public int Write(ObservationWriter writer)
     {
@@ -30,9 +38,14 @@ public class PerceptionSensor : ISensor
             {
                 Debug.Log($"Sensor Output: X={normalizedX} | Y={normalizedY} | Z={normalizedZ} | InRange={seePlayer}");
             }
-            return 4;
         }
-        return 1;
+        else
+        {
+            writer[1] = 0.0f;
+            writer[2] = 0.0f;
+            writer[3] = 0.0f;
+        }
+        return 4;
     }
 
     public byte[] GetCompressedObservation()
@@ -51,17 +64,9 @@ public class PerceptionSensor : ISensor
     }
     public void Reset()
     {
-        throw new System.NotImplementedException();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void ISensor.Update()
     {
-        Update();
     }
 }

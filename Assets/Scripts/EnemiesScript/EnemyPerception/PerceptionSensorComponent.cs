@@ -3,22 +3,22 @@ using UnityEngine;
 
 public class PerceptionSensorComponent : SensorComponent
 {
+    [Header("Sensor Settings")]
     public string sensorName = "SightSensor";
+
+    [Header("Dependencies")]
     public SightDetector sightDetector;
+
+    [Header("Normalization Settings")]
+    [Tooltip("Matches the logic values: X=30, Y=5, Z=30")]
+    public Vector3 observationRange = new Vector3(30f, 5f, 30f);
     public override ISensor[] CreateSensors()
     {
-        return new ISensor[] { new PerceptionSensor(sightDetector, sensorName) };
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (sightDetector == null)
+        {
+            Debug.LogError("SightDetector is missing on " + name + ". Please assign it in the Inspector!");
+            return new ISensor[0];
+        }
+        return new ISensor[] { new PerceptionSensor(sightDetector, sensorName, observationRange) };
     }
 }
