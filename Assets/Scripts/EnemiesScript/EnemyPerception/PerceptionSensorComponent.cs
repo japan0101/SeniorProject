@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class PerceptionSensorComponent : SensorComponent
 {
+    public string sensorName = "SightSensor";
+    public SightDetector sightDetector;
     public override ISensor[] CreateSensors()
     {
-        throw new System.NotImplementedException();
+        return new ISensor[] { new PerceptionSensor(sightDetector, sensorName) };
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
