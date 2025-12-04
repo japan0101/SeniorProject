@@ -24,22 +24,42 @@ public class PerceptionSensor : ISensor
     }
     public int Write(ObservationWriter writer)
     {
+        //In case there are no detectors
+        if (m_Detector == null || m_Detector.origin == null)
+        {
+            writer[0] = 0f;
+            writer[1] = 0f;
+            writer[2] = 0f;
+            writer[3] = 0f;
+            return 4;
+        }
+
         if (Time.frameCount % 60 == 0)
         {
             Debug.Log($"writing observations");
         }
         bool seePlayer = m_Detector.IsTargetVisible;
-        Vector3 relativePosition = m_Detector.targetPosition - m_Detector.origin.position;
         writer[0] = seePlayer ? 1.0f : 0.0f;
+
         if (seePlayer)
         {
-            float normalizedX = Mathf.Clamp(relativePosition.x / 30, -1.0f, 1.0f);
-            float normalizedY = Mathf.Clamp(relativePosition.y / 5, -1.0f, 1.0f);
-            float normalizedZ = Mathf.Clamp(relativePosition.z / 30, -1.0f, 1.0f);
-            writer[1] = normalizedX;
-            writer[2] = normalizedY;
-            writer[3] = normalizedZ;
-            if (Time.frameCount % 60 == 0)
+
+            Vector3 relativePosition = m_Detector.targetPosition - m_Detector.origin.position;
+
+            //Normalized relative position
+            float normalizedX = relativePosition.x / m_ObservationRange.x;
+            float normalizedY = relativePosition.y / m_ObservationRange.y;
+            float normalizedZ = relativePosition.z / m_ObservationRange.z;
+
+            //Clean bad data ie.
+            if (float.IsNaN(normalizedX) || float.IsInfinity(normalizedX)) normalizedX = 0f;
+            if (float.IsNaN(normalizedY) || float.IsInfinity(normalizedY)) normalizedY = 0f;
+            if (float.IsNaN(normalizedZ) || float.IsInfinity(normalizedZ)) normalizedZ = 0f;
+
+            writer[1] = Mathf.Clamp(normalizedX, -1.0f, 1.0f);
+            writer[2] = Mathf.Clamp(normalizedY, -1.0f, 1.0f);
+            writer[3] = Mathf.Clamp(normalizedZ, -1.0f, 1.0f);
+            if (Time.frameCount % 30 == 0)
             {
                 Debug.Log($"Sensor Output: X={normalizedX} | Y={normalizedY} | Z={normalizedZ} | InRange={seePlayer}");
             }
