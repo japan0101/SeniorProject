@@ -8,10 +8,12 @@ public class SightDetector : MonoBehaviour
     public bool IsTargetInRange { get; private set; }
     public bool IsTargetVisible { get; private set; }
     public Vector3 targetPosition { get; private set; }
+    public bool isShuttingDown { get; private set; }
     public string targetTag = "Player";
     public Transform origin;
     private void OnTriggerEnter(Collider other)
     {
+        if (other == null) return;
         if (other.CompareTag(targetTag))
         {
             IsTargetInRange = true;
@@ -19,6 +21,7 @@ public class SightDetector : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
+        if (other == null) return;
         if (other.CompareTag(targetTag))
         {
             IsTargetInRange = false;
@@ -27,6 +30,7 @@ public class SightDetector : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
+        if (other == null) return;
         if (other.CompareTag(targetTag))
         {
             targetPosition = other.transform.position;
@@ -48,5 +52,14 @@ public class SightDetector : MonoBehaviour
                 }
             }
         }
+    }
+    void OnDestroy()
+    {
+        isShuttingDown = true;
+    }
+
+    void OnApplicationQuit()
+    {
+        isShuttingDown = true;
     }
 }
