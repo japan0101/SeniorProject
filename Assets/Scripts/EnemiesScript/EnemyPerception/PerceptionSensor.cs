@@ -34,11 +34,6 @@ public class PerceptionSensor : ISensor
                 writer[3] = 0f;
                 return 4;
             }
-
-            if (Time.frameCount % 60 == 0)
-            {
-                Debug.Log($"writing observations");
-            }
             bool seePlayer = m_Detector.IsTargetVisible;
             writer[0] = seePlayer ? 1.0f : 0.0f;
 
@@ -60,10 +55,10 @@ public class PerceptionSensor : ISensor
                 writer[1] = Mathf.Clamp(normalizedX, -1.0f, 1.0f);
                 writer[2] = Mathf.Clamp(normalizedY, -1.0f, 1.0f);
                 writer[3] = Mathf.Clamp(normalizedZ, -1.0f, 1.0f);
-                if (Time.frameCount % 30 == 0)
-                {
-                    Debug.Log($"Sensor Output: X={normalizedX} | Y={normalizedY} | Z={normalizedZ} | InRange={seePlayer}");
-                }
+                //if (Time.frameCount % 30 == 0)
+                //{
+                //    Debug.Log($"Sensor Output: X={normalizedX} | Y={normalizedY} | Z={normalizedZ} | InRange={seePlayer}");
+                //}
             }
             else
             {

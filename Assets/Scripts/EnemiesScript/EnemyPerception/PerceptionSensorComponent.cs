@@ -16,9 +16,17 @@ public class PerceptionSensorComponent : SensorComponent
     {
         if (sightDetector == null)
         {
-            Debug.LogError("SightDetector is missing on " + name + ". Please assign it in the Inspector!");
-            return new ISensor[0];
+            sightDetector = GetComponentInChildren<SightDetector>();
+            if (sightDetector == null)
+            {
+                Debug.LogError($"[CRITICAL] SightDetector missing on {name}. Sensor will be disabled to prevent crash.");
+                return new ISensor[0];
+            }
         }
+
+        // Validate the range to prevent division by zero
+        if (observationRange == Vector3.zero) observationRange = Vector3.one;
+
         return new ISensor[] { new PerceptionSensor(sightDetector, sensorName, observationRange) };
     }
 }

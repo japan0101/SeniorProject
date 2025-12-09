@@ -8,7 +8,6 @@ namespace EnemiesScript.Range
     public class RangeEnemy:Enemy
     {
         private EnemyAttack _atk;
-        float Timer = 0;
         private RangeEnemyAgent _agent;
 
         private new void Awake()

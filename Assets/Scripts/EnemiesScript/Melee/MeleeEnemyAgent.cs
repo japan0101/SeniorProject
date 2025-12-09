@@ -10,7 +10,7 @@ namespace EnemiesScript.Melee
     public class MeleeEnemyAgent:EnemyAgent
     {
         
-        float Timer = 0;//for testing agent action remove later
+        //float Timer = 0;//for testing agent action remove later
 
         private new void Awake()
         {

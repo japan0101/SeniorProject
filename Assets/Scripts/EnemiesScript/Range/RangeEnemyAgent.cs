@@ -13,7 +13,7 @@ namespace EnemiesScript.Range
         private float lastDistance;
         private float minAttackDistance = 1.5f;
 
-        float Timer = 0;//for testing agent action remove later
+        //float Timer = 0;//for testing agent action remove later
 
         private new void Awake()
         {

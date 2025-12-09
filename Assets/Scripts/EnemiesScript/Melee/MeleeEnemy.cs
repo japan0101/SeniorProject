@@ -6,7 +6,6 @@ namespace EnemiesScript.Melee
     public class MeleeEnemy:Enemy
     {
         private EnemyAttack _atk;
-        float Timer = 0;
         private MeleeEnemyAgent _agent;
         [SerializeField]private AutoPlayerAgent agent;
         
