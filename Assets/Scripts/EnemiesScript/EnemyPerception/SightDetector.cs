@@ -1,7 +1,5 @@
-using EnemiesScript;
-using Unity.AppUI.UI;
+using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class SightDetector : MonoBehaviour
 {
@@ -11,9 +9,22 @@ public class SightDetector : MonoBehaviour
     public bool isShuttingDown { get; private set; }
     public string targetTag = "Player";
     public Transform origin;
+    private void Start()
+    {
+        try
+        {
+            GetComponent<Collider>();
+        }
+        catch (Exception)
+        {
+            Debug.LogError("Error Cannot detect Collider");
+            
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other == null) return;
+        if (origin == null) return;
         if (other.CompareTag(targetTag))
         {
             IsTargetInRange = true;
@@ -22,6 +33,7 @@ public class SightDetector : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other == null) return;
+        if (origin == null) return;
         if (other.CompareTag(targetTag))
         {
             IsTargetInRange = false;
@@ -31,6 +43,7 @@ public class SightDetector : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (other == null) return;
+        if (origin == null) return;
         if (other.CompareTag(targetTag))
         {
             targetPosition = other.transform.position;
@@ -38,7 +51,7 @@ public class SightDetector : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                Debug.DrawRay(origin.position, hit.point - origin.position, Color.green);
+                //Debug.DrawRay(origin.position, hit.point - origin.position, Color.green);
                 //Debug.Log("Is Hit Player:" + hit.transform.gameObject.CompareTag(targetTag));
                 if (hit.transform.gameObject.CompareTag(targetTag))
                 {

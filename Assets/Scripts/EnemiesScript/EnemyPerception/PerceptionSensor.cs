@@ -1,7 +1,5 @@
 using System;
-using Unity.Mathematics;
 using Unity.MLAgents.Sensors;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PerceptionSensor : ISensor

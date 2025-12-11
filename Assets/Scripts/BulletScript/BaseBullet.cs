@@ -26,6 +26,8 @@ public class MainBullet : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.layer);
+        if(other.gameObject.layer == 7) return;
         foreach (var behavior in hitBehaviors)
         {
             behavior.OnBulletHit(other, lastVelocity);
