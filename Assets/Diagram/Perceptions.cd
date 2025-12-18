@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="PerceptionSensor" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="3" Width="3.25" />
+    <Members>
+      <Method Name="GetCompressedObservation" Hidden="true" />
+      <Method Name="GetCompressionSpec" Hidden="true" />
+      <Method Name="GetName" Hidden="true" />
+      <Method Name="GetObservationSpec" Hidden="true" />
+      <Method Name="ISensor.Update" Hidden="true" />
+      <Method Name="WriteZeros" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAABAAAAAAAAAAAAQAQAABIAAQAAEEABIA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\EnemyPerception\PerceptionSensor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Orientation="Right" Position="0.1" />
+  </Class>
+  <Class Name="PerceptionSensorComponent">
+    <Position X="6.5" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAEEAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\EnemyPerception\PerceptionSensorComponent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SightDetector">
+    <Position X="3.75" Y="0.5" Width="2.25" />
+    <Members>
+      <Property Name="isShuttingDown" Hidden="true" />
+      <Method Name="OnApplicationQuit" Hidden="true" />
+      <Method Name="OnDestroy" Hidden="true" />
+      <Method Name="Start" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>CAABEBAAACAAABBAAgAAAAAAAAABQIAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\EnemyPerception\SightDetector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

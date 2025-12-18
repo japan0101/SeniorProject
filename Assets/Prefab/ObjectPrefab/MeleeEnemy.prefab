@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 3166028060444420267}
   - component: {fileID: 5643615066882391414}
   m_Layer: 0
-  m_Name: Cylinder
+  m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -534,7 +534,7 @@ GameObject:
   - component: {fileID: 9098718155733940161}
   - component: {fileID: 3913801104855327558}
   m_Layer: 0
-  m_Name: Cylinder (1)
+  m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
