@@ -16,7 +16,10 @@ namespace EnemiesScript
         {
 
         }
+        public virtual void OnAttack(Vector3 direction)
+        {
 
+        }
         public void OnDestroy()
         {
             if (isMissed)// check weather the launced attack have hit an opponent, the logic of this should be done in a child component since some attack might have AOE
