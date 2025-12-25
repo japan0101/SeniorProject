@@ -8,7 +8,12 @@ namespace EnemiesScript.Boss
         private EnemyAttack _atk;
         private BossEnemyAgent _agent;
         [SerializeField]private AutoPlayerAgent agent;
-        
+        const int basicslashIndex = 1;
+        const int thrustIndex = 2;
+        const int warcryIndex = 3;
+        const int bodyslamIndex = 4;
+        const int jumpslamIndex = 5;
+        const int evadeslashIndex = 6;
         private new void Awake()
         {
             Debug.Log("Hello");
@@ -23,14 +28,37 @@ namespace EnemiesScript.Boss
             {
                 _agent.OnAttack();
             }
-
-            if (energy >= 10f)
+            switch (atkIndex)
             {
-                energy -= 10f;
-                _atk = Instantiate(attacks[atkIndex], gameObject.transform);
-                _atk.OnMissed += Miss;//Add method of missed attack aknowledgement to an event listener of the launched attacks
-                Destroy(_atk.gameObject, _atk.lifetime);
+                case basicslashIndex://basic slash
+                    Debug.Log("Perfoming Slash attack");
+                    break;
+                case thrustIndex://thrust
+                    Debug.Log("Perfoming Thrust attack");
+                    break;
+                case warcryIndex://war cry
+                    Debug.Log("Perfoming WarCry attack");
+                    break;
+                case bodyslamIndex://body slam
+                    Debug.Log("Perfoming Body Slam attack");
+                    break;
+                case jumpslamIndex://jump slam
+                    Debug.Log("Perfoming Jump Slam attack");
+                    break;
+                case evadeslashIndex://evade slash
+                    Debug.Log("Perfoming Evade Slash attack");
+                    break;
+                default:
+                    break;
             }
+            //if (energy >= 10f)
+            //{
+            //    energy -= 10f;
+            //    _atk = Instantiate(attacks[atkIndex], gameObject.transform);
+                
+            //    _atk.OnMissed += Miss;//Add method of missed attack aknowledgement to an event listener of the launched attacks
+            //    Destroy(_atk.gameObject, _atk.lifetime);
+            //}
         }
 
         protected override void OnHurt()

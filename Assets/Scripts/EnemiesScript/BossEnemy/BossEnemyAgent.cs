@@ -9,9 +9,14 @@ namespace EnemiesScript.Boss
 {
     public class BossEnemyAgent:EnemyAgent
     {
-        
-        //float Timer = 0;//for testing agent action remove later
 
+        //float Timer = 0;//for testing agent action remove later
+        const int basicslashIndex = 1;
+        const int thrustIndex = 2;
+        const int warcryIndex = 3;
+        const int bodyslamIndex = 4;
+        const int jumpslamIndex = 5;
+        const int evadeslashIndex = 6;
         private new void Awake()
         {
             base.Awake();
@@ -43,9 +48,36 @@ namespace EnemiesScript.Boss
             {
                 discreteActionsOut[0] = 1;//Dash
             }
+
+            if (Input.GetKey(KeyCode.Alpha1))
+            {
+                Debug.Log("pressed 1");
+                discreteActionsOut[1] = basicslashIndex;
+            }
+            if (Input.GetKey(KeyCode.Keypad2))
+            {
+                discreteActionsOut[1] = thrustIndex;
+            }
+            if (Input.GetKey(KeyCode.Keypad3))
+            {
+                discreteActionsOut[1] = warcryIndex;
+            }
+            if (Input.GetKey(KeyCode.Keypad4))
+            {
+                discreteActionsOut[1] = bodyslamIndex;
+            }
+            if (Input.GetKey(KeyCode.Keypad5))
+            {
+                discreteActionsOut[1] = jumpslamIndex;
+            }
+            if (Input.GetKey(KeyCode.Keypad6))
+            {
+                discreteActionsOut[1] = evadeslashIndex;
+            }
+
             if (Input.GetKey(KeyCode.Space))
             {
-                discreteActionsOut[1] = 1;
+                discreteActionsOut[1] = basicslashIndex;
             }
             if (Input.GetKey(KeyCode.Q))
             {
@@ -81,7 +113,7 @@ namespace EnemiesScript.Boss
 
             if (attack > 0)
             {
-                agent.Attack(attack - 1);
+                agent.Attack(attack);
                 _attackedThisStep = true;
             }
             base.OnActionReceived(actions);

@@ -10,7 +10,6 @@ namespace EnemiesScript.Boss
         [Header("Specific config")]
         public float hold_duration = 0.3f;
         public float attack_window = 0.7f;
-        public GameObject attackCollider;
 
         public override void OnAttack()
         {
