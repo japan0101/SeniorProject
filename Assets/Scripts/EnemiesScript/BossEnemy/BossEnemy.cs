@@ -35,7 +35,8 @@ namespace EnemiesScript.Boss
                     _atk.OnAttack(1);
                     break;
                 case thrustIndex://thrust
-                    Debug.Log("Perfoming Thrust attack");
+                    _atk = Instantiate(attacks[thrustIndex], gameObject.transform);
+                    _atk.OnAttack(1);
                     break;
                 case warcryIndex://war cry
                     Debug.Log("Perfoming WarCry attack");

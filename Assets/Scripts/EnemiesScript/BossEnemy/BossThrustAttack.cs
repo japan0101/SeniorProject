@@ -15,12 +15,11 @@ namespace EnemiesScript.Boss
         protected Coroutine attackRoutine;
         public override void OnAttack(float dmgModifier)
         {
-            OnAttack(dmgModifier, gameObject.transform.forward);
+            damage = damage * dmgModifier;
+            attackRoutine = StartCoroutine(AttackSequence(hold_duration));
         }
         public override void OnAttack(float dmgModifier, Vector3 direction)
         {
-            attackRoutine = StartCoroutine(AttackSequence(hold_duration));
-            damage = damage * dmgModifier;
             OnAttack(dmgModifier);
         }
         public void OnTriggerEnter(Collider other)
