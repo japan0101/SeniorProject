@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,7 +12,6 @@ public class PlayerMovement : MonoBehaviour
     private float speed;
 
     public float groundDrag;
-    bool dashing;
     bool readyToDash;
 
     public float airMultiplier;
@@ -81,7 +81,6 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(dashKey) && readyToDash && energyManager.consumeEnergy(_stats.dashCost))
         {
             readyToDash = false;
-            dashing = true;
             Dash();
 
             Invoke(nameof(ResetDashSpeed), _stats.dashDuration);
@@ -94,16 +93,25 @@ public class PlayerMovement : MonoBehaviour
 
             resetDashRoutine = StartCoroutine(ResetDashAfterDelay(_stats.dashCooldown));
         }
+        if (Input.GetKey(sprintKey)){
+            if (!_stats.States.Contains(PlayerStates.Sprinting))
+            {
+                _stats.States.Add(PlayerStates.Sprinting);
+            }
+        }else
+        {
+            _stats.States.Remove(PlayerStates.Sprinting);
+        }
     }
 
     private void MovePlayer()
     {
         //calculate movement direction
         moveDirection = hOrientation.forward * verticalInput + hOrientation.right * horizontalInput;
-        if (dashing) {
+        if (_stats.States.Contains(PlayerStates.Dashing)) {
             speed = _stats.dashForce;
         } else
-        if (Input.GetKey(sprintKey) && energyManager.consumeEnergy(_stats.sprintCost))
+        if (_stats.States.Contains(PlayerStates.Sprinting) && energyManager.consumeEnergy(_stats.sprintCost))
         {
             speed = _stats.sprintSpeed;
         }
@@ -135,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // reset x velocity
         //rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
-
+        _stats.States.Add(PlayerStates.Dashing);
         rb.AddForce(transform.forward * _stats.dashForce, ForceMode.Impulse);
     }
     private void ResetJump()
@@ -148,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void ResetDashSpeed()
     {
-        dashing = false;
+        _stats.States.Remove(PlayerStates.Dashing);
     }
     private IEnumerator ResetJumpAfterDelay(float delay)
     {
@@ -166,16 +174,16 @@ public class PlayerMovement : MonoBehaviour
     private void SpeedControl()
     {
         Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-        if (dashing)
+        if (_stats.States.Contains(PlayerStates.Dashing))//Dashing
         {
             speed = _stats.dashForce;
         }
         else
-        if (Input.GetKey(sprintKey))
+        if (_stats.States.Contains(PlayerStates.Sprinting))//Sprinting
         {
             speed = _stats.sprintSpeed;
         }
-        else
+        else//Normal Walking
         {
             speed = _stats.moveSpeed;
         }

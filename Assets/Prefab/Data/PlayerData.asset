@@ -15,7 +15,7 @@ MonoBehaviour:
   maxHP: 250
   currentHP: 250
   maxEnergy: 100
-  currentEnergy: 100
+  currentEnergy: 42.52904
   EnergyRegenRate: 5
   moveSpeed: 7
   sprintSpeed: 10
@@ -27,3 +27,4 @@ MonoBehaviour:
   jumpForce: 8
   jumpCooldown: 0.5
   jumpCost: 15
+  States: 

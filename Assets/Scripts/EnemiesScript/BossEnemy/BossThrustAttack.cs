@@ -9,16 +9,17 @@ namespace EnemiesScript.Boss
     {
         [Header("Specific config")]
         public float hold_duration = 0.7f;
-        public float attack_window = 0.7f;
+        public float attack_window = 0.3f;
 
         protected float holdposeTimer = 0;
         protected Coroutine attackRoutine;
         public override void OnAttack(float dmgModifier)
         {
-            attackRoutine = StartCoroutine(AttackSequence(hold_duration));
+            OnAttack(dmgModifier, gameObject.transform.forward);
         }
         public override void OnAttack(float dmgModifier, Vector3 direction)
         {
+            attackRoutine = StartCoroutine(AttackSequence(hold_duration));
             damage = damage * dmgModifier;
             OnAttack(dmgModifier);
         }
