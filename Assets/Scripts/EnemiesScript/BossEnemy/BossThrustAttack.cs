@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 namespace EnemiesScript.Boss
 {
-    public class BossSlashAttack:EnemyAttack
+    public class BossThrustAttack:EnemyAttack
     {
         [Header("Specific config")]
         public float hold_duration = 0.7f;
@@ -15,11 +15,11 @@ namespace EnemiesScript.Boss
         protected Coroutine attackRoutine;
         public override void OnAttack(float dmgModifier)
         {
-            damage = damage * dmgModifier;
             attackRoutine = StartCoroutine(AttackSequence(hold_duration));
         }
         public override void OnAttack(float dmgModifier, Vector3 direction)
         {
+            damage = damage * dmgModifier;
             OnAttack(dmgModifier);
         }
         public void OnTriggerEnter(Collider other)

@@ -81,7 +81,7 @@ public class PlayerHealth : MonoBehaviour
     public void TakeKnockback(Vector3 direction, float force)
     {
         //knock player with force of the attack in a direction
-        rb.AddForce(direction*force);
+        rb.AddForce(direction*force, ForceMode.Impulse);
     }
     public bool IsDead()
     {//for use in enemy attaack detection

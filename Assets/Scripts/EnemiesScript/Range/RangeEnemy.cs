@@ -30,7 +30,7 @@ namespace EnemiesScript.Range
                 energy -= 10f;
                 _atk = Instantiate(attacks[atkIndex], gameObject.transform);
                 _atk.attacker = gameObject;
-                _atk.OnAttack();
+                _atk.OnAttack(1);
                 _atk.OnMissed += miss;//Add method of missed attack aknowledgement to an event listener of the launched attacks
                 Destroy(_atk.gameObject, _atk.lifetime);
             }

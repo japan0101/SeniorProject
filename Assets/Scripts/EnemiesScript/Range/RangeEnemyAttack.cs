@@ -8,7 +8,7 @@ namespace EnemiesScript.Range
         [Header("Range config")]
         public float power;
         //public float attack_speed = 1440f;
-        public override void OnAttack()
+        public override void OnAttack(float dmgModifier)
         {
             Debug.Log("Shooting");
             Rigidbody rb = GetComponent<Rigidbody>();

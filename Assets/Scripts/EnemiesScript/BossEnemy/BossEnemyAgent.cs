@@ -49,9 +49,8 @@ namespace EnemiesScript.Boss
                 discreteActionsOut[0] = 1;//Dash
             }
 
-            if (Input.GetKey(KeyCode.Alpha1))
+            if (Input.GetKey(KeyCode.Keypad1))
             {
-                Debug.Log("pressed 1");
                 discreteActionsOut[1] = basicslashIndex;
             }
             if (Input.GetKey(KeyCode.Keypad2))

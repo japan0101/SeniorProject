@@ -8,12 +8,12 @@ namespace EnemiesScript.Boss
         private EnemyAttack _atk;
         private BossEnemyAgent _agent;
         [SerializeField]private AutoPlayerAgent agent;
-        const int basicslashIndex = 1;
-        const int thrustIndex = 2;
-        const int warcryIndex = 3;
-        const int bodyslamIndex = 4;
-        const int jumpslamIndex = 5;
-        const int evadeslashIndex = 6;
+        const int basicslashIndex = 0;
+        const int thrustIndex = 1;
+        const int warcryIndex = 2;
+        const int bodyslamIndex = 3;
+        const int jumpslamIndex = 4;
+        const int evadeslashIndex = 5;
         private new void Awake()
         {
             Debug.Log("Hello");
@@ -28,10 +28,11 @@ namespace EnemiesScript.Boss
             {
                 _agent.OnAttack();
             }
-            switch (atkIndex)
+            switch (atkIndex-1)
             {
                 case basicslashIndex://basic slash
-                    Debug.Log("Perfoming Slash attack");
+                    _atk = Instantiate(attacks[basicslashIndex], gameObject.transform);
+                    _atk.OnAttack(1);
                     break;
                 case thrustIndex://thrust
                     Debug.Log("Perfoming Thrust attack");
@@ -56,8 +57,8 @@ namespace EnemiesScript.Boss
             //    energy -= 10f;
             //    _atk = Instantiate(attacks[atkIndex], gameObject.transform);
                 
-            //    _atk.OnMissed += Miss;//Add method of missed attack aknowledgement to an event listener of the launched attacks
-            //    Destroy(_atk.gameObject, _atk.lifetime);
+                _atk.OnMissed += Miss;//Add method of missed attack aknowledgement to an event listener of the launched attacks
+                Destroy(_atk.gameObject, _atk.lifetime);
             //}
         }
 

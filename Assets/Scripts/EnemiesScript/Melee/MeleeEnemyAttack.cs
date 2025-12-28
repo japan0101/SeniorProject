@@ -9,7 +9,7 @@ namespace EnemiesScript.Melee
         [Header("Melee config")]
         public float attack_speed = 1440f;
 
-        public override void OnAttack()
+        public override void OnAttack(float dmgModifier)
         {
             Debug.Log("Slashing");
         }
