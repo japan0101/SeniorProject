@@ -1,0 +1,51 @@
+{
+    "PlayerAI": {
+        "checkpoints": [
+            {
+                "steps": 3904,
+                "file_path": "results\\BossBehavior\\PlayerAI\\PlayerAI-3904.onnx",
+                "reward": null,
+                "creation_time": 1767595467.91151,
+                "auxillary_file_paths": [
+                    "results\\BossBehavior\\PlayerAI\\PlayerAI-3904.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 3904,
+            "file_path": "results\\BossBehavior\\PlayerAI.onnx",
+            "reward": null,
+            "creation_time": 1767595467.91151,
+            "auxillary_file_paths": [
+                "results\\BossBehavior\\PlayerAI\\PlayerAI-3904.pt"
+            ]
+        }
+    },
+    "BossBehavior": {
+        "checkpoints": [
+            {
+                "steps": 2880,
+                "file_path": "results\\BossBehavior\\BossBehavior\\BossBehavior-2880.onnx",
+                "reward": null,
+                "creation_time": 1767595468.0079622,
+                "auxillary_file_paths": [
+                    "results\\BossBehavior\\BossBehavior\\BossBehavior-2880.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2880,
+            "file_path": "results\\BossBehavior\\BossBehavior.onnx",
+            "reward": null,
+            "creation_time": 1767595468.0079622,
+            "auxillary_file_paths": [
+                "results\\BossBehavior\\BossBehavior\\BossBehavior-2880.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.2.0.dev0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

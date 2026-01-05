@@ -33,10 +33,12 @@ namespace EnemiesScript.Boss
                 case basicslashIndex://basic slash
                     _atk = Instantiate(attacks[basicslashIndex], gameObject.transform);
                     _atk.OnAttack(1);
+                    Destroy(_atk.gameObject, _atk.lifetime);
                     break;
                 case thrustIndex://thrust
                     _atk = Instantiate(attacks[thrustIndex], gameObject.transform);
                     _atk.OnAttack(1);
+                    Destroy(_atk.gameObject, _atk.lifetime);
                     break;
                 case warcryIndex://war cry
                     Debug.Log("Perfoming WarCry attack");
@@ -59,7 +61,7 @@ namespace EnemiesScript.Boss
             //    _atk = Instantiate(attacks[atkIndex], gameObject.transform);
                 
                 _atk.OnMissed += Miss;//Add method of missed attack aknowledgement to an event listener of the launched attacks
-                Destroy(_atk.gameObject, _atk.lifetime);
+                
             //}
         }
 
