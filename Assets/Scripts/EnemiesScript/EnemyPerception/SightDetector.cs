@@ -51,17 +51,17 @@ public class SightDetector : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                //Debug.DrawRay(origin.position, hit.point - origin.position, Color.green);
-                //Debug.Log("Is Hit Player:" + hit.transform.gameObject.CompareTag(targetTag));
+                Debug.DrawRay(origin.position, hit.point - origin.position, Color.green);
+                Debug.Log("Is Hit Player:" + hit.transform.gameObject.CompareTag(targetTag));
                 if (hit.transform.gameObject.CompareTag(targetTag))
                 {
                     IsTargetVisible = true;
-                    //Debug.Log("Player Position:" + hit.transform.position);
+                    Debug.Log("Player Position:" + hit.transform.position);
                 }
                 else
                 {
                     IsTargetVisible = false;
-                    //Debug.Log("Obstacle:" + hit.transform.position);
+                    Debug.Log("Obstacle:" + hit.transform.position);
                 }
             }
         }
