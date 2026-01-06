@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.MLAgents.Actuators;
 using UnityEngine;
@@ -24,13 +25,16 @@ namespace EnemiesScript
         
         protected float dashTimer = 0;
         protected float realSpeed;
-        private bool isDashing = false;
+        protected bool isDashing = false;
+        protected bool isBSlaming = false;
         public List<EnemyAttack> attacks = new List<EnemyAttack>();
         protected Rigidbody rb;
         public PlayerHealth _playerHealthManager;
         [HideInInspector]public GameObject _player;
+        protected float atkModifier = 1.0f;
         private bool attacking = false;
         private bool missed = false;
+        protected Coroutine bufftimeRoutine;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -76,6 +80,10 @@ namespace EnemiesScript
         {
             isDashing = true;
             energy -= dashConsume;
+        }
+        public void BslamOverride()
+        {
+            isBSlaming = true;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -127,6 +135,12 @@ namespace EnemiesScript
         private void OnDestroy()
         {
             
+        }
+
+        protected IEnumerator BuffTimer(float delayTime)
+        {
+            yield return new WaitForSeconds(delayTime);
+            atkModifier = 1;
         }
     }
 }

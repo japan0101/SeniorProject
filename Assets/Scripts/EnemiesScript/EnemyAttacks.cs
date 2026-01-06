@@ -11,6 +11,7 @@ namespace EnemiesScript
         public float lifetime;
         public float baseKnockbackForce;
         protected bool isMissed = true;
+        public float effectDuration = 2.0f;
         public event Action OnMissed;
         public virtual void OnAttack(float dmgModifier)
         {

@@ -14,6 +14,7 @@ namespace EnemiesScript.Boss
         const int bodyslamIndex = 3;
         const int jumpslamIndex = 4;
         const int evadeslashIndex = 5;
+        
         private new void Awake()
         {
             Debug.Log("Hello");
@@ -32,18 +33,24 @@ namespace EnemiesScript.Boss
             {
                 case basicslashIndex://basic slash
                     _atk = Instantiate(attacks[basicslashIndex], gameObject.transform);
-                    _atk.OnAttack(1);
+                    _atk.OnAttack(atkModifier);
                     Destroy(_atk.gameObject, _atk.lifetime);
                     break;
                 case thrustIndex://thrust
                     _atk = Instantiate(attacks[thrustIndex], gameObject.transform);
-                    _atk.OnAttack(1);
+                    _atk.OnAttack(atkModifier);
                     Destroy(_atk.gameObject, _atk.lifetime);
                     break;
                 case warcryIndex://war cry
-                    Debug.Log("Perfoming WarCry attack");
+                    _atk = Instantiate(attacks[warcryIndex], gameObject.transform);
+                    _atk.OnAttack(atkModifier);
+                    bufftimeRoutine = StartCoroutine(BuffTimer(_atk.effectDuration));
+                    Destroy(_atk.gameObject, _atk.lifetime);
                     break;
                 case bodyslamIndex://body slam
+                    _atk = Instantiate(attacks[bodyslamIndex], gameObject.transform);
+                    _atk.OnAttack(atkModifier);
+                    Destroy(_atk.gameObject, _atk.lifetime);
                     Debug.Log("Perfoming Body Slam attack");
                     break;
                 case jumpslamIndex://jump slam

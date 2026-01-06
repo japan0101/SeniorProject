@@ -49,6 +49,7 @@ MonoBehaviour:
   damage: 10
   lifetime: 1
   baseKnockbackForce: 120
+  effectDuration: 0
   hold_duration: 0.7
   attack_window: 0.7
 --- !u!65 &6858814578697537776
