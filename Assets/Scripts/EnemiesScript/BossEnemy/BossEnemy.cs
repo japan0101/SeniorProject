@@ -51,9 +51,12 @@ namespace EnemiesScript.Boss
                     _atk = Instantiate(attacks[bodyslamIndex], gameObject.transform);
                     _atk.OnAttack(atkModifier);
                     Destroy(_atk.gameObject, _atk.lifetime);
+                    BslamOverride();
                     Debug.Log("Perfoming Body Slam attack");
                     break;
                 case jumpslamIndex://jump slam
+                    _atk = Instantiate(attacks[jumpslamIndex], gameObject.transform);
+                    _atk.OnAttack(atkModifier);
                     Debug.Log("Perfoming Jump Slam attack");
                     break;
                 case evadeslashIndex://evade slash

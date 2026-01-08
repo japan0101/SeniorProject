@@ -13,6 +13,13 @@ namespace EnemiesScript.Boss
 
         protected float holdposeTimer = 0;
         protected Coroutine attackRoutine;
+        public void OnDestroy()
+        {
+            base.OnDestroy();
+            Debug.Log("Return Friction to default");
+            GetComponentInParent<Enemy>().groundFriction = 2.5f;
+            GetComponentInParent<Enemy>().BslamOverride();
+        }
         public override void OnAttack(float dmgModifier)
         {
             damage = damage * dmgModifier;
@@ -35,12 +42,12 @@ namespace EnemiesScript.Boss
         IEnumerator AttackSequence(float delayTime)
         {
             Debug.Log("Holding Pose");
+            GetComponentInParent<Enemy>().groundFriction = 0.002f;
             yield return new WaitForSeconds(delayTime);//Holding pose
             attackRoutine = null;
             //Start attacking after this
             GetComponent<BoxCollider>().enabled = true;
-            GetComponentInParent<BossEnemy>().Dash();
-            GetComponentInParent<Rigidbody>().AddForce(transform.forward * 500, ForceMode.Force);
+            GetComponentInParent<Rigidbody>().AddForce(transform.forward * 1000, ForceMode.Force);
             Debug.Log("Hit");
         }
     }

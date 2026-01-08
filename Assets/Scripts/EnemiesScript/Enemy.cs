@@ -35,6 +35,7 @@ namespace EnemiesScript
         private bool attacking = false;
         private bool missed = false;
         protected Coroutine bufftimeRoutine;
+        public float groundFriction = 2.5f;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
 
@@ -83,7 +84,7 @@ namespace EnemiesScript
         }
         public void BslamOverride()
         {
-            isBSlaming = true;
+            isBSlaming = !isBSlaming;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -115,11 +116,14 @@ namespace EnemiesScript
 
         protected void SpeedControl()
         {
-            rb.linearDamping = 2.5f;
+            rb.linearDamping = groundFriction;
             Vector3 flatVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
             if (isDashing)
             {
                 realSpeed = dashSpeed;
+            }else if (isBSlaming)
+            {
+                realSpeed = 50;
             }
             else
             {

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 5578928161701033281}
   - component: {fileID: 588208438573767990}
   - component: {fileID: 8393816128251758200}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Warcry
-  m_TagString: Untagged
+  m_TagString: EnemyAttacks
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

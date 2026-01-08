@@ -465,8 +465,10 @@ MonoBehaviour:
   - {fileID: 2378781012659935894, guid: bbd5940fd8764184cb10ba2c5095520b, type: 3}
   - {fileID: 588208438573767990, guid: 38523d484b3d11b4e92567342013feab, type: 3}
   - {fileID: 5845608534424573503, guid: 887f36f768b264f49b46da99b7813ab7, type: 3}
+  - {fileID: 5845608534424573503, guid: 887f36f768b264f49b46da99b7813ab7, type: 3}
   _playerHealthManager: {fileID: 0}
   _player: {fileID: 0}
+  groundFriction: 2.5
   agent: {fileID: 0}
 --- !u!114 &5307981173797202405
 MonoBehaviour:
