@@ -10,6 +10,7 @@ namespace EnemiesScript.Boss
         [Header("Specific config")]
         public float hold_duration = 0.7f;
         public float attack_window = 0.3f;
+        public GameObject effect;
 
         protected float holdposeTimer = 0;
         protected Coroutine attackRoutine;
@@ -30,6 +31,8 @@ namespace EnemiesScript.Boss
             }else if(other.gameObject.layer == 10)
             {
                 Destroy(gameObject, lifetime);
+                effect = Instantiate(effect, transform.position, Quaternion.identity);
+                Destroy(effect, 0.5f);
                 GetComponent<MeshCollider>().enabled = true;
             }
         }

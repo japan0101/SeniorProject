@@ -60,6 +60,10 @@ namespace EnemiesScript.Boss
                     Debug.Log("Perfoming Jump Slam attack");
                     break;
                 case evadeslashIndex://evade slash
+                    _atk = Instantiate(attacks[evadeslashIndex], gameObject.transform);
+                    _atk.OnAttack(atkModifier);
+                    Destroy(_atk.gameObject, _atk.lifetime);
+                    BslamOverride();
                     Debug.Log("Perfoming Evade Slash attack");
                     break;
                 default:
