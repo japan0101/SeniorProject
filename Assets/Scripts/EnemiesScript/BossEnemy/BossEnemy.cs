@@ -14,12 +14,13 @@ namespace EnemiesScript.Boss
         const int bodyslamIndex = 3;
         const int jumpslamIndex = 4;
         const int evadeslashIndex = 5;
-        
+        private Animator animator;
         private new void Awake()
         {
-            Debug.Log("Hello");
             _agent = GetComponent<BossEnemyAgent>();
             base.Awake();
+
+            animator = GetComponentInChildren<Animator>();
         }
         
         public override void Attack(int atkIndex)
@@ -33,6 +34,7 @@ namespace EnemiesScript.Boss
             {
                 case basicslashIndex://basic slash
                     _atk = Instantiate(attacks[basicslashIndex], gameObject.transform);
+                    _atk.animator = animator;
                     _atk.OnAttack(atkModifier);
                     Destroy(_atk.gameObject, _atk.lifetime);
                     break;
@@ -56,6 +58,7 @@ namespace EnemiesScript.Boss
                     break;
                 case jumpslamIndex://jump slam
                     _atk = Instantiate(attacks[jumpslamIndex], gameObject.transform);
+                    _atk.animator = animator;
                     _atk.OnAttack(atkModifier);
                     Debug.Log("Perfoming Jump Slam attack");
                     break;

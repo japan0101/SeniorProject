@@ -19,6 +19,7 @@ namespace EnemiesScript.Boss
             damage = damage * dmgModifier;
             transform.position = new Vector3 (transform.position.x, transform.position.y -1.5f, transform.position.z);
             attackRoutine = StartCoroutine(AttackSequence(hold_duration));
+            animator.SetTrigger("Jump");
         }
         public override void OnAttack(float dmgModifier, Vector3 direction)
         {

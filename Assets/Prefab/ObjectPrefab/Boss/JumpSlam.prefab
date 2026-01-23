@@ -74,6 +74,7 @@ MonoBehaviour:
   lifetime: 4
   baseKnockbackForce: 100
   effectDuration: 2
+  animator: {fileID: 0}
   hold_duration: 0.7
   attack_window: 0.3
   effect: {fileID: 8622360290656364668, guid: 0d0a829575df72a4b9694fdbf543bf22, type: 3}

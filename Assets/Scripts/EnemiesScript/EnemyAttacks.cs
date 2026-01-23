@@ -13,6 +13,7 @@ namespace EnemiesScript
         protected bool isMissed = true;
         public float effectDuration = 2.0f;
         public event Action OnMissed;
+        public Animator animator;
         public virtual void OnAttack(float dmgModifier)
         {
 

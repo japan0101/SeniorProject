@@ -16,6 +16,7 @@ namespace EnemiesScript.Boss
         public override void OnAttack(float dmgModifier)
         {
             damage = damage * dmgModifier;
+            animator.SetTrigger("BasicSlash Holdpose");
             attackRoutine = StartCoroutine(AttackSequence(hold_duration));
         }
         public override void OnAttack(float dmgModifier, Vector3 direction)
@@ -35,7 +36,9 @@ namespace EnemiesScript.Boss
         IEnumerator AttackSequence(float delayTime)
         {
             Debug.Log("Holding Pose");
-            yield return new WaitForSeconds(delayTime);
+            yield return new WaitForSeconds(delayTime-0.28f);
+            animator.SetTrigger("BasicSlash Start");
+            yield return new WaitForSeconds(0.28f);
             attackRoutine = null;
             GetComponent<BoxCollider>().enabled = true;
             Debug.Log("Hit");
