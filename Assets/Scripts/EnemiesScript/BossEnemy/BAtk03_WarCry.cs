@@ -33,6 +33,7 @@ namespace EnemiesScript.Boss
         {
             Debug.Log("Holding Pose");
             yield return new WaitForSeconds(delayTime);
+            animator.SetTrigger("Shout");
             attackRoutine = null;
             GetComponent<SphereCollider>().enabled = true;
             Debug.Log("Hit");

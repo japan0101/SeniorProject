@@ -40,11 +40,13 @@ namespace EnemiesScript.Boss
                     break;
                 case thrustIndex://thrust
                     _atk = Instantiate(attacks[thrustIndex], gameObject.transform);
+                    _atk.animator = animator;
                     _atk.OnAttack(atkModifier);
                     Destroy(_atk.gameObject, _atk.lifetime);
                     break;
                 case warcryIndex://war cry
                     _atk = Instantiate(attacks[warcryIndex], gameObject.transform);
+                    _atk.animator = animator;
                     _atk.OnAttack(atkModifier);
                     bufftimeRoutine = StartCoroutine(BuffTimer(_atk.effectDuration));
                     Destroy(_atk.gameObject, _atk.lifetime);

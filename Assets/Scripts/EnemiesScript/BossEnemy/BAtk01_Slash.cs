@@ -36,6 +36,7 @@ namespace EnemiesScript.Boss
         IEnumerator AttackSequence(float delayTime)
         {
             Debug.Log("Holding Pose");
+            //The animation have a .28 seconds delay until the slaash happens
             yield return new WaitForSeconds(delayTime-0.28f);
             animator.SetTrigger("BasicSlash Start");
             yield return new WaitForSeconds(0.28f);
