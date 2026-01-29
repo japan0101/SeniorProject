@@ -53,6 +53,7 @@ namespace EnemiesScript.Boss
                     break;
                 case bodyslamIndex://body slam
                     _atk = Instantiate(attacks[bodyslamIndex], gameObject.transform);
+                    _atk.animator = animator;
                     _atk.OnAttack(atkModifier);
                     Destroy(_atk.gameObject, _atk.lifetime);
                     BslamOverride();
@@ -66,6 +67,7 @@ namespace EnemiesScript.Boss
                     break;
                 case evadeslashIndex://evade slash
                     _atk = Instantiate(attacks[evadeslashIndex], gameObject.transform);
+                    _atk.animator = animator;
                     _atk.OnAttack(atkModifier);
                     Destroy(_atk.gameObject, _atk.lifetime);
                     BslamOverride();

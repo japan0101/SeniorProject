@@ -31,6 +31,7 @@ namespace EnemiesScript.Boss
         }
         IEnumerator AttackSequence(float delayTime)
         {
+
             Debug.Log("Holding Pose");
             yield return new WaitForSeconds(delayTime);
             animator.SetTrigger("Shout");

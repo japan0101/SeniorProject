@@ -17,6 +17,7 @@ namespace EnemiesScript.Boss
         public void OnDestroy()
         {
             base.OnDestroy();
+            animator.SetTrigger("EndAttack");
             Debug.Log("Return Friction to default");
             GetComponentInParent<Enemy>().groundFriction = 2.5f;
             GetComponentInParent<Enemy>().BslamOverride();
@@ -44,7 +45,9 @@ namespace EnemiesScript.Boss
         {
             Debug.Log("Holding Pose");
             GetComponentInParent<Enemy>().groundFriction = 0.002f;
-            yield return new WaitForSeconds(delayTime);//Holding pose
+            animator.SetTrigger("BSlam Holdpose");
+            yield return new WaitForSeconds(delayTime);//Hold pose
+            animator.SetTrigger("Bslam Start");
             attackRoutine = null;
             //Start attacking after this
             GetComponent<BoxCollider>().enabled = true;

@@ -56,12 +56,12 @@ public class SightDetector : MonoBehaviour
                 if (hit.transform.gameObject.CompareTag(targetTag))
                 {
                     IsTargetVisible = true;
-                    Debug.Log("Player Position:" + hit.transform.position);
+                    //Debug.Log("Player Position:" + hit.transform.position);
                 }
                 else
                 {
                     IsTargetVisible = false;
-                    Debug.Log("Obstacle:" + hit.transform.position);
+                    //Debug.Log("Obstacle:" + hit.transform.position);
                 }
             }
         }
