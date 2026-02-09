@@ -20,9 +20,9 @@ GameObject:
   - component: {fileID: 8216289594090169442}
   - component: {fileID: 1946499227976014142}
   - component: {fileID: 6714635913479707322}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: NewNewAutoplayer
-  m_TagString: Enemy
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 3726871557230211256}
   - component: {fileID: 5849689770420109505}
   - component: {fileID: 1972791399415419895}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 864388533830830575}
   - component: {fileID: 479307925571922668}
   - component: {fileID: 3304046382352811976}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -548,7 +548,7 @@ GameObject:
   - component: {fileID: 3812544936374758866}
   - component: {fileID: 5316069579048661815}
   - component: {fileID: 4568040268271923240}
-  m_Layer: 11
+  m_Layer: 8
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -661,7 +661,7 @@ GameObject:
   - component: {fileID: 292750139990679661}
   - component: {fileID: 4320282454331468527}
   - component: {fileID: 2244563593193133427}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Sight
   m_TagString: Perceptions
   m_Icon: {fileID: 0}
@@ -695,7 +695,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf9730ec50209d1488b93b3e34102d85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SightDetector
-  targetTag: Player
+  targetTag: Enemy
   origin: {fileID: 8784498225786138486}
 --- !u!64 &2244563593193133427
 MeshCollider:
@@ -712,7 +712,7 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5

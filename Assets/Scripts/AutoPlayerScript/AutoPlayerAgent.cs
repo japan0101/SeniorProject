@@ -205,7 +205,7 @@ namespace AutoPlayerScript
             if (!isTraining) return;
             AddReward(-1f);
             cumulativeReward = GetCumulativeReward();
-            arenaController?.PlayerDefeated(this);
+            // arenaController?.PlayerDefeated(this);
         }
         
         public void OnHurt()
