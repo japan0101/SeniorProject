@@ -45,9 +45,11 @@ namespace EnemiesScript.Boss
         {
             Debug.Log("Holding Pose");
             GetComponentInParent<Enemy>().groundFriction = 0.002f;
+            animator.SetTrigger("EvadeSlash Holdpose");
             yield return new WaitForSeconds(delayTime);//Holding pose
             attackRoutine = null;
             //Start attacking after this
+            animator.SetTrigger("EvadeSlash Start");
             GetComponent<ParticleSystem>().Play();
             GetComponent<BoxCollider>().enabled = true;
             GetComponentInParent<Rigidbody>().AddForce(transform.forward * -1000, ForceMode.Force);

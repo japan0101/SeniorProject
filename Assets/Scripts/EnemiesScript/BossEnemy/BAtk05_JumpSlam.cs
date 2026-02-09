@@ -19,7 +19,6 @@ namespace EnemiesScript.Boss
             damage = damage * dmgModifier;
             transform.position = new Vector3 (transform.position.x, transform.position.y -1.5f, transform.position.z);
             attackRoutine = StartCoroutine(AttackSequence(hold_duration));
-            animator.SetTrigger("Jump");
         }
         public override void OnAttack(float dmgModifier, Vector3 direction)
         {
@@ -31,6 +30,7 @@ namespace EnemiesScript.Boss
                 isMissed = false;//For using in OnDestroyed checks weather the attack hit a player
             }else if(other.gameObject.layer == 10)
             {
+                animator.SetTrigger("EndAttack");
                 Destroy(gameObject, lifetime);
                 effect = Instantiate(effect, transform.position, Quaternion.identity);
                 Destroy(effect, 0.5f);
@@ -47,7 +47,9 @@ namespace EnemiesScript.Boss
             Debug.Log("Holding Pose");
             GetComponentInParent<Rigidbody>().useGravity = false;
             GetComponentInParent<Rigidbody>().AddForce(transform.up*800);
+            animator.SetTrigger("Jump Holdpose");
             yield return new WaitForSeconds(delayTime);
+            animator.SetTrigger("Jump");
             attackRoutine = null;
             GetComponent<BoxCollider>().enabled = true;
             GetComponentInParent<Rigidbody>().useGravity = true;

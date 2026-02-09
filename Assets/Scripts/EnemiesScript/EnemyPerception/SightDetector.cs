@@ -61,7 +61,7 @@ public class SightDetector : MonoBehaviour
                 else
                 {
                     IsTargetVisible = false;
-                    Debug.Log("Obstacle:" + hit.transform.position);
+                    //Debug.Log("Obstacle:" + hit.transform.position);
                 }
             }
         }
