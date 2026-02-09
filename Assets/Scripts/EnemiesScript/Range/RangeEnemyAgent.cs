@@ -20,7 +20,7 @@ namespace EnemiesScript.Range
             base.Awake();
             if (!isTraining)
             {
-                agent._player = GameObject.FindGameObjectWithTag("Player");
+                agent._player = GameObject.FindGameObjectWithTag("Enemy");
             }
         }
 
@@ -67,7 +67,8 @@ namespace EnemiesScript.Range
         {
             // Give Agent the information about the state
             // Using Ray Perception to identify the goal
-            sensor.AddObservation(transform.localPosition);
+            sensor.AddObservation(agent.energy);
+            sensor.AddObservation(transform.GetChild(2).position);
         }
         public override void OnActionReceived(ActionBuffers actions)
         {
@@ -159,7 +160,7 @@ namespace EnemiesScript.Range
             if (!isTraining) return;
             AddReward(-1f);
             cumulativeReward = GetCumulativeReward();
-            arenaController?.EnemyDefeated(this);
+            arenaController?.PlayerDefeated(this);
         }
 
         public override void OnHurt()

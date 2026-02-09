@@ -93,6 +93,7 @@ namespace EnemiesScript.Boss
             // Give Agent the information about the state
             // Using Ray Perception to identify the goal
             sensor.AddObservation(agent.energy);
+            sensor.AddObservation(transform.GetChild(3).position);
         }
         public override void OnActionReceived(ActionBuffers actions)
         {

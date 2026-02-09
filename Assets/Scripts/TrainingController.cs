@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using AutoPlayerScript;
+using EnemiesScript.Range;
 using Unity.MLAgents;
 
 public class TrainingController : MonoBehaviour
@@ -69,7 +70,7 @@ public class TrainingController : MonoBehaviour
         }
     }
 
-    public void PlayerDefeated(AutoPlayerAgent defeatedPlayer)
+    public void PlayerDefeated(RangeEnemyAgent defeatedPlayer)
     {
         if (matchIsOver) return;
         HandleEnemiesWin();
@@ -80,7 +81,7 @@ public class TrainingController : MonoBehaviour
         matchIsOver = true;
         Debug.Log("Player Won");
         // Safely find the player reference from our participant list.
-        var player = episodeParticipants.Find(p => p is AutoPlayerAgent) as AutoPlayerAgent;
+        var player = episodeParticipants.Find(p => p is RangeEnemyAgent) as RangeEnemyAgent;
         if (player != null) player.AddReward(1.0f);
         EndMatch();
     }
@@ -116,7 +117,7 @@ public class TrainingController : MonoBehaviour
     private void SpawnPlayer()
     {
         GameObject playerObj = Instantiate(playerPrefab, GetRandomSpawnPosition(), Quaternion.identity, transform);
-        AutoPlayerAgent playerAgent = playerObj.GetComponent<AutoPlayerAgent>();
+        RangeEnemyAgent playerAgent = playerObj.GetComponent<RangeEnemyAgent>();
         playerAgent.arenaController = this;
         
         // --- MODIFIED ---
@@ -126,6 +127,7 @@ public class TrainingController : MonoBehaviour
     
     private void SpawnEnemy(GameObject prefab)
     {
+        if (prefab == null) return;
         GameObject enemyObj = Instantiate(prefab, GetRandomSpawnPosition(), Quaternion.identity, transform);
         EnemyAgent newEnemy = enemyObj.GetComponent<EnemyAgent>();
         newEnemy.arenaController = this;
