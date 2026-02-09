@@ -115,7 +115,10 @@ namespace EnemiesScript
             }
         }
         protected abstract void OnHurt(); // Called when Agent getting Hurt
-        protected abstract void OnKilled(); // Called when Agent getting Killed
+        protected virtual void OnKilled()
+        {
+            OnPlayerDie?.Invoke();
+        } // Called when Agent getting Killed
         protected abstract void OnAttackLanded(); // Called when Agent Hit Something
         protected abstract void OnKilledTarget(); // Called when Agent Kill Something
 
@@ -153,7 +156,6 @@ namespace EnemiesScript
         }
         private void OnDestroy()
         {
-            OnPlayerDie?.Invoke();
         }
 
         protected IEnumerator BuffTimer(float delayTime)
