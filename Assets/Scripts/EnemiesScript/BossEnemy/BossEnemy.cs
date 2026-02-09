@@ -99,6 +99,7 @@ namespace EnemiesScript.Boss
             if (_agent.isTraining)
             {
                 TrainerManager.KillEnemy(agent);
+                base.OnKilled();
                 _agent.OnKilled();
             }
         }

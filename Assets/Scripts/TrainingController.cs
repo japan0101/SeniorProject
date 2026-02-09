@@ -116,7 +116,11 @@ public class TrainingController : MonoBehaviour
     
     private void SpawnPlayer()
     {
-        GameObject playerObj = Instantiate(playerPrefab, GetRandomSpawnPosition(), Quaternion.identity, transform);
+        GameObject playerObj = Instantiate(playerPrefab, transform);
+        
+        playerObj.transform.localPosition = GetRandomSpawnPosition();
+        playerObj.transform.localRotation = Quaternion.identity;
+        
         RangeEnemyAgent playerAgent = playerObj.GetComponent<RangeEnemyAgent>();
         playerAgent.arenaController = this;
         
@@ -128,10 +132,14 @@ public class TrainingController : MonoBehaviour
     private void SpawnEnemy(GameObject prefab)
     {
         if (prefab == null) return;
-        GameObject enemyObj = Instantiate(prefab, GetRandomSpawnPosition(), Quaternion.identity, transform);
+        GameObject enemyObj = Instantiate(prefab, transform);
+        
+        enemyObj.transform.localPosition = GetRandomSpawnPosition();
+        enemyObj.transform.localRotation = Quaternion.identity;
+        
         EnemyAgent newEnemy = enemyObj.GetComponent<EnemyAgent>();
         newEnemy.arenaController = this;
-        var player = episodeParticipants.Find(p => p is AutoPlayerAgent) as AutoPlayerAgent;
+        var player = episodeParticipants.Find(p => p is RangeEnemyAgent) as RangeEnemyAgent;
         newEnemy.agent.AddListenerToTarget(player?.gameObject);
         
         // --- MODIFIED ---
@@ -142,8 +150,9 @@ public class TrainingController : MonoBehaviour
 
     private Vector3 GetRandomSpawnPosition()
     {
-        Vector3 randomPos = Random.insideUnitSphere * spawnAreaRadius;
-        randomPos.y = 0;
-        return transform.position + randomPos;
+        float x =Random.Range(-spawnAreaRadius, spawnAreaRadius);
+        float z =Random.Range(-spawnAreaRadius, spawnAreaRadius);
+        
+        return new Vector3(x+50 , 5, z+50);
     }
 }

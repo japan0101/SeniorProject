@@ -1,4 +1,5 @@
 ﻿using EnemiesScript.Melee;
+using TMPro.EditorUtilities;
 using Unity.MLAgents.Actuators;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -47,7 +48,8 @@ namespace EnemiesScript.Range
         protected override void OnKilled()
         {
             if (_agent.isTraining)
-            {
+            {   
+                base.OnKilled();
                 _agent.OnKilled();
             }
         }

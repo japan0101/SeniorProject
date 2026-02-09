@@ -68,19 +68,9 @@ namespace EnemiesScript
 
         public void AddListenerToTarget(GameObject _target)
         {
-            if(_target.gameObject.GetComponent<PlayerHealth>() != null)
-            {
                 opponent = _target.GetComponent<Enemy>();
                 opponent.OnPlayerHurt += OnAttackLanded;
                 opponent.OnPlayerDie += OnKilledTarget;
-            }
-            else
-            {
-                _playerHealthManager = _target.gameObject.GetComponent<PlayerHealth>();
-                _playerHealthManager.OnPlayerHurt += OnAttackLanded;
-                _playerHealthManager.OnPlayerDie += OnKilledTarget;
-            }
-
         }
         public abstract void Specials(int actionIndex);
         public abstract void MoveAgentX(float actionValue);
