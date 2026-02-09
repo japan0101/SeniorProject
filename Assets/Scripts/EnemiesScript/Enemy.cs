@@ -4,6 +4,7 @@ using Unity.MLAgents.Actuators;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements.Experimental;
+using System;
 
 namespace EnemiesScript
 {
@@ -30,6 +31,7 @@ namespace EnemiesScript
         public List<EnemyAttack> attacks = new List<EnemyAttack>();
         protected Rigidbody rb;
         public PlayerHealth _playerHealthManager;
+        public Enemy opponent;
         [HideInInspector]public GameObject _player;
         protected float atkModifier = 1.0f;
         private bool attacking = false;
@@ -37,6 +39,8 @@ namespace EnemiesScript
         protected Coroutine bufftimeRoutine;
         public float groundFriction = 2.5f;
 
+        public event Action OnPlayerHurt;
+        public event Action OnPlayerDie;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
 
         protected void Awake()
@@ -64,9 +68,19 @@ namespace EnemiesScript
 
         public void AddListenerToTarget(GameObject _target)
         {
-            _playerHealthManager = _target.gameObject.GetComponent<PlayerHealth>();
-            _playerHealthManager.OnPlayerHurt += OnAttackLanded;
-            _playerHealthManager.OnPlayerDie += OnKilledTarget;
+            if(_target.gameObject.GetComponent<PlayerHealth>() != null)
+            {
+                opponent = _target.GetComponent<Enemy>();
+                opponent.OnPlayerHurt += OnAttackLanded;
+                opponent.OnPlayerDie += OnKilledTarget;
+            }
+            else
+            {
+                _playerHealthManager = _target.gameObject.GetComponent<PlayerHealth>();
+                _playerHealthManager.OnPlayerHurt += OnAttackLanded;
+                _playerHealthManager.OnPlayerDie += OnKilledTarget;
+            }
+
         }
         public abstract void Specials(int actionIndex);
         public abstract void MoveAgentX(float actionValue);
