@@ -125,6 +125,7 @@ namespace EnemiesScript
             //realDmg = 
             // GetComponent<DamageTextSpawner>().SpawnDamageText(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), damage);
             hp -= damage - (defence / 100);// reduce health
+            OnPlayerHurt?.Invoke();
         }
 
 
@@ -152,7 +153,7 @@ namespace EnemiesScript
         }
         private void OnDestroy()
         {
-            
+            OnPlayerDie?.Invoke();
         }
 
         protected IEnumerator BuffTimer(float delayTime)
