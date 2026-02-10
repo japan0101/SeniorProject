@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using AutoPlayerScript;
+using EnemiesScript;
 using EnemiesScript.Range;
 using Unity.MLAgents;
 
@@ -46,15 +47,14 @@ public class TrainingController : MonoBehaviour
         episodeParticipants.Clear();
 
         // --- 3. Spawn New Agents ---
-        SpawnPlayer();
+        var player = SpawnPlayer();
         for (int i = 0; i < numberOfMeleeEnemies; i++)
         {
-            SpawnEnemy(meleeEnemyPrefab);
+            var enemy = SpawnEnemy(meleeEnemyPrefab);
+            enemy.GetComponent<EnemyAgent>().agent.AddListenerToTarget(player.gameObject);
+            player.GetComponent<EnemyAgent>().agent.AddListenerToTarget(enemy.gameObject);
         }
-        for (int i = 0; i < numberOfRangeEnemies; i++)
-        {
-            SpawnEnemy(rangeEnemyPrefab);
-        }
+        
     }
 
     public void EnemyDefeated(EnemyAgent defeatedEnemy)
@@ -114,7 +114,7 @@ public class TrainingController : MonoBehaviour
         Invoke(nameof(ResetArena), 0.5f);
     }
     
-    private void SpawnPlayer()
+    private GameObject SpawnPlayer()
     {
         GameObject playerObj = Instantiate(playerPrefab, transform);
         
@@ -127,11 +127,12 @@ public class TrainingController : MonoBehaviour
         // --- MODIFIED ---
         // Add to the list of all participants.
         episodeParticipants.Add(playerAgent);
+        return playerObj;
     }
     
-    private void SpawnEnemy(GameObject prefab)
+    private GameObject SpawnEnemy(GameObject prefab)
     {
-        if (prefab == null) return;
+        if (prefab == null) return null;
         GameObject enemyObj = Instantiate(prefab, transform);
         
         enemyObj.transform.localPosition = GetRandomSpawnPosition();
@@ -139,13 +140,12 @@ public class TrainingController : MonoBehaviour
         
         EnemyAgent newEnemy = enemyObj.GetComponent<EnemyAgent>();
         newEnemy.arenaController = this;
-        var player = episodeParticipants.Find(p => p is RangeEnemyAgent) as RangeEnemyAgent;
-        newEnemy.agent.AddListenerToTarget(player?.gameObject);
         
         // --- MODIFIED ---
         // Add to BOTH lists.
         activeEnemies.Add(newEnemy);
         episodeParticipants.Add(newEnemy);
+        return enemyObj;
     }
 
     private Vector3 GetRandomSpawnPosition()
