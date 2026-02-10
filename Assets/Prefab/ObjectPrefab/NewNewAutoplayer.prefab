@@ -226,6 +226,7 @@ MonoBehaviour:
   attacks:
   - {fileID: 8632399557589978374, guid: 958b9037141b2a84a81df437911a9164, type: 3}
   _playerHealthManager: {fileID: 0}
+  opponent: {fileID: 0}
   _player: {fileID: 0}
   groundFriction: 2.5
 --- !u!114 &2257696061735293616
@@ -274,7 +275,7 @@ MonoBehaviour:
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
-  m_BehaviorName: RangeTestPerception
+  m_BehaviorName: PlayerAI
   TeamId: 1
   m_UseChildSensors: 1
   m_UseChildActuators: 1
@@ -661,7 +662,7 @@ GameObject:
   - component: {fileID: 292750139990679661}
   - component: {fileID: 4320282454331468527}
   - component: {fileID: 2244563593193133427}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: Sight
   m_TagString: Perceptions
   m_Icon: {fileID: 0}

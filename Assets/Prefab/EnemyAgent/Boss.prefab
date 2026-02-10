@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 5892657355807181553}
   - component: {fileID: 3177972367828331163}
   - component: {fileID: 914046825150785176}
-  m_Layer: 11
+  m_Layer: 7
   m_Name: Sight
   m_TagString: Perceptions
   m_Icon: {fileID: 0}
@@ -409,7 +409,7 @@ MonoBehaviour:
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
-  m_BehaviorName: BossBehavior
+  m_BehaviorName: BossAI
   TeamId: 0
   m_UseChildSensors: 1
   m_UseChildActuators: 1
@@ -468,6 +468,7 @@ MonoBehaviour:
   - {fileID: 5511264433514989176, guid: 86fa1648a99b42f44aee4b320cc1a7db, type: 3}
   - {fileID: 663692900867868946, guid: d7b140f1aaa758744bfb81ebf0aef881, type: 3}
   _playerHealthManager: {fileID: 0}
+  opponent: {fileID: 0}
   _player: {fileID: 0}
   groundFriction: 2.5
   agent: {fileID: 0}
