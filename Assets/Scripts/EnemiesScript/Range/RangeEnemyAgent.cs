@@ -65,6 +65,8 @@ namespace EnemiesScript.Range
         {
             // Give Agent the information about the state
             // Using Ray Perception to identify the goal
+            
+            agent._player = GameObject.FindGameObjectWithTag("Enemy");
             Vector3 toPlayer = (agent._player.transform.position - transform.position).normalized;
             
             sensor.AddObservation(transform.forward);
