@@ -108,6 +108,7 @@ namespace EnemiesScript
 
         private void OnTriggerEnter(Collider other)
         {
+            if (other.gameObject.transform.IsChildOf(gameObject.transform)) return;
             if (other.gameObject.layer == 9)
             {
                 MainBullet bullet = other.gameObject.GetComponent<MainBullet>();
@@ -115,6 +116,14 @@ namespace EnemiesScript
                 {
                     //spawn hit FX then register damage
                     TakeDamage(bullet.damage);
+                    OnHurt();
+                }
+            }else if (other.gameObject.layer == 12)
+            {
+                EnemyAttack _atk = other.gameObject.GetComponent<EnemyAttack>();
+                if (_atk != null)
+                {
+                    TakeDamage(_atk.damage);
                     OnHurt();
                 }
             }
