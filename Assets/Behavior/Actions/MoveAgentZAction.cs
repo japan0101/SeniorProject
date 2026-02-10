@@ -6,7 +6,7 @@ using Unity.Properties;
 using EnemiesScript;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "Move Agent Z", story: "Move Agent Z by [amount]", category: "Enemy Actions", id: "Custom/EnemyMoveZ")]
+[NodeDescription(name: "Move Agent Z", story: "Move Agent Z by [amount]", category: "Enemy Actions", id: "c26ad313ff4aa42363962ebce79b18b0")]
 public class MoveAgentZAction : Action
 {
     [SerializeReference] public BlackboardVariable<float> amount;
