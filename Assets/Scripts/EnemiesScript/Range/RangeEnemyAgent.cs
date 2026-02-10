@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Unity.MLAgents.Actuators;
+﻿using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -18,10 +17,7 @@ namespace EnemiesScript.Range
         private new void Awake()
         {
             base.Awake();
-            if (!isTraining)
-            {
-                agent._player = GameObject.FindGameObjectWithTag("Enemy");
-            }
+            agent._player = GameObject.FindGameObjectWithTag("Enemy");
         }
 
         public override void Initialize()
@@ -69,6 +65,10 @@ namespace EnemiesScript.Range
         {
             // Give Agent the information about the state
             // Using Ray Perception to identify the goal
+            Vector3 toPlayer = (agent._player.transform.position - transform.position).normalized;
+            
+            sensor.AddObservation(transform.forward);
+            sensor.AddObservation(toPlayer);
             sensor.AddObservation(agent.energy);
             sensor.AddObservation(transform.GetChild(2).position);
         }
@@ -100,22 +100,16 @@ namespace EnemiesScript.Range
             {
                 var player = agent._player;
                 float currentDistance = Vector3.Distance(transform.position, player.transform.position);
-
+                
                 // Reward moving closer, penalize running away
-                float distanceDelta = lastDistance - currentDistance;
-                AddReward(Mathf.Clamp(distanceDelta * 0.05f, -0.05f, 0.05f));
+                float distanceDelta = _lastDistance - currentDistance;
 
-                // Reward staying in good combat range (not too far, not too close)
-                float idealRange = 5f;
-                float rangeScore = 1f - Mathf.Abs(currentDistance - idealRange) / idealRange;
-                AddReward(rangeScore * 0.001f);
+                if (distanceDelta > 0)
+                {
+                    AddReward(distanceDelta * 0.1f);
+                }
 
-
-                // Penalize camping too close without attacking
-                if (currentDistance <= minAttackDistance && !attackedThisStep)
-                    AddReward(-0.002f);
-
-                lastDistance = currentDistance;
+                _lastDistance = currentDistance;
 
                 if (sightDetector != null && sightDetector.IsTargetVisible && agent._player != null)
                 {

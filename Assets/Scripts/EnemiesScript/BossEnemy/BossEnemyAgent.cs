@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Unity.MLAgents.Actuators;
+﻿using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -93,6 +92,10 @@ namespace EnemiesScript.Boss
         {
             // Give Agent the information about the state
             // Using Ray Perception to identify the goal
+            Vector3 toPlayer = (agent._player.transform.position - transform.position).normalized;
+            
+            sensor.AddObservation(transform.forward);
+            sensor.AddObservation(toPlayer);
             sensor.AddObservation(agent.energy);
             sensor.AddObservation(transform.GetChild(3).position);
         }
@@ -127,17 +130,11 @@ namespace EnemiesScript.Boss
                 
                 // Reward moving closer, penalize running away
                 float distanceDelta = _lastDistance - currentDistance;
-                AddReward(Mathf.Clamp(distanceDelta * 0.05f, -0.05f, 0.05f));
 
-                // Reward staying in good combat range (not too far, not too close)
-                float idealRange = 2.5f;
-                float rangeScore = 1f - Mathf.Abs(currentDistance - idealRange) / idealRange;
-                AddReward(rangeScore * 0.001f);
-
-
-                // Penalize camping too close without attacking
-                if (currentDistance <= _minAttackDistance && !_attackedThisStep)
-                    AddReward(-0.002f);
+                if (distanceDelta > 0)
+                {
+                    AddReward(distanceDelta * 0.1f);
+                }
 
                 _lastDistance = currentDistance;
 
