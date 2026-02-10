@@ -6,6 +6,7 @@ public class SightDetector : MonoBehaviour
     public bool IsTargetInRange { get; private set; }
     public bool IsTargetVisible { get; private set; }
     public Vector3 targetPosition { get; private set; }
+    public GameObject targetGameObject { get; private set; }
     public bool isShuttingDown { get; private set; }
     public string targetTag = "Player";
     public Transform origin;
@@ -47,6 +48,7 @@ public class SightDetector : MonoBehaviour
         if (other.CompareTag(targetTag))
         {
             targetPosition = other.transform.position;
+            targetGameObject = other.transform.gameObject;
             Ray ray = new Ray(origin.position, targetPosition - origin.position);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
@@ -70,9 +72,12 @@ public class SightDetector : MonoBehaviour
     {
         isShuttingDown = true;
     }
-
     void OnApplicationQuit()
     {
         isShuttingDown = true;
+    }
+    public GameObject getTarget()
+    {
+        return targetGameObject;
     }
 }
