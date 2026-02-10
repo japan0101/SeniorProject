@@ -25,6 +25,7 @@ namespace EnemiesScript.Boss
 
         public override void Initialize()
         {
+            base.Initialize();
             if (isTraining)
             {
                 currentEpisode = 0;
@@ -104,6 +105,7 @@ namespace EnemiesScript.Boss
             var special = actions.DiscreteActions[0];
             var attack = actions.DiscreteActions[1];
 
+
             agent.MoveAgentX(moveX);
             agent.MoveAgentZ(moveZ);
             agent.RotateAgent(rotation);
@@ -138,7 +140,22 @@ namespace EnemiesScript.Boss
                     AddReward(-0.002f);
 
                 _lastDistance = currentDistance;
-                
+
+                if (sightDetector != null && sightDetector.IsTargetVisible && agent._player != null)
+                {
+                    // 1. Calculate direction to player (using the God Mode reference)
+                    Vector3 toPlayer = (agent._player.transform.position - transform.position).normalized;
+
+                    // 2. Calculate alignment
+                    float dotProduct = Vector3.Dot(transform.forward, toPlayer);
+
+                    // 3. Give the "Facing" reward ONLY because we can see them
+                    if (dotProduct > 0)
+                    {
+                        AddReward(dotProduct * 0.005f);
+                    }
+                }
+
                 // Penalty given each step to encourage agent to finish a task quickly
                 AddReward(-0.0001f);
                 // Survival incentive

@@ -12,6 +12,7 @@ public abstract class EnemyAgent : Agent
     protected float _lastDistance;
     protected float _minAttackDistance = 1.5f;
     public TrainingController arenaController;
+    public SightDetector sightDetector;
     public abstract void OnAttack();
     public abstract void OnSpecial();
     public abstract void OnAttackMissed();//Called by Enemy attack event listener to notify that the attack launched did not and on a player
@@ -19,4 +20,9 @@ public abstract class EnemyAgent : Agent
     public abstract void OnKilledTarget();// Called when Agent Kill Something
     public abstract void OnKilled();
     public abstract void OnHurt();
+    public override void Initialize()
+    {
+        base.Initialize();
+        if (sightDetector == null) sightDetector = GetComponentInChildren<SightDetector>();
+    }
 }

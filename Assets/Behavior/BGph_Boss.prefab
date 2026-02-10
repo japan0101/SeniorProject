@@ -305,8 +305,7 @@ GameObject:
   - component: {fileID: 7086786552870838414}
   - component: {fileID: 7285808823960335515}
   - component: {fileID: 4336597781567697657}
-  - component: {fileID: 6167491219680560848}
-  - component: {fileID: -3184474100672779805}
+  - component: {fileID: -2919164584397931377}
   m_Layer: 11
   m_Name: BGph_Boss
   m_TagString: Enemy
@@ -417,7 +416,7 @@ MonoBehaviour:
   _player: {fileID: 0}
   groundFriction: 2.5
   agent: {fileID: 0}
---- !u!114 &6167491219680560848
+--- !u!114 &-2919164584397931377
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -426,27 +425,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 4895929049003943609}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
+  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.VisualScripting.Core::Unity.VisualScripting.Variables
-  _data:
-    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[],"$version":"A"},"$version":"A"}}'
-    _objectReferences: []
---- !u!114 &-3184474100672779805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4895929049003943609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2fe5546f775c47d2820aa5e8a715f53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.VisualScripting.Flow::Unity.VisualScripting.ScriptMachine
-  _data:
-    _json: '{"nest":{"source":"Macro","macro":null,"embed":null}}'
-    _objectReferences: []
+  m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.BehaviorGraphAgent
+  m_Graph: {fileID: 0}
+  m_BlackboardVariableOverridesList: []
+  m_OriginalGraph: {fileID: 0}
+  m_IsInitialised: 0
+  m_IsStarted: 0
+  references:
+    version: 2
+    RefIds: []
 --- !u!1 &6064915413216958340
 GameObject:
   m_ObjectHideFlags: 0
