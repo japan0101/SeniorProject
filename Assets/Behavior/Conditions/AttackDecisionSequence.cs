@@ -20,7 +20,8 @@ public partial class AttackDecisionSequence : Composite
 
     protected override Status OnStart()
     {
-        return Status.Running;
+
+        return StartNode(DontAttack);
     }
 
     protected override Status OnUpdate()
@@ -30,6 +31,7 @@ public partial class AttackDecisionSequence : Composite
 
     protected override void OnEnd()
     {
+
     }
 }
 
