@@ -29,8 +29,11 @@ public partial class PatrolWithinRadiusAction : Composite
     [SerializeReference] public Node PlayerNotFound;
 
     private SightDetector sight;
+    private float startTime;
+    private float timeoutTime = 5;
     protected override Status OnStart()
     {
+        startTime = Time.time;
         // 1. Get the Controller
         if (GameObject == null) return Status.Failure;
         enemyController = GameObject.GetComponent<Enemy>();
@@ -57,10 +60,17 @@ public partial class PatrolWithinRadiusAction : Composite
     {
         if (!hasValidTarget || enemyController == null) return Status.Failure;
 
+        //Check for timeout
+        if (Time.time - startTime > timeoutTime)
+        {
+            StopMovement();
+            return Status.Failure;
+        }
+
         // VISUALIZATION: Draw a line to where we are going
         Debug.DrawLine(GameObject.transform.position, targetPosition, Color.cyan);
 
-        // 3. Check Distance
+        // Check Distance
         float distance = Vector3.Distance(GameObject.transform.position, targetPosition);
         if (IsPlayerFound())
         {
@@ -73,7 +83,7 @@ public partial class PatrolWithinRadiusAction : Composite
             return StartNode(PlayerNotFound);
         }
 
-        // 4. Move the Puppet
+        // Move the Puppet
         MoveTowards(targetPosition);
 
         return Status.Running;
