@@ -138,13 +138,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3084894303534820587}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.70659083, y: 0.70659083, z: 0.027008811, w: -0.027008811}
-  m_LocalPosition: {x: 0, y: 0.29, z: -0.23397446}
+  m_LocalRotation: {x: 0.4812067, y: -0.4812067, z: 0.5181121, w: 0.5181121}
+  m_LocalPosition: {x: 0, y: -0.09, z: 1.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4137364483339843393}
-  m_LocalEulerAnglesHint: {x: -4.378, y: 180, z: 90}
+  m_LocalEulerAnglesHint: {x: 85.77, y: 0, z: 90}
 --- !u!64 &3177972367828331163
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -166,7 +166,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: 3613567641014311022, guid: a34a5a37381466149bf7ef1fd70a3ae2, type: 3}
+  m_Mesh: {fileID: 2534964839176971238, guid: 0e0352d607888e44eaa3b3409f41f24f, type: 3}
 --- !u!114 &914046825150785176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,6 +416,7 @@ MonoBehaviour:
   _player: {fileID: 0}
   groundFriction: 2.5
   agent: {fileID: 0}
+  isBehaviorGraph: 1
 --- !u!114 &-2919164584397931377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -428,14 +429,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.BehaviorGraphAgent
-  m_Graph: {fileID: 0}
-  m_BlackboardVariableOverridesList: []
+  m_Graph: {fileID: 3072431895826964718, guid: fd18c19588e01ad4492b6d51a9db62db, type: 2}
+  m_BlackboardVariableOverridesList:
+  - rid: 409904762469220493
+  - rid: 409904762469220732
+  - rid: 409904807703216249
+  - rid: 409904807703216369
   m_OriginalGraph: {fileID: 0}
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 409904762469220493
+      type: {class: 'SharedBlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 678236466346663869
+          m_Value1: 1172176465209834741
+        Name: target
+        m_Value: {fileID: 0}
+        m_SharedVariablesRuntimeAsset: {fileID: 7650126504233650446, guid: fd18c19588e01ad4492b6d51a9db62db, type: 2}
+    - rid: 409904762469220732
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 12197115507119791308
+          m_Value1: 7197747166036358906
+        Name: sensor
+        m_Value: {fileID: 3084894303534820587}
+    - rid: 409904807703216249
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 4895929049003943609}
+    - rid: 409904807703216369
+      type: {class: 'SharedBlackboardVariable`1[[UnityEngine.Terrain, UnityEngine.TerrainModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1976589247226131596
+          m_Value1: 4075046802664661004
+        Name: Tarrain
+        m_Value: {fileID: 0}
+        m_SharedVariablesRuntimeAsset: {fileID: 7650126504233650446, guid: fd18c19588e01ad4492b6d51a9db62db, type: 2}
 --- !u!1 &6064915413216958340
 GameObject:
   m_ObjectHideFlags: 0

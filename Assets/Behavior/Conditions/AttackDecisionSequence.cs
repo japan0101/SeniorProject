@@ -21,7 +21,8 @@ public partial class AttackDecisionSequence : Composite
     protected override Status OnStart()
     {
 
-        return StartNode(DontAttack);
+        //return StartNode(DontAttack);
+        return StartNode(BasicSlash);
     }
 
     protected override Status OnUpdate()

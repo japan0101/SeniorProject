@@ -15,9 +15,13 @@ namespace EnemiesScript.Boss
         const int jumpslamIndex = 4;
         const int evadeslashIndex = 5;
         private Animator animator;
+        [SerializeField] private bool isBehaviorGraph = false;
         private new void Awake()
         {
-            _agent = GetComponent<BossEnemyAgent>();
+            if (!isBehaviorGraph)
+            {
+                _agent = GetComponent<BossEnemyAgent>();
+            }
             base.Awake();
 
             animator = GetComponentInChildren<Animator>();
@@ -26,9 +30,12 @@ namespace EnemiesScript.Boss
         public override void Attack(int atkIndex)
         {   
             if (_atk) return;
-            if (_agent.isTraining)
+            if (!isBehaviorGraph)
             {
-                _agent.OnAttack();
+                if (_agent.isTraining)
+                {
+                    _agent.OnAttack();
+                }
             }
             switch (atkIndex-1)
             {
@@ -57,13 +64,13 @@ namespace EnemiesScript.Boss
                     _atk.OnAttack(atkModifier);
                     Destroy(_atk.gameObject, _atk.lifetime);
                     BslamOverride();
-                    Debug.Log("Perfoming Body Slam attack");
+                    //Debug.Log("Perfoming Body Slam attack");
                     break;
                 case jumpslamIndex://jump slam
                     _atk = Instantiate(attacks[jumpslamIndex], gameObject.transform);
                     _atk.animator = animator;
                     _atk.OnAttack(atkModifier);
-                    Debug.Log("Perfoming Jump Slam attack");
+                    //Debug.Log("Perfoming Jump Slam attack");
                     break;
                 case evadeslashIndex://evade slash
                     _atk = Instantiate(attacks[evadeslashIndex], gameObject.transform);
@@ -80,7 +87,7 @@ namespace EnemiesScript.Boss
             //{
             //    energy -= 10f;
             //    _atk = Instantiate(attacks[atkIndex], gameObject.transform);
-                
+            //Debug.Log($"index: {atkIndex} = {_atk}");
                 _atk.OnMissed += Miss;//Add method of missed attack aknowledgement to an event listener of the launched attacks
                 
             //}
@@ -122,6 +129,7 @@ namespace EnemiesScript.Boss
         public void Miss()//used to acknowledge that an attack launched by this agent has missed
         {
             Debug.Log("Enemy component acknowledge misses");
+            if (isBehaviorGraph) return;
             _agent.OnAttackMissed();
         }
         
@@ -165,6 +173,15 @@ namespace EnemiesScript.Boss
                 Destroy(gameObject);
             }
             energy = Mathf.Clamp(energy + (energyRegenPerSecond * Time.deltaTime), 0, maxEnergy);
+            if (_atk == null)
+            {
+                animator.SetFloat("Speed", realSpeed);
+            }
+            else
+            {
+                animator.SetFloat("Speed", 0);
+            }
+            Debug.Log($"{_atk == null} : {animator.GetFloat("Speed")}");
         }
         
     }
