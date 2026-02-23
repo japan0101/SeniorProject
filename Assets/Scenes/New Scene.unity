@@ -232,6 +232,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: BGph_Boss
       objectReference: {fileID: 0}
+    - target: {fileID: 5892657355807181553, guid: cf5fb1e1390339248af2f11f0e27b810, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 5892657355807181553, guid: cf5fb1e1390339248af2f11f0e27b810, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 5892657355807181553, guid: cf5fb1e1390339248af2f11f0e27b810, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.99
+      objectReference: {fileID: 0}
+    - target: {fileID: 5892657355807181553, guid: cf5fb1e1390339248af2f11f0e27b810, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -950,7 +966,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6622080744109317753, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_fontSize
-      value: 21.95
+      value: 22.55
       objectReference: {fileID: 0}
     - target: {fileID: 7504117136374191398, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1062,7 +1078,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8142741763728077721, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_fontSize
-      value: 21.95
+      value: 22.55
       objectReference: {fileID: 0}
     - target: {fileID: 8296017056809875815, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_AnchorMax.y
