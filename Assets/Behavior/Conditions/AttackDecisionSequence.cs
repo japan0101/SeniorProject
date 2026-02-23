@@ -3,6 +3,7 @@ using Unity.Behavior;
 using UnityEngine;
 using Composite = Unity.Behavior.Composite;
 using Unity.Properties;
+using EnemiesScript;
 
 [Serializable, GeneratePropertyBag]
 [NodeDescription(name: "AttackDecision", story: "Decide to attack based on [Self] and [Target]", category: "Flow", id: "dfd4461560b4e2421aff91ff066fe500")]
@@ -28,13 +29,60 @@ public partial class AttackDecisionSequence : Composite
 
     protected override Status OnUpdate()
     {
-        //Basic Slash at 0.1-0.5 Viewing Angle and <10 range
-        //If <10 range and low health up front use evade slash
-        //thrust at 0.0-0.1 with close/ <15 range
-        //<15 range will use war cry
-        //<15 range but in front will use jump slam *need to add forward velocity
-        //<20 range use Body Slam
-        
+        if( Self == null || Target == null) return Status.Failure;
+        Vector3 _vectorToTarget = Self.Value.transform.position - Target.Value.transform.position;
+        float _distanceToTarget = _vectorToTarget.magnitude;
+        if (_distanceToTarget < 20)
+        {
+            if (_distanceToTarget < 15)
+            {
+                if (IsTargetInFront(Target.Value.transform, 0.1f))
+                {
+
+                    //thrust at 0.0-0.1 with <15 range
+                    StartNode(Thrust);
+                }
+                else if (_distanceToTarget < 10)
+                {
+                    if (IsTargetInFront(Target.Value.transform, 0.5f))
+                    {
+                        if(Self.Value.GetComponent<Enemy>().hp < 200 && _distanceToTarget <= 7)
+                        {
+                            //If <10 range and low health up front use evade slash
+                            StartNode(EvadeSlash);
+                        }
+                        else
+                        {
+                            //Basic Slash at 0.1-0.5 Viewing Angle and <10 range
+                            StartNode(BasicSlash);
+                        }
+                    }
+                    else
+                    {
+                        return StartNode(DontAttack);
+                    }
+                }
+                else if (IsTargetInFront(Target.Value.transform, 0.5f))
+                {
+                    //<15 range but in front will use jump slam *need to add forward velocity
+                    StartNode(JumpSlam);
+                }
+                else
+                {
+                    //<15 range will use war cry
+                    StartNode(WarCry);
+                }
+            }
+            else
+            {
+                //<20 range use Body Slam *Add forward velocity too
+                StartNode(BodySlam);
+            }
+        }
+        else
+        {
+            return StartNode(DontAttack);
+        }
         return Status.Success;
     }
 
