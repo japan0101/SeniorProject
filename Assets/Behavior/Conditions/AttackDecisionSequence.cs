@@ -28,7 +28,13 @@ public partial class AttackDecisionSequence : Composite
 
     protected override Status OnUpdate()
     {
-
+        //Basic Slash at 0.1-0.5 Viewing Angle and <10 range
+        //If <10 range and low health up front use evade slash
+        //thrust at 0.0-0.1 with close/ <15 range
+        //<15 range will use war cry
+        //<15 range but in front will use jump slam *need to add forward velocity
+        //<20 range use Body Slam
+        
         return Status.Success;
     }
 

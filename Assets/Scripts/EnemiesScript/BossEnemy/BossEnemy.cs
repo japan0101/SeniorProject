@@ -183,6 +183,15 @@ namespace EnemiesScript.Boss
             }
             Debug.Log($"{_atk == null} : {animator.GetFloat("Speed")}");
         }
-        
+        private void OnDrawGizmos()
+        {
+            //Gizmos.color = Color.red;
+            //Gizmos.DrawWireSphere(transform.position, 10);
+            //Gizmos.color = Color.yellow;
+            //Gizmos.DrawWireSphere(transform.position, 20);
+            //Gizmos.color = Color.green;
+            //Gizmos.DrawWireSphere(transform.position, 30);
+        }
+
     }
 }
