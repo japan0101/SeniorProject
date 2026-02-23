@@ -22,17 +22,34 @@ public partial class AttackDecisionSequence : Composite
     {
 
         //return StartNode(DontAttack);
-        return StartNode(BasicSlash);
+        //return StartNode(BasicSlash);
+        return Status.Running;
     }
 
     protected override Status OnUpdate()
     {
+
         return Status.Success;
     }
 
     protected override void OnEnd()
     {
 
+    }
+    private bool IsTargetInFront(Transform target, float viewAngleThreshold)
+    {
+        Vector3 toTarget = (target.position - Self.Value.transform.position).normalized;
+        float dotProduct = Vector3.Dot(Self.Value.transform.forward, toTarget);
+
+        // Check if the dot product is greater than a threshold for a "vision cone"
+        // A value of 0.5f corresponds roughly to a 60-degree angle (cos(60 deg) = 0.5)
+        // Use a value closer to 1.0f for a narrower, more direct field of view
+        if (dotProduct > viewAngleThreshold)
+        {
+            return true;
+        }
+
+        return false;
     }
 }
 
