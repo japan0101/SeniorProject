@@ -13,9 +13,8 @@ public partial class AttackAction : Action
     private Enemy enemyController;
     protected override Status OnStart()
     {
-        if (GameObject == null) return Status.Failure;
         enemyController = GameObject.GetComponent<Enemy>();
-        return enemyController != null ? Status.Running : Status.Failure;
+        return Status.Running;
     }
 
     protected override Status OnUpdate()
@@ -27,6 +26,7 @@ public partial class AttackAction : Action
 
     protected override void OnEnd()
     {
+        Debug.Log("End Atack action");
     }
 }
 

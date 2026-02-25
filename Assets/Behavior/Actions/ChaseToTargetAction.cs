@@ -1,4 +1,5 @@
 using EnemiesScript;
+using EnemiesScript.Boss;
 using System;
 using Unity.Behavior;
 using Unity.Properties;
@@ -18,7 +19,7 @@ public class MoveTowardsTargetAction : Action
     protected override Status OnStart()
     {
         if (GameObject == null) return Status.Failure;
-        enemyController = GameObject.GetComponent<Enemy>();
+        enemyController = GameObject.GetComponent<BossEnemy>();
         return enemyController != null ? Status.Running : Status.Failure;
     }
 

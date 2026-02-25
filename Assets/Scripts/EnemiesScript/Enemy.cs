@@ -34,7 +34,6 @@ namespace EnemiesScript
         public Enemy opponent;
         [HideInInspector]public GameObject _player;
         protected float atkModifier = 1.0f;
-        private bool attacking = false;
         private bool missed = false;
         protected Coroutine bufftimeRoutine;
         public float groundFriction = 2.5f;

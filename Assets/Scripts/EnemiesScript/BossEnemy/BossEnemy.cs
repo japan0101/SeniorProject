@@ -26,71 +26,59 @@ namespace EnemiesScript.Boss
 
             animator = GetComponentInChildren<Animator>();
         }
-        
+        public bool isAttacking()
+        {
+            return _atk != null;
+        }
         public override void Attack(int atkIndex)
-        {   
-            if (_atk) return;
-            if (!isBehaviorGraph)
+        {
+            if (_atk != null) return; // Prevent attacking if already attacking
+            if (!isBehaviorGraph && _agent.isTraining)
             {
-                if (_agent.isTraining)
-                {
-                    _agent.OnAttack();
-                }
+                _agent.OnAttack();
             }
-            switch (atkIndex-1)
+            int actualIndex = atkIndex - 1;
+            Debug.Log($"Attempting attack with input index: {atkIndex}, array index: {actualIndex}");
+
+            // Failsafe: Ensure the index is valid so we don't get Array Out Of Bounds errors
+            if (actualIndex < 0 || actualIndex >= attacks.Count || attacks[actualIndex] == null)
             {
-                case basicslashIndex://basic slash
-                    _atk = Instantiate(attacks[basicslashIndex], gameObject.transform);
-                    _atk.animator = animator;
-                    _atk.OnAttack(atkModifier);
-                    Destroy(_atk.gameObject, _atk.lifetime);
-                    break;
-                case thrustIndex://thrust
-                    _atk = Instantiate(attacks[thrustIndex], gameObject.transform);
-                    _atk.animator = animator;
-                    _atk.OnAttack(atkModifier);
-                    Destroy(_atk.gameObject, _atk.lifetime);
-                    break;
-                case warcryIndex://war cry
-                    _atk = Instantiate(attacks[warcryIndex], gameObject.transform);
-                    _atk.animator = animator;
-                    _atk.OnAttack(atkModifier);
+                Debug.LogWarning("Invalid attack index passed to Attack()!");
+                return;
+            }
+            // Core logic
+            _atk = Instantiate(attacks[actualIndex], gameObject.transform);
+            _atk.animator = animator;
+            _atk.OnAttack(atkModifier);
+            _atk.OnMissed += Miss;
+
+            bool autoDestroy = true;
+            switch (actualIndex)
+            {
+                case warcryIndex:
                     bufftimeRoutine = StartCoroutine(BuffTimer(_atk.effectDuration));
-                    Destroy(_atk.gameObject, _atk.lifetime);
                     break;
-                case bodyslamIndex://body slam
-                    _atk = Instantiate(attacks[bodyslamIndex], gameObject.transform);
-                    _atk.animator = animator;
-                    _atk.OnAttack(atkModifier);
-                    Destroy(_atk.gameObject, _atk.lifetime);
+
+                case bodyslamIndex:
                     BslamOverride();
-                    //Debug.Log("Perfoming Body Slam attack");
                     break;
-                case jumpslamIndex://jump slam
-                    _atk = Instantiate(attacks[jumpslamIndex], gameObject.transform);
-                    _atk.animator = animator;
-                    _atk.OnAttack(atkModifier);
-                    //Debug.Log("Perfoming Jump Slam attack");
+
+                case jumpslamIndex:
+                    // I noticed your original code didn't Destroy the Jump Slam. 
+                    // If that was intentional, we set this to false!
+                    autoDestroy = false;
                     break;
-                case evadeslashIndex://evade slash
-                    _atk = Instantiate(attacks[evadeslashIndex], gameObject.transform);
-                    _atk.animator = animator;
-                    _atk.OnAttack(atkModifier);
-                    Destroy(_atk.gameObject, _atk.lifetime);
+
+                case evadeslashIndex:
                     BslamOverride();
-                    Debug.Log("Perfoming Evade Slash attack");
-                    break;
-                default:
+                    Debug.Log("Performing Evade Slash attack");
                     break;
             }
-            //if (energy >= 10f)
-            //{
-            //    energy -= 10f;
-            //    _atk = Instantiate(attacks[atkIndex], gameObject.transform);
-            //Debug.Log($"index: {atkIndex} = {_atk}");
-                _atk.OnMissed += Miss;//Add method of missed attack aknowledgement to an event listener of the launched attacks
-                
-            //}
+            if (autoDestroy)
+            {
+                Destroy(_atk.gameObject, _atk.lifetime);
+            }
+            _atk.OnMissed += Miss;//Add method of missed attack aknowledgement to an event listener of the launched attacks
         }
 
         protected override void OnHurt()
@@ -181,7 +169,7 @@ namespace EnemiesScript.Boss
             {
                 animator.SetFloat("Speed", 0);
             }
-            Debug.Log($"{_atk == null} : {animator.GetFloat("Speed")}");
+            //Debug.Log($"{_atk == null} : {animator.GetFloat("Speed")}");
         }
         private void OnDrawGizmos()
         {
