@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   maxHP: 250
-  currentHP: 250
+  currentHP: 175
   maxEnergy: 100
   currentEnergy: 100
   EnergyRegenRate: 5

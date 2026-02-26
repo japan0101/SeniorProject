@@ -11,8 +11,8 @@ using Action = Unity.Behavior.Action;
 public class MoveTowardsTargetAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Target;
-    [SerializeReference] public BlackboardVariable<float> StoppingDistance = new BlackboardVariable<float>(1.5f);
-    [SerializeReference] public BlackboardVariable<float> AlignSpeed = new BlackboardVariable<float>(0.5f); // Sensitivity
+    [SerializeReference] public BlackboardVariable<float> StoppingDistance = new BlackboardVariable<float>(5f);
+    [SerializeReference] public BlackboardVariable<float> AlignSpeed = new BlackboardVariable<float>(0.2f); // Sensitivity
 
     private Enemy enemyController;
 

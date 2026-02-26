@@ -51,6 +51,7 @@ namespace EnemiesScript.Boss
             _atk.animator = animator;
             _atk.OnAttack(atkModifier);
             _atk.OnMissed += Miss;
+            nextAvailableAttackTime[actualIndex] = Time.time + cooldownDurations[actualIndex] + _atk.lifetime;
 
             bool autoDestroy = true;
             switch (actualIndex)
@@ -83,35 +84,47 @@ namespace EnemiesScript.Boss
 
         protected override void OnHurt()
         {
-            if (_agent.isTraining)
+            if(_agent != null)
             {
-                _agent.OnHurt();
+                if (_agent.isTraining)
+                {
+                    _agent.OnHurt();
+                }
             }
         }
 
         protected override void OnKilled()
         {
-            if (_agent.isTraining)
+            if (_agent != null)
             {
-                TrainerManager.KillEnemy(agent);
-                base.OnKilled();
-                _agent.OnKilled();
+                if (_agent.isTraining)
+                {
+                    TrainerManager.KillEnemy(agent);
+                    base.OnKilled();
+                    _agent.OnKilled();
+                }
             }
         }
 
         protected override void OnAttackLanded()
         {
-            if (_agent.isTraining)
+            if (_agent != null)
             {
-                _agent.OnAttackLanded();
+                if (_agent.isTraining)
+                {
+                    _agent.OnAttackLanded();
+                }
             }
         }
 
         protected override void OnKilledTarget()
         {
-            if (_agent.isTraining)
+            if (_agent != null)
             {
-                _agent.OnKilledTarget();
+                if (_agent.isTraining)
+                {
+                    _agent.OnKilledTarget();
+                }
             }
         }
         public void Miss()//used to acknowledge that an attack launched by this agent has missed
@@ -173,12 +186,12 @@ namespace EnemiesScript.Boss
         }
         private void OnDrawGizmos()
         {
-            //Gizmos.color = Color.red;
-            //Gizmos.DrawWireSphere(transform.position, 10);
-            //Gizmos.color = Color.yellow;
-            //Gizmos.DrawWireSphere(transform.position, 20);
-            //Gizmos.color = Color.green;
-            //Gizmos.DrawWireSphere(transform.position, 30);
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, 10);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, 20);
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position, 30);
         }
 
     }

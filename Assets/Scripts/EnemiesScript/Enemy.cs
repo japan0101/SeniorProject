@@ -40,6 +40,10 @@ namespace EnemiesScript
 
         public event Action OnPlayerHurt;
         public event Action OnPlayerDie;
+
+        [Header("Attack Cooldowns (in seconds)")]
+        public float[] cooldownDurations;
+        protected float[] nextAvailableAttackTime;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
 
         protected void Awake()
@@ -47,6 +51,10 @@ namespace EnemiesScript
             rb = GetComponent<Rigidbody>();
             rb.freezeRotation = true;
             realSpeed = baseSpeed;
+            if (attacks != null)
+            {
+                nextAvailableAttackTime = new float[attacks.Count];
+            }
         }
 
         // Update is called once per frame
@@ -144,7 +152,16 @@ namespace EnemiesScript
             OnPlayerHurt?.Invoke();
         }
 
+        public bool CanUseAttack(int atkIndex)
+        {
+            int actualIndex = atkIndex - 1;
 
+            // Failsafe: If the index is invalid, just say no.
+            if (actualIndex < 0 || actualIndex >= nextAvailableAttackTime.Length) return false;
+
+            // Check if the current game time has passed the required wait time
+            return Time.time >= nextAvailableAttackTime[actualIndex];
+        }
         protected void SpeedControl()
         {
             rb.linearDamping = groundFriction;
