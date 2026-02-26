@@ -106,13 +106,13 @@ public partial class PatrolWithinRadiusAction : Composite
 
         if (foundTarget)
         {
-            // SUCCESS: We see something!
+            // SUCCESS: see something!
             // Write the found object into the Blackboard so other nodes (like Move/Attack) can use it
             Target.Value = sight.getTarget();
             return true;
         }
 
-        // FAILURE: We see nothing.
+        // FAILURE: see nothing.
         return false;
     }
     protected override void OnEnd()

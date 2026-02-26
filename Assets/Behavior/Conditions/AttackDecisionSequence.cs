@@ -46,7 +46,7 @@ public partial class AttackDecisionSequence : Composite
         // --- OUT OF RANGE ---
         if (distance >= 20f)
         {
-            Debug.Log("Target >20 range. Don't Attack.");
+            //Debug.Log("Target >20 range. Don't Attack.");
             MaxDistance.Value = 20f;
             return StartNode(DontAttack);
         }
@@ -58,10 +58,10 @@ public partial class AttackDecisionSequence : Composite
         {
             if (currentHp < 400f && enemyComponent.CanUseAttack(4))
             {
-                Debug.Log("15-20 range. Use Body Slam *Add forward velocity");
+                //Debug.Log("15-20 range. Use Body Slam *Add forward velocity");
                 return StartNode(BodySlam);
             }
-            Debug.LogWarning("Fail to met any condition for long range. Don't Attack.");
+            //Debug.LogWarning("Fail to met any condition for long range. Don't Attack.");
             MaxDistance.Value = 15f;
             return StartNode(DontAttack);
         }
@@ -71,7 +71,7 @@ public partial class AttackDecisionSequence : Composite
         {
             if (isTargetDeadAhead && enemyComponent.CanUseAttack(2))
             {
-                Debug.Log("Target dead ahead with <15 range. Use Thrust.");
+                //Debug.Log("Target dead ahead with <15 range. Use Thrust.");
                 return StartNode(Thrust);
             }
         }
@@ -81,16 +81,16 @@ public partial class AttackDecisionSequence : Composite
         {
             if (currentHp < 200f && isTargetInFront && enemyComponent.CanUseAttack(5))
             {
-                Debug.Log("10-15 range, in front. Use Jump Slam *Add forward velocity");
+                //Debug.Log("10-15 range, in front. Use Jump Slam *Add forward velocity");
                 return StartNode(JumpSlam);
             }
             if (currentHp < 400f && enemyComponent.CanUseAttack(3))
             {
-                Debug.Log("10-15 range, not in front. Use War Cry.");
+                //Debug.Log("10-15 range, not in front. Use War Cry.");
                 return StartNode(WarCry);
             }
             MaxDistance.Value = 10f;
-            Debug.LogWarning("Fail to met any condition in Med range. Don't Attack.");
+            //Debug.LogWarning("Fail to met any condition in Med range. Don't Attack.");
             return StartNode(DontAttack);
         }
 
@@ -99,22 +99,22 @@ public partial class AttackDecisionSequence : Composite
         {
             if (currentHp < 200f && enemyComponent.CanUseAttack(6))
             {
-                Debug.Log("<10 range, low health, <=7 dist. Use Evade Slash.");
+                //Debug.Log("<10 range, low health, <=7 dist. Use Evade Slash.");
                 return StartNode(EvadeSlash);
             }
             if (enemyComponent.CanUseAttack(1))
             {
-                Debug.Log("<10 range, in front. Use Basic Slash.");
+                //Debug.Log("<10 range, in front. Use Basic Slash.");
                 return StartNode(BasicSlash);
             }
             MaxDistance.Value = 5f;
-            Debug.LogWarning("Fail to met any condition in close range. Don't Attack.");
+            //Debug.LogWarning("Fail to met any condition in close range. Don't Attack.");
             return StartNode(DontAttack);
         }
 
         // Fallback for close range but target is behind the enemy
         MaxDistance.Value = 5f;
-        Debug.LogWarning("<10 range, but target is behind. Don't Attack.");
+        //Debug.LogWarning("<10 range, but target is behind. Don't Attack.");
         return StartNode(DontAttack);
     }
 

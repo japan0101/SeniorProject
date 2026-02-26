@@ -19,7 +19,7 @@ public partial class AttackAction : Action
 
     protected override Status OnUpdate()
     {
-        Debug.Log("Attacking from bg");
+        //Debug.Log("Attacking from bg");
         enemyController.Attack(Index);
         return Status.Success;
     }
