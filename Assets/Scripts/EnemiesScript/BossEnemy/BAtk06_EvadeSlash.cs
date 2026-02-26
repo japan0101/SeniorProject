@@ -24,8 +24,15 @@ namespace EnemiesScript.Boss
         {
             base.OnDestroy();
             Debug.Log("Return Friction to default");
-            GetComponentInParent<Enemy>().groundFriction = 2.5f;
-            GetComponentInParent<Enemy>().BslamOverride();
+            try
+            {
+                GetComponentInParent<Enemy>().groundFriction = 2.5f;
+                GetComponentInParent<Enemy>().BslamOverride();
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e);
+            }
         }
         public override void OnAttack(float dmgModifier, Vector3 direction)
         {
