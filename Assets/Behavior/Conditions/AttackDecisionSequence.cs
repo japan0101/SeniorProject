@@ -53,7 +53,7 @@ public partial class AttackDecisionSequence : Composite
 
         // --- LONG RANGE (15 to 20) ---
 
-        Debug.Log($"{distance}>15:{distance >= 15f} HP<400:{currentHp < 400f} InCooldown:{enemyComponent.CanUseAttack(4)}");
+        //Debug.Log($"{distance}>15:{distance >= 15f} HP<400:{currentHp < 400f} InCooldown:{enemyComponent.CanUseAttack(4)}");
         if (distance >= 15f)
         {
             if (currentHp < 400f && enemyComponent.CanUseAttack(4))

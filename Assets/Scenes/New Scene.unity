@@ -230,7 +230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4336597781567697657, guid: cf5fb1e1390339248af2f11f0e27b810, type: 3}
       propertyPath: hp
-      value: 200
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 4895929049003943609, guid: cf5fb1e1390339248af2f11f0e27b810, type: 3}
       propertyPath: m_Name
@@ -954,7 +954,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6622080744109317753, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_fontSize
-      value: 21.3
+      value: 22.5
       objectReference: {fileID: 0}
     - target: {fileID: 7504117136374191398, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1066,7 +1066,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8142741763728077721, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_fontSize
-      value: 21.3
+      value: 22.5
       objectReference: {fileID: 0}
     - target: {fileID: 8296017056809875815, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_AnchorMax.y
