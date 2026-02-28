@@ -472,7 +472,15 @@ MonoBehaviour:
   opponent: {fileID: 0}
   _player: {fileID: 0}
   groundFriction: 2.5
+  cooldownDurations:
+  - 1
+  - 1.2
+  - 8
+  - 10
+  - 10
+  - 15
   agent: {fileID: 0}
+  isBehaviorGraph: 1
 --- !u!114 &5307981173797202405
 MonoBehaviour:
   m_ObjectHideFlags: 0
