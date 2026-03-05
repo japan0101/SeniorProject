@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements.Experimental;
 using System;
+using UnityEngine.Events;
 
 namespace EnemiesScript
 {
@@ -45,7 +46,6 @@ namespace EnemiesScript
         public float[] cooldownDurations;
         protected float[] nextAvailableAttackTime;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-
         protected void Awake()
         {
             rb = GetComponent<Rigidbody>();
