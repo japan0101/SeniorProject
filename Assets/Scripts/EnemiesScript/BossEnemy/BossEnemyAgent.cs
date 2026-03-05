@@ -92,10 +92,20 @@ namespace EnemiesScript.Boss
         {
             // Give Agent the information about the state
             // Using Ray Perception to identify the goal
-            Vector3 toPlayer = (agent._player.transform.position - transform.position).normalized;
+            if (agent._player != null)
+            {
+                Vector3 toPlayer = (agent._player.transform.position - transform.position);
+                sensor.AddObservation(toPlayer.normalized);
+                sensor.AddObservation(toPlayer.magnitude/30f);
+            }
+            else
+            {
+                sensor.AddObservation(Vector3.zero);
+                sensor.AddObservation(0f);
+            }
+            
             
             sensor.AddObservation(transform.forward);
-            sensor.AddObservation(toPlayer);
             sensor.AddObservation(agent.energy);
             sensor.AddObservation(transform.GetChild(3).position);
         }
@@ -147,9 +157,9 @@ namespace EnemiesScript.Boss
                     float dotProduct = Vector3.Dot(transform.forward, toPlayer);
 
                     // 3. Give the "Facing" reward ONLY because we can see them
-                    if (dotProduct > 0)
+                    if (dotProduct > 0.9f)
                     {
-                        AddReward(dotProduct * 0.005f);
+                        AddReward(dotProduct * 0.01f);
                     }
                 }
 

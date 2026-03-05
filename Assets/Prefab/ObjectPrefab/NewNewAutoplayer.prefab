@@ -229,6 +229,7 @@ MonoBehaviour:
   opponent: {fileID: 0}
   _player: {fileID: 0}
   groundFriction: 2.5
+  cooldownDurations: []
 --- !u!114 &2257696061735293616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,6 +251,7 @@ MonoBehaviour:
   cumulativeReward: 0
   isTraining: 1
   arenaController: {fileID: 0}
+  sightDetector: {fileID: 0}
 --- !u!114 &8216289594090169442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,7 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 3
+    VectorObservationSize: 11
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 3
