@@ -90,8 +90,6 @@ namespace EnemiesScript.Boss
         }
         public override void CollectObservations(VectorSensor sensor)
         {
-            // Give Agent the information about the state
-            // Using Ray Perception to identify the goal
             if (agent._player != null)
             {
                 Vector3 toPlayer = (agent._player.transform.position - transform.position);
@@ -104,20 +102,24 @@ namespace EnemiesScript.Boss
                 sensor.AddObservation(0f);
             }
             
-            
             sensor.AddObservation(transform.forward);
             sensor.AddObservation(agent.energy);
             sensor.AddObservation(transform.GetChild(3).position);
+
+            // Add angular velocity so agent knows it's spinning
+            Rigidbody rb = GetComponent<Rigidbody>();
+            if (rb != null)
+                sensor.AddObservation(rb.angularVelocity.y / 10f);
+            else
+                sensor.AddObservation(0f);
         }
         public override void OnActionReceived(ActionBuffers actions)
         {
-            
             var moveX = actions.ContinuousActions[0];
             var moveZ = actions.ContinuousActions[1];
             var rotation = actions.ContinuousActions[2];
             var special = actions.DiscreteActions[0];
             var attack = actions.DiscreteActions[1];
-
 
             agent.MoveAgentX(moveX);
             agent.MoveAgentZ(moveZ);
@@ -138,36 +140,31 @@ namespace EnemiesScript.Boss
                 var player = agent._player;
                 float currentDistance = Vector3.Distance(transform.position, player.transform.position);
                 
-                // Reward moving closer, penalize running away
                 float distanceDelta = _lastDistance - currentDistance;
-
                 if (distanceDelta > 0)
                 {
                     AddReward(distanceDelta * 0.1f);
                 }
-
                 _lastDistance = currentDistance;
+
+                // Penalize excessive rotation
+                if (Mathf.Abs(rotation) > 0.1f)
+                {
+                    AddReward(-Mathf.Abs(rotation) * 0.005f);
+                }
 
                 if (sightDetector != null && sightDetector.IsTargetVisible && agent._player != null)
                 {
-                    // 1. Calculate direction to player (using the God Mode reference)
                     Vector3 toPlayer = (agent._player.transform.position - transform.position).normalized;
-
-                    // 2. Calculate alignment
                     float dotProduct = Vector3.Dot(transform.forward, toPlayer);
 
-                    // 3. Give the "Facing" reward ONLY because we can see them
                     if (dotProduct > 0.9f)
                     {
                         AddReward(dotProduct * 0.01f);
                     }
                 }
 
-                // Penalty given each step to encourage agent to finish a task quickly
                 AddReward(-0.0001f);
-                // Survival incentive
-                // AddReward(0.0001f);
-                // // Update the cumulative reward after adding the step penalty.
                 cumulativeReward = GetCumulativeReward();
             }
         }
