@@ -20,6 +20,10 @@ namespace EnemiesScript.Boss
         {
             base.Awake();
             agent._player = GameObject.FindGameObjectWithTag("Player");
+
+            // FIX: Warn if player not found
+            if (agent._player == null)
+                Debug.LogWarning("BossEnemyAgent: No GameObject with tag 'Player' found!");
         }
 
         public override void Initialize()
@@ -94,7 +98,7 @@ namespace EnemiesScript.Boss
             {
                 Vector3 toPlayer = (agent._player.transform.position - transform.position);
                 sensor.AddObservation(toPlayer.normalized);
-                sensor.AddObservation(toPlayer.magnitude/30f);
+                sensor.AddObservation(toPlayer.magnitude / 30f);
             }
             else
             {
@@ -104,9 +108,10 @@ namespace EnemiesScript.Boss
             
             sensor.AddObservation(transform.forward);
             sensor.AddObservation(agent.energy);
-            sensor.AddObservation(transform.GetChild(3).position);
 
-            // Add angular velocity so agent knows it's spinning
+            // FIX: Use local position instead of world position
+            sensor.AddObservation(transform.GetChild(3).localPosition);
+
             Rigidbody rb = GetComponent<Rigidbody>();
             if (rb != null)
                 sensor.AddObservation(rb.angularVelocity.y / 10f);
@@ -145,33 +150,8 @@ namespace EnemiesScript.Boss
                 float distanceFromOptimal = Mathf.Abs(currentDistance - optimalRange);
                 AddReward(-distanceFromOptimal * 0.005f); // Penalize being outside optimal range
 
-                // Penalize strafing (sideways movement) when far from player
-                if (currentDistance > optimalRange + 1f)
-                {
-                    // moveX is sideways movement - penalize it when not in range
-                    AddReward(-Mathf.Abs(moveX) * 0.01f);
-                }
-
-                // Penalize excessive rotation
-                if (Mathf.Abs(rotation) > 0.1f)
-                {
-                    AddReward(-Mathf.Abs(rotation) * 0.005f);
-                }
-
-                // Reward for facing the player
-                if (sightDetector != null && sightDetector.IsTargetVisible)
-                {
-                    Vector3 toPlayer = (agent._player.transform.position - transform.position).normalized;
-                    float dotProduct = Vector3.Dot(transform.forward, toPlayer);
-
-                    if (dotProduct > 0.9f)
-                    {
-                        AddReward(dotProduct * 0.01f);
-                    }
-                }
-
-                // Small time penalty to encourage efficiency
-                AddReward(-0.0001f);
+                // FIX: Always penalize strafing, not just when far
+                AddReward(-Mathf.Abs(moveX) * 0.01f);
                 _lastDistance = currentDistance;
                 cumulativeReward = GetCumulativeReward();
             }
