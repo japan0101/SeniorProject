@@ -135,17 +135,22 @@ namespace EnemiesScript.Boss
             }
             base.OnActionReceived(actions);
             
-            if (isTraining & agent._player != null)
+            if (isTraining && agent._player != null)
             {
                 var player = agent._player;
                 float currentDistance = Vector3.Distance(transform.position, player.transform.position);
-                
-                float distanceDelta = _lastDistance - currentDistance;
-                if (distanceDelta > 0)
+
+                // Reward for being in attack range instead of just getting closer
+                float optimalRange = 2.5f; // Adjust to your attack range
+                float distanceFromOptimal = Mathf.Abs(currentDistance - optimalRange);
+                AddReward(-distanceFromOptimal * 0.005f); // Penalize being outside optimal range
+
+                // Penalize strafing (sideways movement) when far from player
+                if (currentDistance > optimalRange + 1f)
                 {
-                    AddReward(distanceDelta * 0.1f);
+                    // moveX is sideways movement - penalize it when not in range
+                    AddReward(-Mathf.Abs(moveX) * 0.01f);
                 }
-                _lastDistance = currentDistance;
 
                 // Penalize excessive rotation
                 if (Mathf.Abs(rotation) > 0.1f)
@@ -153,7 +158,8 @@ namespace EnemiesScript.Boss
                     AddReward(-Mathf.Abs(rotation) * 0.005f);
                 }
 
-                if (sightDetector != null && sightDetector.IsTargetVisible && agent._player != null)
+                // Reward for facing the player
+                if (sightDetector != null && sightDetector.IsTargetVisible)
                 {
                     Vector3 toPlayer = (agent._player.transform.position - transform.position).normalized;
                     float dotProduct = Vector3.Dot(transform.forward, toPlayer);
@@ -164,7 +170,9 @@ namespace EnemiesScript.Boss
                     }
                 }
 
+                // Small time penalty to encourage efficiency
                 AddReward(-0.0001f);
+                _lastDistance = currentDistance;
                 cumulativeReward = GetCumulativeReward();
             }
         }
