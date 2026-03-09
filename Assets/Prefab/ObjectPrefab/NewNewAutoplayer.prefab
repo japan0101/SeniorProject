@@ -211,8 +211,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4e1c113651ae8a4db0ac951b90a581e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 20
-  maxHp: 20
+  hp: 250
+  maxHp: 250
   baseSpeed: 5
   dashSpeed: 20
   dashCooldown: 0.5
@@ -274,7 +274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 13
+    VectorObservationSize: 12
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 3
