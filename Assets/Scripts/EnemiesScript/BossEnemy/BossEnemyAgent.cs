@@ -8,20 +8,23 @@ namespace EnemiesScript.Boss
 {
     public class BossEnemyAgent:EnemyAgent
     {
-
-        //float Timer = 0;//for testing agent action remove later
         const int basicslashIndex = 1;
         const int thrustIndex = 2;
         const int warcryIndex = 3;
         const int bodyslamIndex = 4;
         const int jumpslamIndex = 5;
         const int evadeslashIndex = 6;
+
+        // Health thresholds (percentage)
+        const float phase2Threshold = 0.75f; // 75% HP - unlocks thrust & warcry
+        const float phase3Threshold = 0.50f; // 50% HP - unlocks bodyslam
+        const float phase4Threshold = 0.25f; // 25% HP - unlocks jumpslam & evadeslash
+
         private new void Awake()
         {
             base.Awake();
             agent._player = GameObject.FindGameObjectWithTag("Player");
 
-            // FIX: Warn if player not found
             if (agent._player == null)
                 Debug.LogWarning("BossEnemyAgent: No GameObject with tag 'Player' found!");
         }
@@ -43,10 +46,8 @@ namespace EnemiesScript.Boss
             continuousActions[0] = Input.GetAxis("Horizontal");
             continuousActions[1] = Input.GetAxis("Vertical");
             
-
             discreteActionsOut[0] = 0; // Do nothing
             discreteActionsOut[1] = 0; // Do nothing
-
 
             if (Input.GetKey(KeyCode.LeftShift))
             {
@@ -92,6 +93,33 @@ namespace EnemiesScript.Boss
             }
             
         }
+        public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
+        {
+            if (agent._player == null) return;
+
+            float distance = Vector3.Distance(transform.position, agent._player.transform.position);
+
+            // Get current health percentage (adjust agent.health & agent.maxHealth to your actual property names)
+            float healthPercent = agent.hp / agent.maxHp;
+
+            bool isCloseRange = distance < 3f;
+            bool isMidRange   = distance >= 3f && distance <= 6f;
+            bool isFarRange   = distance > 6f;
+
+            // Phase 1 (100% - 75% HP): Basic slash & Thrust only
+            actionMask.SetActionEnabled(1, basicslashIndex, isCloseRange);
+            actionMask.SetActionEnabled(1, thrustIndex, isCloseRange || isMidRange);
+
+            // Phase 2 (below 75% HP): Unlock Warcry
+            actionMask.SetActionEnabled(1, warcryIndex,    healthPercent <= phase2Threshold);
+
+            // Phase 3 (below 50% HP): Unlock Bodyslam
+            actionMask.SetActionEnabled(1, bodyslamIndex,  healthPercent <= phase3Threshold && isCloseRange);
+
+            // Phase 4 (below 25% HP): Unlock Jumpslam & EvadeSlash
+            actionMask.SetActionEnabled(1, jumpslamIndex,  healthPercent <= phase4Threshold && (isMidRange || isFarRange));
+            actionMask.SetActionEnabled(1, evadeslashIndex,healthPercent <= phase4Threshold && isCloseRange);
+        }
         public override void CollectObservations(VectorSensor sensor)
         {
             if (agent._player != null)
@@ -117,6 +145,9 @@ namespace EnemiesScript.Boss
                 sensor.AddObservation(rb.angularVelocity.y / 10f);
             else
                 sensor.AddObservation(0f);
+
+            // Add health percent so agent knows which attacks are available
+            sensor.AddObservation(agent.hp / agent.maxHp);
         }
         public override void OnActionReceived(ActionBuffers actions)
         {
@@ -216,29 +247,5 @@ namespace EnemiesScript.Boss
             //     _lastDistance = Vector3.Distance(transform.position, agent._player.transform.position);
         }
         
-        private void SpawnPlayer()
-        {
-            var localOrigin = new Vector3(0f, 0.5f, 0f);
-            
-            
-            // Randomize the direction on the Y-axis (angle in degrees)
-            float randomAngle = Random.Range(0f, 360f);
-            Vector3 randomDirection = Quaternion.Euler(0f, randomAngle, 0f) * Vector3.forward;
-        
-            // Randomize the distance within range [1, 2.5]
-            float randomDistance = Random.Range(1f, 10f);
-        
-            // Calculate the player's position
-            Vector3 localPlayerPosition = localOrigin + randomDirection * randomDistance;
-        
-            // Apply the calculated position to the player
-            
-            
-            if (agent._player) Destroy(agent._player);
-            
-            agent._player.transform.localPosition = localPlayerPosition;
-            agent._player.transform.localRotation = Quaternion.identity;
-            agent.AddListenerToTarget(agent._player);
-        }
     }
 }

@@ -397,7 +397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.ML-Agents::Unity.MLAgents.Policies.BehaviorParameters
   m_BrainParameters:
-    VectorObservationSize: 12
+    VectorObservationSize: 13
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 3
@@ -479,6 +479,15 @@ MonoBehaviour:
   - 10
   - 10
   - 15
+  TrackOnPlayerDamageDealt:
+    m_PersistentCalls:
+      m_Calls: []
+  TrackOnEnemyAttack:
+    m_PersistentCalls:
+      m_Calls: []
+  TrackOnDeath:
+    m_PersistentCalls:
+      m_Calls: []
   agent: {fileID: 0}
   isBehaviorGraph: 1
 --- !u!114 &5307981173797202405

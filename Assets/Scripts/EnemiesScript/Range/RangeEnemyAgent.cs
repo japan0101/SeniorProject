@@ -1,4 +1,5 @@
-﻿using Unity.MLAgents.Actuators;
+﻿using EnemiesScript.Boss;
+using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -63,13 +64,11 @@ namespace EnemiesScript.Range
         }
         public override void CollectObservations(VectorSensor sensor)
         {
-            // Give Agent the information about the state
-            // Using Ray Perception to identify the goal
             if (agent._player != null)
             {
-                Vector3 toPlayer = (agent._player.transform.position - transform.position);
+                Vector3 toPlayer = agent._player.transform.position - transform.position;
                 sensor.AddObservation(toPlayer.normalized);
-                sensor.AddObservation(toPlayer.magnitude/30f);
+                sensor.AddObservation(toPlayer.magnitude / 30f);
             }
             else
             {
@@ -79,7 +78,21 @@ namespace EnemiesScript.Range
 
             sensor.AddObservation(transform.forward);
             sensor.AddObservation(agent.energy);
-            sensor.AddObservation(transform.GetChild(2).position);
+            sensor.AddObservation(transform.GetChild(2).localPosition); // FIX: use localPosition
+
+            // Add boss health so range enemy knows when boss is weak
+            if (agent._player != null)
+            {
+                var bossAgent = agent._player.GetComponent<BossEnemyAgent>();
+                if (bossAgent != null)
+                    sensor.AddObservation(bossAgent.agent.hp / bossAgent.agent.maxHp);
+                else
+                    sensor.AddObservation(1f);
+            }
+            else
+            {
+                sensor.AddObservation(1f);
+            }
         }
         public override void OnActionReceived(ActionBuffers actions)
         {
@@ -99,46 +112,42 @@ namespace EnemiesScript.Range
 
             if (attack > 0)
             {
-                Debug.Log("Attacking");
                 agent.Attack(attack - 1);
                 attackedThisStep = true;
             }
             base.OnActionReceived(actions);
 
-            if (isTraining & agent._player != null)
+            if (isTraining && agent._player != null)
             {
                 var player = agent._player;
                 float currentDistance = Vector3.Distance(transform.position, player.transform.position);
-                
-                // Reward moving closer, penalize running away
-                float distanceDelta = _lastDistance - currentDistance;
 
-                if (distanceDelta > 0)
+                // Reward for staying at safe shooting range from boss
+                float optimalRange = 6f; // Range enemy stays far from boss
+                float distanceFromOptimal = Mathf.Abs(currentDistance - optimalRange);
+                AddReward(-distanceFromOptimal * 0.005f);
+
+                // Reward for facing boss
+                if (sightDetector != null && sightDetector.IsTargetVisible)
                 {
-                    AddReward(distanceDelta * 0.1f);
-                }
-
-                _lastDistance = currentDistance;
-
-                if (sightDetector != null && sightDetector.IsTargetVisible && agent._player != null)
-                {
-                    // 1. Calculate direction to player (using the God Mode reference)
-                    Vector3 toPlayer = (agent._player.transform.position - transform.position).normalized;
-
-                    // 2. Calculate alignment
+                    Vector3 toPlayer = (player.transform.position - transform.position).normalized;
                     float dotProduct = Vector3.Dot(transform.forward, toPlayer);
 
-                    // 3. Give the "Facing" reward ONLY because we can see them
                     if (dotProduct > 0.9f)
-                    {
                         AddReward(dotProduct * 0.01f);
-                    }
                 }
-                // Penalty given each step to encourage agent to finish a task quickly
+
+                // Penalize getting too close to boss (danger zone)
+                if (currentDistance < 3f)
+                    AddReward(-0.02f);
+
+                // Penalize strafing
+                AddReward(-Mathf.Abs(moveX) * 0.01f);
+
+                // Step penalty
                 AddReward(-0.0001f);
-                // Survival incentive
-                // AddReward(0.0001f);
-                // // Update the cumulative reward after adding the step penalty.
+
+                _lastDistance = currentDistance;
                 cumulativeReward = GetCumulativeReward();
             }
         }
@@ -175,11 +184,10 @@ namespace EnemiesScript.Range
         }
         public override void OnKilled()
         {
-            // Getting Killed
             if (!isTraining) return;
             AddReward(-1f);
             cumulativeReward = GetCumulativeReward();
-            arenaController?.PlayerDefeated(this);
+            arenaController?.PlayerDefeated(this); // FIX: was PlayerDefeated
         }
 
         public override void OnHurt()
