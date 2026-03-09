@@ -45,7 +45,10 @@ namespace EnemiesScript
         [Header("Attack Cooldowns (in seconds)")]
         public float[] cooldownDurations;
         protected float[] nextAvailableAttackTime;
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+        public UnityEvent<float> TrackOnPlayerDamageDealt;
+        public UnityEvent TrackOnEnemyAttack;
+        public UnityEvent<bool> TrackOnDeath;
         protected void Awake()
         {
             rb = GetComponent<Rigidbody>();
@@ -148,6 +151,7 @@ namespace EnemiesScript
             //instantiate damage number with DamageTextSpawner component
             //realDmg = 
             // GetComponent<DamageTextSpawner>().SpawnDamageText(new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), damage);
+            TrackOnPlayerDamageDealt?.Invoke(damage);
             hp -= damage - (defence / 100);// reduce health
             OnPlayerHurt?.Invoke();
         }

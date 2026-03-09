@@ -8,5 +8,6 @@ public class Statistic : ScriptableObject
     public float GameTime;
     public int EnemyAttackCount;
     public int EnemyAttackHit;
-    public int EnemyAttackAccuracy;
+    public float EnemyAttackAccuracy;
+    public bool isPlayerWin;
 }

@@ -80,6 +80,7 @@ namespace EnemiesScript.Boss
                 Destroy(_atk.gameObject, _atk.lifetime);
             }
             _atk.OnMissed += Miss;//Add method of missed attack aknowledgement to an event listener of the launched attacks
+            TrackOnEnemyAttack?.Invoke();
         }
 
         protected override void OnHurt()
@@ -170,6 +171,7 @@ namespace EnemiesScript.Boss
             base.Update();
             if (hp <= 0)
             {
+                TrackOnDeath?.Invoke(true);
                 OnKilled();
                 Destroy(gameObject);
             }
@@ -193,6 +195,6 @@ namespace EnemiesScript.Boss
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(transform.position, 30);
         }
-
+        
     }
 }

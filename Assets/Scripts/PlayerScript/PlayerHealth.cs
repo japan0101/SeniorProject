@@ -2,6 +2,7 @@ using EnemiesScript;
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class PlayerHealth : MonoBehaviour
 
     public event Action OnPlayerHurt;
     public event Action OnPlayerDie;
+
+    public UnityEvent<float> TrackOnEnemyDamageDealt;
+    public UnityEvent<bool> TrackDeath;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -68,10 +72,12 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(Vector3 dmgPos, float damage)
     {
         //GetComponent<DamageTextSpawner>().SpawnDamageText(dmgPos, damage);
+        TrackOnEnemyDamageDealt?.Invoke(damage);
         OnPlayerHurt?.Invoke();
         _stats.ModifyHP(-damage);
         if (IsDead())
         {
+            TrackDeath?.Invoke(false);
             OnPlayerDie?.Invoke();
             Destroy(gameObject);
         }
