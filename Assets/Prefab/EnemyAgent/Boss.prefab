@@ -489,7 +489,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   agent: {fileID: 0}
-  isBehaviorGraph: 1
+  isBehaviorGraph: 0
 --- !u!114 &5307981173797202405
 MonoBehaviour:
   m_ObjectHideFlags: 0
