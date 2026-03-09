@@ -173,7 +173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4895929049003943609, guid: cf5fb1e1390339248af2f11f0e27b810, type: 3}
       propertyPath: m_Name
-      value: BGph_Boss
+      value: Boss
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
