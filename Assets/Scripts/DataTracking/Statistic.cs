@@ -10,4 +10,19 @@ public class Statistic : ScriptableObject
     public int EnemyAttackHit;
     public float EnemyAttackAccuracy;
     public bool isPlayerWin;
-}
+
+    public void Reset()
+    {
+        EnemyDamageDealt = 0;
+        PlayerDamageDealt = 0;
+        GameTime = 0;
+        EnemyAttackCount = 0;
+        EnemyAttackHit = 0;
+        EnemyAttackAccuracy = 0;
+        isPlayerWin = false;
+    }   
+}       
+        
+        
+        
+        

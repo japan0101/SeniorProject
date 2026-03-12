@@ -171,8 +171,8 @@ namespace EnemiesScript.Boss
             base.Update();
             if (hp <= 0)
             {
-                TrackOnDeath?.Invoke(true);
                 OnKilled();
+                TrackOnDeath?.Invoke(true);
                 Destroy(gameObject);
             }
             energy = Mathf.Clamp(energy + (energyRegenPerSecond * Time.deltaTime), 0, maxEnergy);

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d185a51021cc4694e99a7ff92a3108fe, type: 3}
+  m_Name: Player1TypeB
+  m_EditorClassIdentifier: Assembly-CSharp::Statistic
+  EnemyDamageDealt: 0
+  PlayerDamageDealt: 0
+  GameTime: 0
+  EnemyAttackCount: 0
+  EnemyAttackHit: 0
+  EnemyAttackAccuracy: 0
+  isPlayerWin: 0

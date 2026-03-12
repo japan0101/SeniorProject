@@ -1,4 +1,7 @@
 using EnemiesScript;
+using System;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StatisticManager : MonoBehaviour
@@ -7,10 +10,12 @@ public class StatisticManager : MonoBehaviour
     [SerializeField] public Enemy enemy;
     [SerializeField] public PlayerShoot playerShoot;
     [SerializeField] public PlayerHealth playerHealth;
+    [SerializeField] public TextMeshProUGUI resultPanel;
     float matchStarts;
 
     private void Awake()
     {
+        currentStats.Reset();
         matchStarts = Time.time;
 
         enemy.TrackOnDeath.AddListener(OnGameEnd);
@@ -40,8 +45,31 @@ public class StatisticManager : MonoBehaviour
     }
     public void OnGameEnd(bool playerWin)
     {
+        DisplayResult();
         currentStats.GameTime = Time.time - matchStarts;
+        Time.timeScale = 0;
         currentStats.EnemyAttackAccuracy = currentStats.EnemyAttackHit / currentStats.EnemyAttackCount;
         currentStats.isPlayerWin = playerWin;
+    }
+    public void DisplayResult()
+    {
+        resultPanel.SetText(
+            $"Test Type A Result" +
+            $"Enemy Damage Dealt: {currentStats.EnemyDamageDealt}\n" +
+            $"Player Damage Dealt: {currentStats.PlayerDamageDealt}\n" +
+            $"Game Time: {FormatTimeSpan(currentStats.GameTime)}\n" +
+            $"Enemy Attack Count: {currentStats.EnemyAttackCount} \n" +
+            $"Enemy Attack hit: {currentStats.EnemyAttackHit} \n" +
+            $"Enemy Attack Accuracy: {currentStats.EnemyAttackAccuracy * 100}% \n" +
+            $"Did Player Win: {currentStats.isPlayerWin} \n"
+            );
+        resultPanel.gameObject.SetActive(true);
+    }
+    public string FormatTimeSpan(float seconds)
+    {
+        TimeSpan t = TimeSpan.FromSeconds(seconds);
+
+        return string.Format("{0:00}:{1:00}", t.Minutes, t.Seconds);
+
     }
 }

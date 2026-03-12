@@ -79,7 +79,7 @@ public class PlayerHealth : MonoBehaviour
         {
             TrackDeath?.Invoke(false);
             OnPlayerDie?.Invoke();
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
         // Debug.Log(_stats.currentHP);
         DisplayHP();
