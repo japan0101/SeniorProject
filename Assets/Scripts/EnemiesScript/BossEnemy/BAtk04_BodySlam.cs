@@ -12,6 +12,9 @@ namespace EnemiesScript.Boss
         public float attack_window = 0.3f;
         public GameObject effect;
 
+        [Header("Specific config")]
+        public AudioSource audioSource;
+
         protected float holdposeTimer = 0;
         protected Coroutine attackRoutine;
         public void OnDestroy()
@@ -48,6 +51,7 @@ namespace EnemiesScript.Boss
             animator.SetTrigger("BSlam Holdpose");
             yield return new WaitForSeconds(delayTime);//Hold pose
             animator.SetTrigger("Bslam Start");
+            audioSource.Play();
             attackRoutine = null;
             //Start attacking after this
             GetComponent<BoxCollider>().enabled = true;

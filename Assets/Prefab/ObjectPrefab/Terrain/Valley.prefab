@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5962007959336413125}
   - component: {fileID: 8131133073806668481}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BoundBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9021444871164499655}
   - component: {fileID: 4889623474982745658}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BoundFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,6 +200,59 @@ TerrainCollider:
   serializedVersion: 2
   m_TerrainData: {fileID: 15600000, guid: 6ec2111c6a78cd840973c736ee84dfd7, type: 2}
   m_EnableTreeColliders: 1
+--- !u!1 &7296256668968656159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2866043084641525573}
+  - component: {fileID: 5384983743914256642}
+  m_Layer: 10
+  m_Name: BoundLeft (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2866043084641525573
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7296256668968656159}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 34.2, y: 10.9, z: -15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8493536846619217304}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5384983743914256642
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7296256668968656159}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 120, y: 1, z: 100}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7617979548878673874
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9010190619429096918}
   - component: {fileID: 8121598316668521312}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BoundLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +315,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8493536846619217304}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bounds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -286,6 +339,7 @@ Transform:
   - {fileID: 5962007959336413125}
   - {fileID: 9010190619429096918}
   - {fileID: 7765862134446328970}
+  - {fileID: 2866043084641525573}
   m_Father: {fileID: 805462954514970602}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8409408583698104090
@@ -298,7 +352,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7765862134446328970}
   - component: {fileID: 2265773634807186182}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BoundRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

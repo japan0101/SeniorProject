@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("References")]
     public EnergyManager energyManager;
     public Zoom zoomMnger;
+    public AudioSource audioSource;
+    public AudioClip DashAudio;
 
     [Header("Keybinds")]
     public KeyCode jumpKey = KeyCode.Space;
@@ -136,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
 
         rb.AddForce(transform.up * _stats.jumpForce, ForceMode.Impulse);
-
+        PlayEffect(DashAudio);
     }
 
     private void Dash()
@@ -145,6 +147,11 @@ public class PlayerMovement : MonoBehaviour
         //rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);
         _stats.States.Add(PlayerStates.Dashing);
         rb.AddForce(transform.forward * _stats.dashForce, ForceMode.Impulse);
+        PlayEffect(DashAudio);
+    }
+    private void PlayEffect(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
     private void ResetJump()
     {

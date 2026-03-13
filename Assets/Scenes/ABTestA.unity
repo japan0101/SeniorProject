@@ -402,29 +402,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2945215709486149037, guid: ac66938595512fd419ee37b079f6e814, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4947385159626938892, guid: ac66938595512fd419ee37b079f6e814, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 6352229584110614203, guid: ac66938595512fd419ee37b079f6e814, type: 3}
       propertyPath: m_Name
       value: Valley
-      objectReference: {fileID: 0}
-    - target: {fileID: 7617979548878673874, guid: ac66938595512fd419ee37b079f6e814, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7747817861011960981, guid: ac66938595512fd419ee37b079f6e814, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 8409408583698104090, guid: ac66938595512fd419ee37b079f6e814, type: 3}
-      propertyPath: m_Layer
-      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -569,6 +549,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eabf13b54d8ec964183e4c2770ae1493, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StatisticManager
+--- !u!82 &1614558797 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 1439740689640885444, guid: 29c651aee8de9d143be001c326634c04, type: 3}
+  m_PrefabInstance: {fileID: 9065347822166352639}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5123349797329726774
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -786,10 +771,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1439740689640885444, guid: 29c651aee8de9d143be001c326634c04, type: 3}
-      propertyPath: m_Resource
+    - target: {fileID: 1959412001079789453, guid: 29c651aee8de9d143be001c326634c04, type: 3}
+      propertyPath: DashAudio
       value: 
-      objectReference: {fileID: 8300000, guid: 7d280cec4a9df58448495a2593c0b1fc, type: 3}
+      objectReference: {fileID: 8300000, guid: fdc9c236338ad224188e6f7cacbd6e4c, type: 3}
+    - target: {fileID: 1959412001079789453, guid: 29c651aee8de9d143be001c326634c04, type: 3}
+      propertyPath: audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: fdc9c236338ad224188e6f7cacbd6e4c, type: 3}
+    - target: {fileID: 1959412001079789453, guid: 29c651aee8de9d143be001c326634c04, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1614558797}
     - target: {fileID: 2346484336028920871, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1178,6 +1171,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6622080744109317753, guid: 29c651aee8de9d143be001c326634c04, type: 3}
+      propertyPath: m_fontSize
+      value: 21.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7504117136374191398, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1285,6 +1282,10 @@ PrefabInstance:
     - target: {fileID: 8051417941451049511, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8142741763728077721, guid: 29c651aee8de9d143be001c326634c04, type: 3}
+      propertyPath: m_fontSize
+      value: 21.5
       objectReference: {fileID: 0}
     - target: {fileID: 8296017056809875815, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_AnchorMax.y
