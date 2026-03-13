@@ -29,6 +29,7 @@ public class AutoShoot : MonoBehaviour
     public LayerMask detectionLayer;
     public Color rayColor = Color.red;
 
+
     private bool isPrimary;
     private Weapon equipedWeapon;
     private Coroutine activeReloadRoutine;

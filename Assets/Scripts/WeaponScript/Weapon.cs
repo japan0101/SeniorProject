@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics.Tracing;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UIElements;
 using UnityEngine.VFX;
 using static UnityEngine.Rendering.DebugUI;
@@ -21,6 +22,8 @@ public class Weapon : MonoBehaviour
     public GameObject bullet;
     public VisualEffect muzzleFlash;
     public VFXEventAttribute muzzleAttribute;
+    public AudioClip shotEffect;
+    public AudioSource audioSource;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -61,6 +64,7 @@ public class Weapon : MonoBehaviour
     public void Shoot(Vector3 shootDirection, Vector3 shotPosition)
     {
         //create bullet then add force to it
+        playShootEffect();
         currentAmmo -= 1;
         muzzleFlash.SendEvent("OnPlay");
         var bulletInstance = Instantiate(bullet, shotPosition, Quaternion.LookRotation(shootDirection));
@@ -71,6 +75,7 @@ public class Weapon : MonoBehaviour
     public void Shoot(Vector3 shootDirection, Vector3 shotPosition, AutoPlayerAgent shooter)
     {
         //create bullet then add force to it
+        playShootEffect();
         currentAmmo -= 1;
         muzzleFlash.SendEvent("OnPlay");
         var bulletInstance = Instantiate(bullet, shotPosition, Quaternion.LookRotation(shootDirection));
@@ -78,6 +83,11 @@ public class Weapon : MonoBehaviour
         bulletInstance.GetComponent<MainBullet>().agent = shooter;
         //bulletRB.AddForce(orientation.forward * 20 + orientation.up * 10, ForceMode.Impulse);
         bulletRB.AddForce(shootDirection * power, ForceMode.Impulse);
+    }
+
+    public void playShootEffect()
+    {
+        audioSource.PlayOneShot(shotEffect);
     }
     void Update()
     {

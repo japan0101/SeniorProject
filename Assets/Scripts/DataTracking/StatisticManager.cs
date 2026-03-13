@@ -45,16 +45,22 @@ public class StatisticManager : MonoBehaviour
     }
     public void OnGameEnd(bool playerWin)
     {
+        Debug.Log("Game Ending");
+        currentStats.isPlayerWin = playerWin;
         DisplayResult();
+
+        Debug.Log("Unlocking Mouse");
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         currentStats.GameTime = Time.time - matchStarts;
         Time.timeScale = 0;
-        currentStats.EnemyAttackAccuracy = currentStats.EnemyAttackHit / currentStats.EnemyAttackCount;
-        currentStats.isPlayerWin = playerWin;
+        currentStats.EnemyAttackAccuracy = currentStats.EnemyAttackCount != 0?currentStats.EnemyAttackHit / currentStats.EnemyAttackCount:0;
     }
     public void DisplayResult()
     {
+        Debug.Log("Showing Results");
         resultPanel.SetText(
-            $"Test Type A Result" +
+            $"Test Type A Result\n" +
             $"Enemy Damage Dealt: {currentStats.EnemyDamageDealt}\n" +
             $"Player Damage Dealt: {currentStats.PlayerDamageDealt}\n" +
             $"Game Time: {FormatTimeSpan(currentStats.GameTime)}\n" +

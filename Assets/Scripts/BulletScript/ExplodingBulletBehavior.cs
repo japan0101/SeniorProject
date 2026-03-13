@@ -11,8 +11,11 @@ public class ExplodingHit : OnHitBehavior
     public float blastKnockback;
     [Header("References")]
     public VisualEffect blastVFX;
+    public AudioClip blastSound;
+    public AudioSource audioSource;
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         // Auto-get the VFX from a child object
         //if (blastVFX == null)
         //{
@@ -82,6 +85,7 @@ public class ExplodingHit : OnHitBehavior
 
             }
         }
+        playBlastEffect();
         GetComponentInChildren<MeshRenderer>().enabled = false;
         GetComponentInChildren<Collider>().enabled = false;
         Destroy(gameObject, 0.4f);
@@ -137,8 +141,14 @@ public class ExplodingHit : OnHitBehavior
 
             }
         }
+        playBlastEffect();
         GetComponentInChildren<MeshRenderer>().enabled = false;
         GetComponentInChildren<Collider>().enabled = false;
         Destroy(gameObject, 0.4f);
+    }
+    
+    public void playBlastEffect()
+    {
+        audioSource.PlayOneShot(blastSound);
     }
 }

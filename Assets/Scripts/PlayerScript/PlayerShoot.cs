@@ -24,6 +24,7 @@ public class PlayerShoot : MonoBehaviour
     public Weapon primaryWeapon;
     public Weapon secondaryWeapon;
 
+
     [Header("Ray Settings")]
     public float rayLength = 10f;
     public LayerMask detectionLayer;
