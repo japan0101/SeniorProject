@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using Unity.MLAgents.Actuators;
+﻿using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -184,20 +183,22 @@ namespace EnemiesScript.Boss
                 float distanceFromOptimal = Mathf.Abs(currentDistance - optimalRange);
                 AddReward(-distanceFromOptimal * 0.005f); // Penalize being outside optimal range
 
-                if (sightDetector != null && sightDetector.IsTargetVisible)
-                {
-                    Vector3 toPlayer = (player.transform.position - transform.position).normalized;
-                    float dotProduct = Vector3.Dot(transform.forward, toPlayer);
-
-                    if (dotProduct > 0.9f)
-                        AddReward(dotProduct * 0.01f);
-                }
-
-
-                // FIX: Always penalize strafing, not just when far
+                // Penalize strafing
                 AddReward(-Mathf.Abs(moveX) * 0.01f);
 
-                AddReward(-0.0001f);
+                // --- Anti-spin fixes ---
+                // 1. Penalize large rotation action directly (stops model outputting constant spin)
+                AddReward(-Mathf.Abs(rotation) * 0.01f);
+
+                // 2. Penalize actual angular velocity (physical spinning)
+                Rigidbody rb = GetComponent<Rigidbody>();
+                if (rb != null)
+                    AddReward(-Mathf.Abs(rb.angularVelocity.y) * 0.005f);
+
+                // 3. Reward for facing player: encourages purposeful rotation, not random spinning
+                Vector3 toPlayer = (player.transform.position - transform.position).normalized;
+                float facingDot = Vector3.Dot(transform.forward, toPlayer);
+                AddReward(facingDot * 0.02f);
 
                 _lastDistance = currentDistance;
                 cumulativeReward = GetCumulativeReward();

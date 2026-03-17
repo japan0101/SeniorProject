@@ -1,4 +1,4 @@
-﻿using EnemiesScript.Boss;
+using EnemiesScript.Boss;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
@@ -143,6 +143,20 @@ namespace EnemiesScript.Range
 
                 // Penalize strafing
                 AddReward(-Mathf.Abs(moveX) * 0.01f);
+
+                // --- Anti-spin fixes ---
+                // 1. Penalize large rotation action directly (stops model outputting constant spin)
+                AddReward(-Mathf.Abs(rotation) * 0.01f);
+
+                // 2. Penalize actual angular velocity (physical spinning)
+                Rigidbody rb = GetComponent<Rigidbody>();
+                if (rb != null)
+                    AddReward(-Mathf.Abs(rb.angularVelocity.y) * 0.005f);
+
+                // 3. Reward for facing player: encourages purposeful rotation, not random spinning
+                Vector3 toPlayer = (player.transform.position - transform.position).normalized;
+                float facingDot = Vector3.Dot(transform.forward, toPlayer);
+                AddReward(facingDot * 0.02f);
 
                 // Step penalty
                 AddReward(-0.0001f);
