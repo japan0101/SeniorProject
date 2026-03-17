@@ -184,6 +184,9 @@ namespace EnemiesScript.Boss
             {
                 animator.SetFloat("Speed", 0);
             }
+
+            Debug.DrawRay(transform.position, transform.forward * 5, Color.blue);
+            Debug.DrawRay(transform.position, transform.right * 5, Color.pink);
             //Debug.Log($"{_atk == null} : {animator.GetFloat("Speed")}");
         }
         private void OnDrawGizmos()

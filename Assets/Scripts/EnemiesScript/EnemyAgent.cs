@@ -1,4 +1,5 @@
 using EnemiesScript;
+using Unity.Collections;
 using Unity.MLAgents;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ public abstract class EnemyAgent : Agent
 {
     [SerializeField] public Enemy agent;
     [HideInInspector] public int currentEpisode;
-    [HideInInspector] public float cumulativeReward;
+    [ReadOnly] public float cumulativeReward;
     public bool isTraining;
     protected bool _attackedThisStep = false;
     protected float _lastDistance;

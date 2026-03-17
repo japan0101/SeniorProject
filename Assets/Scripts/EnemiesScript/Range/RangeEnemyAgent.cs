@@ -78,7 +78,7 @@ namespace EnemiesScript.Range
 
             sensor.AddObservation(transform.forward);
             sensor.AddObservation(agent.energy);
-            sensor.AddObservation(transform.GetChild(2).localPosition); // FIX: use localPosition
+            sensor.AddObservation(transform.localPosition); // FIX: use localPosition
 
             // Add boss health so range enemy knows when boss is weak
             if (agent._player != null)
@@ -134,7 +134,7 @@ namespace EnemiesScript.Range
                     float dotProduct = Vector3.Dot(transform.forward, toPlayer);
 
                     if (dotProduct > 0.9f)
-                        AddReward(dotProduct * 0.01f);
+                        AddReward(dotProduct * 0.1f);
                 }
 
                 // Penalize getting too close to boss (danger zone)
@@ -185,7 +185,7 @@ namespace EnemiesScript.Range
         public override void OnKilled()
         {
             if (!isTraining) return;
-            AddReward(-1f);
+            SetReward(-1f);
             cumulativeReward = GetCumulativeReward();
             arenaController?.PlayerDefeated(this); // FIX: was PlayerDefeated
         }

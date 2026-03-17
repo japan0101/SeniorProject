@@ -1,4 +1,5 @@
-﻿using Unity.MLAgents.Actuators;
+﻿using System.ComponentModel;
+using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -8,6 +9,7 @@ namespace EnemiesScript.Boss
 {
     public class BossEnemyAgent:EnemyAgent
     {
+        public float reward = 0f;
         const int basicslashIndex = 1;
         const int thrustIndex = 2;
         const int warcryIndex = 3;
@@ -124,7 +126,7 @@ namespace EnemiesScript.Boss
         {
             if (agent._player != null)
             {
-                Vector3 toPlayer = (agent._player.transform.position - transform.position);
+                Vector3 toPlayer = agent._player.transform.position - transform.position;
                 sensor.AddObservation(toPlayer.normalized);
                 sensor.AddObservation(toPlayer.magnitude / 30f);
             }
@@ -138,7 +140,7 @@ namespace EnemiesScript.Boss
             sensor.AddObservation(agent.energy);
 
             // FIX: Use local position instead of world position
-            sensor.AddObservation(transform.GetChild(3).localPosition);
+            sensor.AddObservation(transform.localPosition);
 
             Rigidbody rb = GetComponent<Rigidbody>();
             if (rb != null)
@@ -154,6 +156,7 @@ namespace EnemiesScript.Boss
             var moveX = actions.ContinuousActions[0];
             var moveZ = actions.ContinuousActions[1];
             var rotation = actions.ContinuousActions[2];
+
             var special = actions.DiscreteActions[0];
             var attack = actions.DiscreteActions[1];
 
@@ -181,8 +184,21 @@ namespace EnemiesScript.Boss
                 float distanceFromOptimal = Mathf.Abs(currentDistance - optimalRange);
                 AddReward(-distanceFromOptimal * 0.005f); // Penalize being outside optimal range
 
+                if (sightDetector != null && sightDetector.IsTargetVisible)
+                {
+                    Vector3 toPlayer = (player.transform.position - transform.position).normalized;
+                    float dotProduct = Vector3.Dot(transform.forward, toPlayer);
+
+                    if (dotProduct > 0.9f)
+                        AddReward(dotProduct * 0.01f);
+                }
+
+
                 // FIX: Always penalize strafing, not just when far
                 AddReward(-Mathf.Abs(moveX) * 0.01f);
+
+                AddReward(-0.0001f);
+
                 _lastDistance = currentDistance;
                 cumulativeReward = GetCumulativeReward();
             }
@@ -198,8 +214,6 @@ namespace EnemiesScript.Boss
         public override void OnSpecial()
         {
             if (!isTraining) return;
-            AddReward(-0.01f);
-            cumulativeReward = GetCumulativeReward();
         }
         public override void OnAttackMissed()//Called by Enemy attack event listener to notify that the attack launched did not and on a player
         {
@@ -214,6 +228,10 @@ namespace EnemiesScript.Boss
         public override void OnKilledTarget()// Called when Agent Kill Something
         {
             if (!isTraining) return;
+            if (GetCumulativeReward() < 0f)
+            {
+                SetReward(1f);
+            }
             AddReward(5f);
             cumulativeReward = GetCumulativeReward();
         }
@@ -221,7 +239,7 @@ namespace EnemiesScript.Boss
         {
             // Getting Killed
             if (!isTraining) return;
-            AddReward(-1f);
+            SetReward(-1f);
             cumulativeReward = GetCumulativeReward();
             arenaController?.EnemyDefeated(this);
         }

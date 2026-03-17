@@ -213,7 +213,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 250
   maxHp: 250
-  baseSpeed: 5
+  baseSpeed: 7
   dashSpeed: 20
   dashCooldown: 0.5
   dashDuration: 0.2

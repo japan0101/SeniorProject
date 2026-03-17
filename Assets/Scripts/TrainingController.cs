@@ -94,7 +94,7 @@ public class TrainingController : MonoBehaviour
         {
             enemy.AddReward(1.0f);
         }
-        var player = episodeParticipants.Find(p => p is AutoPlayerAgent) as AutoPlayerAgent;
+        var player = episodeParticipants.Find(p => p is RangeEnemyAgent) as RangeEnemyAgent;
         if (player != null) player.AddReward(-1.0f);
         EndMatch();
     }
