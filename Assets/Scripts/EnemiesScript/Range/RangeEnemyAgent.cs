@@ -124,18 +124,18 @@ namespace EnemiesScript.Range
                 AddReward(-Mathf.Abs(moveX) * 0.01f);
 
                 // --- Anti-spin fixes ---
-                // 1. Penalize large rotation action directly (stops model outputting constant spin)
-                AddReward(-Mathf.Abs(rotation) * 0.01f);
+                // 1. Heavy penalty on the rotation action itself
+                //    (rb.angularVelocity is always 0 due to freezeRotation=true, so we use the action value)
+                AddReward(-Mathf.Abs(rotation) * 0.03f);
 
-                // 2. Penalize actual angular velocity (physical spinning)
-                var rb = GetComponent<Rigidbody>();
-                if (rb != null)
-                    AddReward(-Mathf.Abs(rb.angularVelocity.y) * 0.005f);
-
-                // 3. Reward for facing player: encourages purposeful rotation, not random spinning
+                // 2. Continuous facing reward — reward looking at player, penalize looking away
                 var toPlayer = (player.transform.position - transform.position).normalized;
                 var facingDot = Vector3.Dot(transform.forward, toPlayer);
                 AddReward(facingDot * 0.02f);
+
+                // 3. Hard penalty for actively facing AWAY — makes sustained spinning very expensive
+                if (facingDot < 0f)
+                    AddReward(facingDot * 0.05f); // facingDot is negative here so this is a penalty
 
                 // Step penalty
                 AddReward(-0.0001f);
@@ -182,7 +182,7 @@ namespace EnemiesScript.Range
         public override void OnKilled()
         {
             if (!isTraining) return;
-            SetReward(-1f);
+            AddReward(-1f);
             cumulativeReward = GetCumulativeReward();
             arenaController?.PlayerDefeated(this); // FIX: was PlayerDefeated
         }

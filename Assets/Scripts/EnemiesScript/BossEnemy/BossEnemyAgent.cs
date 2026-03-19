@@ -1,4 +1,4 @@
-﻿using Unity.MLAgents.Actuators;
+using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
 
@@ -18,11 +18,13 @@ namespace EnemiesScript.Boss
         private const float phase3Threshold = 0.50f; // 50% HP - unlocks bodyslam
         private const float phase4Threshold = 0.25f; // 25% HP - unlocks jumpslam & evadeslash
         public float reward;
+        private BossEnemy bossEnemy;
 
         private new void Awake()
         {
             base.Awake();
             agent._player = GameObject.FindGameObjectWithTag("Player");
+            bossEnemy = GetComponent<BossEnemy>();
 
             if (agent._player == null)
                 Debug.LogWarning("BossEnemyAgent: No GameObject with tag 'Player' found!");
@@ -76,19 +78,18 @@ namespace EnemiesScript.Boss
             var isFarRange = distance > 6f;
 
             // Phase 1 (100% - 75% HP): Basic slash & Thrust only
-            actionMask.SetActionEnabled(1, basicslashIndex, isCloseRange);
-            actionMask.SetActionEnabled(1, thrustIndex, isCloseRange || isMidRange);
+            actionMask.SetActionEnabled(1, basicslashIndex, bossEnemy.CanUseAttack(basicslashIndex));
+            actionMask.SetActionEnabled(1, thrustIndex, bossEnemy.CanUseAttack(thrustIndex));
 
             // Phase 2 (below 75% HP): Unlock Warcry
-            actionMask.SetActionEnabled(1, warcryIndex, healthPercent <= phase2Threshold);
+            actionMask.SetActionEnabled(1, warcryIndex, healthPercent <= phase2Threshold && bossEnemy.CanUseAttack(warcryIndex));
 
             // Phase 3 (below 50% HP): Unlock Bodyslam
-            actionMask.SetActionEnabled(1, bodyslamIndex, healthPercent <= phase3Threshold && isCloseRange);
+            actionMask.SetActionEnabled(1, bodyslamIndex, healthPercent <= phase3Threshold && bossEnemy.CanUseAttack(bodyslamIndex));
 
             // Phase 4 (below 25% HP): Unlock Jumpslam & EvadeSlash
-            actionMask.SetActionEnabled(1, jumpslamIndex,
-                healthPercent <= phase4Threshold && (isMidRange || isFarRange));
-            actionMask.SetActionEnabled(1, evadeslashIndex, healthPercent <= phase4Threshold && isCloseRange);
+            actionMask.SetActionEnabled(1, jumpslamIndex, healthPercent <= phase4Threshold && bossEnemy.CanUseAttack(jumpslamIndex));
+            actionMask.SetActionEnabled(1, evadeslashIndex, healthPercent <= phase4Threshold && bossEnemy.CanUseAttack(evadeslashIndex));
         }
 
         public override void CollectObservations(VectorSensor sensor)
@@ -159,18 +160,18 @@ namespace EnemiesScript.Boss
                 AddReward(-Mathf.Abs(moveX) * 0.01f);
 
                 // --- Anti-spin fixes ---
-                // 1. Penalize large rotation action directly (stops model outputting constant spin)
-                AddReward(-Mathf.Abs(rotation) * 0.01f);
+                // 1. Heavy penalty on the rotation action itself
+                //    (rb.angularVelocity is always 0 due to freezeRotation=true, so we use the action value)
+                AddReward(-Mathf.Abs(rotation) * 0.03f);
 
-                // 2. Penalize actual angular velocity (physical spinning)
-                var rb = GetComponent<Rigidbody>();
-                if (rb != null)
-                    AddReward(-Mathf.Abs(rb.angularVelocity.y) * 0.005f);
-
-                // 3. Reward for facing player: encourages purposeful rotation, not random spinning
+                // 2. Continuous facing reward — reward looking at player, penalize looking away
                 var toPlayer = (player.transform.position - transform.position).normalized;
                 var facingDot = Vector3.Dot(transform.forward, toPlayer);
                 AddReward(facingDot * 0.02f);
+
+                // 3. Hard penalty for actively facing AWAY — makes sustained spinning very expensive
+                if (facingDot < 0f)
+                    AddReward(facingDot * 0.05f); // facingDot is negative here so this is a penalty
 
                 _lastDistance = currentDistance;
                 cumulativeReward = GetCumulativeReward();
@@ -205,7 +206,6 @@ namespace EnemiesScript.Boss
         public override void OnKilledTarget() // Called when Agent Kill Something
         {
             if (!isTraining) return;
-            if (GetCumulativeReward() < 0f) SetReward(1f);
             AddReward(5f);
             cumulativeReward = GetCumulativeReward();
         }
@@ -214,7 +214,7 @@ namespace EnemiesScript.Boss
         {
             // Getting Killed
             if (!isTraining) return;
-            SetReward(-1f);
+            AddReward(-1f);
             cumulativeReward = GetCumulativeReward();
             arenaController?.EnemyDefeated(this);
         }
