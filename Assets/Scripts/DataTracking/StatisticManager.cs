@@ -3,6 +3,8 @@ using System;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class StatisticManager : MonoBehaviour
 {
@@ -12,9 +14,11 @@ public class StatisticManager : MonoBehaviour
     [SerializeField] public PlayerHealth playerHealth;
     [SerializeField] public TextMeshProUGUI resultPanel;
     float matchStarts;
-
+    bool gameEnded = false;
     private void Awake()
     {
+        Time.timeScale = 1;
+        gameEnded = false;
         currentStats.Reset();
         matchStarts = Time.time;
 
@@ -53,8 +57,16 @@ public class StatisticManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         currentStats.GameTime = Time.time - matchStarts;
+        if(currentStats.EnemyAttackCount == 0)
+        {
+            currentStats.EnemyAttackAccuracy = 0;
+        }
+        else
+        {
+            currentStats.EnemyAttackAccuracy = currentStats.EnemyAttackHit * 100 / currentStats.EnemyAttackCount;
+        }
+        gameEnded = true;
         Time.timeScale = 0;
-        currentStats.EnemyAttackAccuracy = currentStats.EnemyAttackCount != 0?currentStats.EnemyAttackHit / currentStats.EnemyAttackCount:0;
     }
     public void DisplayResult()
     {
@@ -66,7 +78,7 @@ public class StatisticManager : MonoBehaviour
             $"Game Time: {FormatTimeSpan(currentStats.GameTime)}\n" +
             $"Enemy Attack Count: {currentStats.EnemyAttackCount} \n" +
             $"Enemy Attack hit: {currentStats.EnemyAttackHit} \n" +
-            $"Enemy Attack Accuracy: {currentStats.EnemyAttackAccuracy * 100}% \n" +
+            $"Enemy Attack Accuracy: {currentStats.EnemyAttackAccuracy}% \n" +
             $"Did Player Win: {currentStats.isPlayerWin} \n"
             );
         resultPanel.gameObject.SetActive(true);
@@ -77,5 +89,12 @@ public class StatisticManager : MonoBehaviour
 
         return string.Format("{0:00}:{1:00}", t.Minutes, t.Seconds);
 
+    }
+    private void Update()
+    {
+        if (gameEnded && Input.GetKey(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 }

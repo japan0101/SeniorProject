@@ -236,6 +236,10 @@ PrefabInstance:
       value: OnPlayerDamageDealt
       objectReference: {fileID: 0}
     - target: {fileID: 4336597781567697657, guid: cf5fb1e1390339248af2f11f0e27b810, type: 3}
+      propertyPath: TrackOnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4336597781567697657, guid: cf5fb1e1390339248af2f11f0e27b810, type: 3}
       propertyPath: TrackOnEnemyAttack.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: StatisticManager, Assembly-CSharp
       objectReference: {fileID: 0}
@@ -1043,6 +1047,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6076190997747557862, guid: 29c651aee8de9d143be001c326634c04, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6152645284722009622, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1173,7 +1181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6622080744109317753, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_fontSize
-      value: 21.5
+      value: 21.35
       objectReference: {fileID: 0}
     - target: {fileID: 7504117136374191398, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1242,6 +1250,22 @@ PrefabInstance:
     - target: {fileID: 7734858173081419315, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7941907373574413407, guid: 29c651aee8de9d143be001c326634c04, type: 3}
+      propertyPath: TrackDeath.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7941907373574413407, guid: 29c651aee8de9d143be001c326634c04, type: 3}
+      propertyPath: TrackOnEnemyDamageDealt.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7941907373574413407, guid: 29c651aee8de9d143be001c326634c04, type: 3}
+      propertyPath: TrackDeath.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7941907373574413407, guid: 29c651aee8de9d143be001c326634c04, type: 3}
+      propertyPath: TrackOnEnemyDamageDealt.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8021753467761103370, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1285,7 +1309,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8142741763728077721, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_fontSize
-      value: 21.5
+      value: 21.35
       objectReference: {fileID: 0}
     - target: {fileID: 8296017056809875815, guid: 29c651aee8de9d143be001c326634c04, type: 3}
       propertyPath: m_AnchorMax.y
