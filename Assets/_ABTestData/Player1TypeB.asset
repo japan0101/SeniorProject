@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d185a51021cc4694e99a7ff92a3108fe, type: 3}
   m_Name: Player1TypeB
   m_EditorClassIdentifier: Assembly-CSharp::Statistic
+  TestType: 66
   EnemyDamageDealt: 0
   PlayerDamageDealt: 0
   GameTime: 0

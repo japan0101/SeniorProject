@@ -3,6 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Statistic", menuName = "Scriptable Objects/Statistic")]
 public class Statistic : ScriptableObject
 {
+    public char TestType;
     public float EnemyDamageDealt;
     public float PlayerDamageDealt;
     public float GameTime;

@@ -77,7 +77,7 @@ public class StatisticManager : MonoBehaviour
     {
         Debug.Log("Showing Results");
         resultPanel.SetText(
-            "Test Type A Result\n" +
+            $"Test Type {currentStats.TestType} Result\n" +
             $"Enemy Damage Dealt: {currentStats.EnemyDamageDealt}\n" +
             $"Player Damage Dealt: {currentStats.PlayerDamageDealt}\n" +
             $"Game Time: {FormatTimeSpan(currentStats.GameTime)}\n" +
