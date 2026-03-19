@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EnemiesScript.Boss.BossEnemy">
+    <Position X="10.25" Y="1.25" Width="1.5" />
+    <Members>
+      <Method Name="Awake" Hidden="true" />
+      <Field Name="basicslashIndex" Hidden="true" />
+      <Field Name="bodyslamIndex" Hidden="true" />
+      <Field Name="evadeslashIndex" Hidden="true" />
+      <Field Name="jumpslamIndex" Hidden="true" />
+      <Method Name="OnDrawGizmos" Hidden="true" />
+      <Field Name="thrustIndex" Hidden="true" />
+      <Method Name="Update" Hidden="true" />
+      <Field Name="warcryIndex" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>hISUKAAAoAAAAQAIAAAAEAEAAZQgAAAEAAgAAACAIEA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\BossEnemy\BossEnemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemiesScript.Enemy" Collapsed="true">
+    <Position X="12" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQBCYBAoEEgEEWMIAkyGAEQAJSEIgQgQAhQgQCgAsI=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

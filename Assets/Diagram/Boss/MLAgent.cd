@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EnemiesScript.Boss.BossEnemyAgent">
+    <Position X="5.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAABKAAAKIAAAQCACAAAEAEBAQAAAABEAAgAAAGAIEA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\BossEnemy\BossEnemyAgent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemyAgent" Collapsed="true">
+    <Position X="7.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAgACAgAAlAAAQCAAAgAEAAAAAAAAABAAAgAAAGgAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\EnemyAgent.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="arenaController" />
+      <Field Name="sightDetector" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="TrainingController">
+    <Position X="9.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABEAAADBAAIAAAAAAAABAAIABAyQAAABIAAAQIQA=</HashCode>
+      <FileName>Assets\Scripts\TrainingController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SightDetector">
+    <Position X="7.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAABEDAAACAAABBAAgAAAAAAABABQIAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\EnemyPerception\SightDetector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

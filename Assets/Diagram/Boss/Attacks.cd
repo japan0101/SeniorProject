@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EnemiesScript.Boss.BossSlashAttack">
+    <Position X="3" Y="4.25" Width="2" />
+    <Members>
+      <Method Name="Update" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAQCAAAAAAAAECAAAABAAQAAAAAAAAAg=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\BossEnemy\BAtk01_Slash.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemiesScript.Boss.BossThrustAttack">
+    <Position X="5.25" Y="4.25" Width="2" />
+    <Members>
+      <Method Name="Update" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAQACAAAAAAAAQCAAAAAAAAECAAAABAAQAAAAAAAAAg=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\BossEnemy\BAtk02_Thrust.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemiesScript.Boss.BossWCAttack">
+    <Position X="9.75" Y="4.25" Width="2" />
+    <Members>
+      <Method Name="OnTriggerEnter" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQCAAAAAAAAECAAAABAAQAAAAAAAAAg=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\BossEnemy\BAtk03_WarCry.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemiesScript.Boss.BossBodySlamAttack">
+    <Position X="7.5" Y="4.25" Width="2" />
+    <Members>
+      <Field Name="audioSource" Hidden="true" />
+      <Method Name="Update" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAQBCAAAAAAAAQCAAAAAAAAECAAAEBAAQAAAAAAAAAg=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\BossEnemy\BAtk04_BodySlam.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemiesScript.Boss.BossJSlamAttack">
+    <Position X="12" Y="4.25" Width="2" />
+    <Members>
+      <Method Name="Update" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAQACAAAAAAAAQCAAAAAAAAECAAAABAAQAAAAAAAAAg=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\BossEnemy\BAtk05_JumpSlam.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemiesScript.Boss.BossESlahshAttack">
+    <Position X="14.25" Y="4.25" Width="2" />
+    <Members>
+      <Method Name="Update" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAQBCAAAAAAAAQCAAAAAAAAECAAAABAAQAAAAAAAAAg=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\BossEnemy\BAtk06_EvadeSlash.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemiesScript.EnemyAttack" Collapsed="true">
+    <Position X="8.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAABAAAAAAQFgACAAAAAAABAAAgAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\EnemyAttacks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MoveTowardsTargetAction">
+    <Position X="8.5" Y="2" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAEAAAACAAAAAAEQAAAABAAAEAAAA=</HashCode>
+      <FileName>Assets\Behavior\Actions\ChaseToTargetAction.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="enemyController" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="AttackAction">
+    <Position X="6.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAgAAAAAAAAFAAAEAAAA=</HashCode>
+      <FileName>Assets\Behavior\Actions\AttackAction.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="enemyController" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EnemiesScript.Enemy" Collapsed="true">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQBCYBAoEEgEEWMIAkyGAEQAJSEIgQgQAhQgQCgAsI=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PatrolWithinRadiusAction">
+    <Position X="11" Y="1.25" Width="2" />
+    <AssociationLine Name="sight" Type="SightDetector" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="12.25" Y="1.25" />
+        <Point X="12.25" Y="0.875" />
+        <Point X="13.875" Y="0.875" />
+        <Point X="13.875" Y="1.25" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AABIEgAABQAAAAAAEAAgAiAAAgBAEQBAAABAAIFAAAA=</HashCode>
+      <FileName>Assets\Behavior\Actions\PatrolWithinRadiusAction.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="enemyController" />
+      <Field Name="sight" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SightDetector">
+    <Position X="13.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAABEDAAACAAABBAAgAAAAAAABABQIAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\EnemyPerception\SightDetector.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
