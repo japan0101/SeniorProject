@@ -27,24 +27,26 @@ namespace AutoPlayerScript
         public float aimErrorMargin = 2f;
 
         // A reference to the current target GameObject.
-        [FormerlySerializedAs("EnemyTarget")] [HideInInspector] public GameObject enemyTarget;
+        [FormerlySerializedAs("EnemyTarget")] [HideInInspector]
+        public GameObject enemyTarget;
 
-        // A reference to the Rigidbody component for force-based movement.
-        private Rigidbody _rb;
+        private readonly bool _isDashing = false;
 
         // The desired rotation for the agent.
         private Quaternion _desiredRotation;
+
+        // A reference to the Rigidbody component for force-based movement.
+        private Rigidbody _rb;
         private float _realSpeed;
-        private bool _isDashing = false;
 
 
-        void Awake()
+        private void Awake()
         {
             // Get the Rigidbody component once at the start.
             _rb = GetComponent<Rigidbody>();
         }
 
-        void Update()
+        private void Update()
         {
             // Find a target if one doesn't exist.
             // Only proceed if a target has been found.
@@ -88,7 +90,7 @@ namespace AutoPlayerScript
         }
 
         /// <summary>
-        /// Applies force to the Rigidbody to move the agent.
+        ///     Applies force to the Rigidbody to move the agent.
         /// </summary>
         /// <param name="dir">The direction to move.</param>
         /// <param name="actionValue"></param>
@@ -111,17 +113,17 @@ namespace AutoPlayerScript
 
 
         /// <summary>
-        /// Limits the linear velocity of the Rigidbody to prevent over-acceleration.
+        ///     Limits the linear velocity of the Rigidbody to prevent over-acceleration.
         /// </summary>
         private void SpeedControl()
         {
             _rb.linearDamping = 2.5f;
-            Vector3 flatVel = new Vector3(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
+            var flatVel = new Vector3(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
             _realSpeed = _isDashing ? dashSpeed : baseSpeed;
 
             if (flatVel.magnitude > _realSpeed)
             {
-                Vector3 limitedVel = flatVel.normalized * baseSpeed;
+                var limitedVel = flatVel.normalized * baseSpeed;
                 _rb.linearVelocity = new Vector3(limitedVel.x, _rb.linearVelocity.y, limitedVel.z);
             }
             //Debug.Log(realSpeed);

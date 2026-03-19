@@ -1,34 +1,29 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace EnemiesScript.Boss
 {
-    public class BossJSlamAttack:EnemyAttack
+    public class BossJSlamAttack : EnemyAttack
     {
-        [Header("Specific config")]
-        public float hold_duration = 0.7f;
+        [Header("Specific config")] public float hold_duration = 0.7f;
+
         public float attack_window = 0.3f;
         public GameObject effect;
+        protected Coroutine attackRoutine;
 
         protected float holdposeTimer = 0;
-        protected Coroutine attackRoutine;
-        public override void OnAttack(float dmgModifier)
+
+        private void Update()
         {
-            damage = damage * dmgModifier;
-            transform.position = new Vector3 (transform.position.x, transform.position.y -1.5f, transform.position.z);
-            attackRoutine = StartCoroutine(AttackSequence(hold_duration));
         }
-        public override void OnAttack(float dmgModifier, Vector3 direction)
-        {
-            OnAttack(dmgModifier);
-        }
+
         public void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag("Player")) {
-                isMissed = false;//For using in OnDestroyed checks weather the attack hit a player
-            }else if(other.gameObject.layer == 10)
+            if (other.gameObject.CompareTag("Player"))
+            {
+                isMissed = false; //For using in OnDestroyed checks weather the attack hit a player
+            }
+            else if (other.gameObject.layer == 10)
             {
                 animator.SetTrigger("EndAttack");
                 Destroy(gameObject, lifetime);
@@ -37,16 +32,24 @@ namespace EnemiesScript.Boss
                 GetComponent<MeshCollider>().enabled = true;
             }
         }
-        void Update()
+
+        public override void OnAttack(float dmgModifier)
         {
-            
+            damage = damage * dmgModifier;
+            transform.position = new Vector3(transform.position.x, transform.position.y - 1.5f, transform.position.z);
+            attackRoutine = StartCoroutine(AttackSequence(hold_duration));
         }
-        
-        IEnumerator AttackSequence(float delayTime)
+
+        public override void OnAttack(float dmgModifier, Vector3 direction)
+        {
+            OnAttack(dmgModifier);
+        }
+
+        private IEnumerator AttackSequence(float delayTime)
         {
             Debug.Log("Holding Pose");
             GetComponentInParent<Rigidbody>().useGravity = false;
-            GetComponentInParent<Rigidbody>().AddForce(transform.up*800);
+            GetComponentInParent<Rigidbody>().AddForce(transform.up * 800);
             animator.SetTrigger("Jump Holdpose");
             yield return new WaitForSeconds(delayTime);
             animator.SetTrigger("Jump");

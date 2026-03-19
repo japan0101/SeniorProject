@@ -20,9 +20,5 @@ public class Statistic : ScriptableObject
         EnemyAttackHit = 0;
         EnemyAttackAccuracy = 0;
         isPlayerWin = false;
-    }   
-}       
-        
-        
-        
-        
+    }
+}

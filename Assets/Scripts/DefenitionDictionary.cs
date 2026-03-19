@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using UnityEngine;
-
 public static class PlayerStates
 {
     public static int Normal = 0;

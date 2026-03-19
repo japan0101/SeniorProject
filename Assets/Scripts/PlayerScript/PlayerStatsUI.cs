@@ -1,18 +1,10 @@
 using System;
 using System.Collections;
-using System.Xml.Serialization;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerStatsUI : MonoBehaviour
 {
-    [Header("Refferences")]
-    public PlayerStats playerData;
-    public GameObject statsPanel;
-    [SerializeField] private TextMeshProUGUI[] statsElements; // Array mapped to TextMeshUI enum
-    [SerializeField] private TextMeshProUGUI[] PrimaryWeaponStatsTextUI;
-    [SerializeField] private TextMeshProUGUI[] SecondaryWeaponStatsTextUI;
     public enum TextMeshUI
     {
         MaxHealthUI,
@@ -29,6 +21,7 @@ public class PlayerStatsUI : MonoBehaviour
         JumpCostUI,
         JumpCDUI
     }
+
     public enum WeaponStatList
     {
         DisplayName,
@@ -38,40 +31,52 @@ public class PlayerStatsUI : MonoBehaviour
         ShotCooldown,
         ReloadTime
     }
+
+    [Header("Refferences")] public PlayerStats playerData;
+
+    public GameObject statsPanel;
+    [SerializeField] private TextMeshProUGUI[] statsElements; // Array mapped to TextMeshUI enum
+    [SerializeField] private TextMeshProUGUI[] PrimaryWeaponStatsTextUI;
+    [SerializeField] private TextMeshProUGUI[] SecondaryWeaponStatsTextUI;
     [SerializeField] public Weapon PrimaryWeapon;
     [SerializeField] public Weapon SecondaryWeapon;
-    [Header("Keybind")]
-    public KeyCode OpenStatsMenu = KeyCode.Tab;
+
+    [Header("Keybind")] public KeyCode OpenStatsMenu = KeyCode.Tab;
 
     private Coroutine inputDelayRoutine;
     private bool inputEnabled = true;
 
     private bool isMenuOpen;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         if (statsElements.Length != Enum.GetNames(typeof(TextMeshUI)).Length)
-        {
             Debug.LogError("statsElements array size doesn't match TextMeshUI enum count!");
-        }
         if (PrimaryWeaponStatsTextUI.Length != Enum.GetNames(typeof(WeaponStatList)).Length)
-        {
             Debug.LogError("PrimaryWeaponStatsTextUI array size doesn't match WeaponStatList enum count!");
-        }
         if (SecondaryWeaponStatsTextUI.Length != Enum.GetNames(typeof(WeaponStatList)).Length)
-        {
             Debug.LogError("SecondaryWeaponStatsTextUI array size doesn't match WeaponStatList enum count!");
-        }
         ExitStats();
         OnEnable();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
         HandleInput();
     }
+
+    private void OnEnable()
+    {
+        playerData.onStatsChanged += UpdateUI;
+    }
+
+    private void OnDisable()
+    {
+        playerData.onStatsChanged -= UpdateUI;
+    }
+
     private void HandleInput()
     {
         if (Input.GetKey(OpenStatsMenu) && !isMenuOpen && inputEnabled)
@@ -79,18 +84,17 @@ public class PlayerStatsUI : MonoBehaviour
             UpdateUI();
             DisplayStats();
         }
-        if(Input.GetKey(OpenStatsMenu) && isMenuOpen && inputEnabled)
-        {
-            ExitStats();
-        }
 
+        if (Input.GetKey(OpenStatsMenu) && isMenuOpen && inputEnabled) ExitStats();
     }
+
     private IEnumerator MenuDelay()
     {
         yield return new WaitForSeconds(1);
         inputEnabled = !inputEnabled;
     }
-    void UpdateUI()
+
+    private void UpdateUI()
     {
         //set player stats
         SetText(TextMeshUI.MaxHealthUI, $"Max Health: {playerData.maxHP}");
@@ -112,7 +116,8 @@ public class PlayerStatsUI : MonoBehaviour
         SetWeaponText(WeaponStatList.CurrentAmmo, $"Ammo: {PrimaryWeapon.currentAmmo}", PrimaryWeaponStatsTextUI);
         SetWeaponText(WeaponStatList.MaxAmmo, $"Mags Size: {PrimaryWeapon.magsSize}", PrimaryWeaponStatsTextUI);
         SetWeaponText(WeaponStatList.Power, $"Power: {PrimaryWeapon.power}", PrimaryWeaponStatsTextUI);
-        SetWeaponText(WeaponStatList.ShotCooldown, $"Shot Intervals: {PrimaryWeapon.cooldown}", PrimaryWeaponStatsTextUI);
+        SetWeaponText(WeaponStatList.ShotCooldown, $"Shot Intervals: {PrimaryWeapon.cooldown}",
+            PrimaryWeaponStatsTextUI);
         SetWeaponText(WeaponStatList.ReloadTime, $"Reload Time: {PrimaryWeapon.reloadTime}", PrimaryWeaponStatsTextUI);
 
         //set secondary stats
@@ -120,12 +125,13 @@ public class PlayerStatsUI : MonoBehaviour
         SetWeaponText(WeaponStatList.CurrentAmmo, $"Ammo: {SecondaryWeapon.currentAmmo}", SecondaryWeaponStatsTextUI);
         SetWeaponText(WeaponStatList.MaxAmmo, $"Mags Size: {SecondaryWeapon.magsSize}", SecondaryWeaponStatsTextUI);
         SetWeaponText(WeaponStatList.Power, $"Power: {SecondaryWeapon.power}", SecondaryWeaponStatsTextUI);
-        SetWeaponText(WeaponStatList.ShotCooldown, $"Shot Intervals: {SecondaryWeapon.cooldown}", SecondaryWeaponStatsTextUI);
-        SetWeaponText(WeaponStatList.ReloadTime, $"Reload Time: {SecondaryWeapon.reloadTime}", SecondaryWeaponStatsTextUI);
-
-
+        SetWeaponText(WeaponStatList.ShotCooldown, $"Shot Intervals: {SecondaryWeapon.cooldown}",
+            SecondaryWeaponStatsTextUI);
+        SetWeaponText(WeaponStatList.ReloadTime, $"Reload Time: {SecondaryWeapon.reloadTime}",
+            SecondaryWeaponStatsTextUI);
     }
-    void DisplayStats()
+
+    private void DisplayStats()
     {
         statsPanel.SetActive(true);
         isMenuOpen = true;
@@ -136,7 +142,8 @@ public class PlayerStatsUI : MonoBehaviour
 
         inputDelayRoutine = StartCoroutine(MenuDelay());
     }
-    void ExitStats()
+
+    private void ExitStats()
     {
         statsPanel.SetActive(false);
         isMenuOpen = false;
@@ -146,22 +153,15 @@ public class PlayerStatsUI : MonoBehaviour
 
         inputDelayRoutine = StartCoroutine(MenuDelay());
     }
+
     private void SetText(TextMeshUI element, string text)
     {
         statsElements[(int)element].text = text; // set the ui text depending on the enum element and a given string
     }
+
     private void SetWeaponText(WeaponStatList element, string text, TextMeshProUGUI[] UIArray)
     {
-        UIArray[(int)element].text = text; // set the ui text depending on the enum element and a given string into an array of weapon ui element
-    }
-
-    void OnEnable()
-    {
-        playerData.onStatsChanged += UpdateUI;
-    }
-
-    void OnDisable()
-    {
-        playerData.onStatsChanged -= UpdateUI;
+        UIArray[(int)element].text =
+            text; // set the ui text depending on the enum element and a given string into an array of weapon ui element
     }
 }

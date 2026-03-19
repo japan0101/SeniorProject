@@ -9,7 +9,7 @@ namespace EnemiesScript.Range
 {
     public class RangeEnemyAgent : EnemyAgent
     {
-        private bool attackedThisStep = false;
+        private bool attackedThisStep;
         private float lastDistance;
         private float minAttackDistance = 1.5f;
 
@@ -23,7 +23,6 @@ namespace EnemiesScript.Range
 
         public override void Initialize()
         {
-
             base.Initialize();
             if (isTraining)
             {
@@ -44,29 +43,17 @@ namespace EnemiesScript.Range
             discreteActionsOut[1] = 0; // Do nothing
 
 
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                discreteActionsOut[0] = 1;//Dash
-            }
-            if (Input.GetKey(KeyCode.Space))
-            {
-                discreteActionsOut[1] = 1;//attack
-            }
-            if (Input.GetKey(KeyCode.Q))
-            {
-                continuousActions[2] = -1;//ccwspin
-            }
-            if (Input.GetKey(KeyCode.E))
-            {
-                continuousActions[2] = 1;//cwspin
-            }
-
+            if (Input.GetKey(KeyCode.LeftShift)) discreteActionsOut[0] = 1; //Dash
+            if (Input.GetKey(KeyCode.Space)) discreteActionsOut[1] = 1; //attack
+            if (Input.GetKey(KeyCode.Q)) continuousActions[2] = -1; //ccwspin
+            if (Input.GetKey(KeyCode.E)) continuousActions[2] = 1; //cwspin
         }
+
         public override void CollectObservations(VectorSensor sensor)
         {
             if (agent._player != null)
             {
-                Vector3 toPlayer = agent._player.transform.position - transform.position;
+                var toPlayer = agent._player.transform.position - transform.position;
                 sensor.AddObservation(toPlayer.normalized);
                 sensor.AddObservation(toPlayer.magnitude / 30f);
             }
@@ -94,9 +81,9 @@ namespace EnemiesScript.Range
                 sensor.AddObservation(1f);
             }
         }
+
         public override void OnActionReceived(ActionBuffers actions)
         {
-
             var moveX = actions.ContinuousActions[0];
             var moveZ = actions.ContinuousActions[1];
             var rotation = actions.ContinuousActions[2];
@@ -115,16 +102,17 @@ namespace EnemiesScript.Range
                 agent.Attack(attack - 1);
                 attackedThisStep = true;
             }
+
             base.OnActionReceived(actions);
 
             if (isTraining && agent._player != null)
             {
                 var player = agent._player;
-                float currentDistance = Vector3.Distance(transform.position, player.transform.position);
+                var currentDistance = Vector3.Distance(transform.position, player.transform.position);
 
                 // Reward for staying at safe shooting range from boss
-                float optimalRange = 6f; // Range enemy stays far from boss
-                float distanceFromOptimal = Mathf.Abs(currentDistance - optimalRange);
+                var optimalRange = 6f; // Range enemy stays far from boss
+                var distanceFromOptimal = Mathf.Abs(currentDistance - optimalRange);
                 AddReward(-distanceFromOptimal * 0.005f);
 
 
@@ -140,13 +128,13 @@ namespace EnemiesScript.Range
                 AddReward(-Mathf.Abs(rotation) * 0.01f);
 
                 // 2. Penalize actual angular velocity (physical spinning)
-                Rigidbody rb = GetComponent<Rigidbody>();
+                var rb = GetComponent<Rigidbody>();
                 if (rb != null)
                     AddReward(-Mathf.Abs(rb.angularVelocity.y) * 0.005f);
 
                 // 3. Reward for facing player: encourages purposeful rotation, not random spinning
-                Vector3 toPlayer = (player.transform.position - transform.position).normalized;
-                float facingDot = Vector3.Dot(transform.forward, toPlayer);
+                var toPlayer = (player.transform.position - transform.position).normalized;
+                var facingDot = Vector3.Dot(transform.forward, toPlayer);
                 AddReward(facingDot * 0.02f);
 
                 // Step penalty
@@ -170,23 +158,27 @@ namespace EnemiesScript.Range
             AddReward(-0.01f);
             cumulativeReward = GetCumulativeReward();
         }
-        public override void OnAttackMissed()//Called by Enemy attack event listener to notify that the attack launched did not and on a player
+
+        public override void
+            OnAttackMissed() //Called by Enemy attack event listener to notify that the attack launched did not and on a player
         {
             if (!isTraining) return;
-
         }
-        public override void OnAttackLanded()// Called when Agent Hit Something
+
+        public override void OnAttackLanded() // Called when Agent Hit Something
         {
             if (!isTraining) return;
             AddReward(0.05f);
             cumulativeReward = GetCumulativeReward();
         }
-        public override void OnKilledTarget()// Called when Agent Kill Something
+
+        public override void OnKilledTarget() // Called when Agent Kill Something
         {
             if (!isTraining) return;
             AddReward(5f);
             cumulativeReward = GetCumulativeReward();
         }
+
         public override void OnKilled()
         {
             if (!isTraining) return;
@@ -201,12 +193,12 @@ namespace EnemiesScript.Range
             AddReward(-0.01f);
             cumulativeReward = GetCumulativeReward();
         }
-        
+
 
         public override void OnEpisodeBegin()
         {
             if (!isTraining) return;
-            
+
             currentEpisode++;
             cumulativeReward = 0f;
 
@@ -219,18 +211,18 @@ namespace EnemiesScript.Range
 
 
             // Randomize the direction on the Y-axis (angle in degrees)
-            float randomAngle = Random.Range(0f, 360f);
-            Vector3 randomDirection = Quaternion.Euler(0f, randomAngle, 0f) * Vector3.forward;
+            var randomAngle = Random.Range(0f, 360f);
+            var randomDirection = Quaternion.Euler(0f, randomAngle, 0f) * Vector3.forward;
 
             // Randomize the distance within range [1, 2.5]
-            float randomDistance = Random.Range(1f, 10f);
+            var randomDistance = Random.Range(1f, 10f);
 
             // Calculate the player's position
-            Vector3 localPlayerPosition = localOrigin + randomDirection * randomDistance;
+            var localPlayerPosition = localOrigin + randomDirection * randomDistance;
 
             // Apply the calculated position to the player
-            
-            
+
+
             // var navigation = agent._player.GetComponent<TrainerNavigation>();
             // navigation.EnemyTarget = gameObject;
             // agent._player.transform.localPosition = localPlayerPosition;

@@ -1,35 +1,33 @@
 using AutoPlayerScript;
-using System;
-using System.Diagnostics.Tracing;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Audio;
-using UnityEngine.UIElements;
 using UnityEngine.VFX;
-using static UnityEngine.Rendering.DebugUI;
 
 public class Weapon : MonoBehaviour
 {
-    [Header("Weapon Attribute")]
-    public string DisplayName;
+    [Header("Weapon Attribute")] public string DisplayName;
+
     public int currentAmmo;
     public int magsSize;
     public float power; //shot's bullet initial velocity
     public float cooldown;
     public float reloadTime;
 
-    [Header("Assets References")]
-    public GameObject bullet;
+    [Header("Assets References")] public GameObject bullet;
+
     public VisualEffect muzzleFlash;
-    public VFXEventAttribute muzzleAttribute;
     public AudioClip shotEffect;
     public AudioSource audioSource;
+    public VFXEventAttribute muzzleAttribute;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         //SetEquipped(false);
+    }
+
+    private void Update()
+    {
     }
 
     public void SetEquipped(bool value)
@@ -48,10 +46,11 @@ public class Weapon : MonoBehaviour
     {
         return currentAmmo > 0;
     }
+
     public void StartReload()
     {
-
     }
+
     public void FinishReload()
     {
         currentAmmo = magsSize;
@@ -61,6 +60,7 @@ public class Weapon : MonoBehaviour
     {
         return true;
     }
+
     public void Shoot(Vector3 shootDirection, Vector3 shotPosition)
     {
         //create bullet then add force to it
@@ -72,6 +72,7 @@ public class Weapon : MonoBehaviour
         //bulletRB.AddForce(orientation.forward * 20 + orientation.up * 10, ForceMode.Impulse);
         bulletRB.AddForce(shootDirection * power, ForceMode.Impulse);
     }
+
     public void Shoot(Vector3 shootDirection, Vector3 shotPosition, AutoPlayerAgent shooter)
     {
         //create bullet then add force to it
@@ -88,9 +89,5 @@ public class Weapon : MonoBehaviour
     public void playShootEffect()
     {
         audioSource.PlayOneShot(shotEffect);
-    }
-    void Update()
-    {
-        
     }
 }

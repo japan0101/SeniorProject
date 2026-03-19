@@ -1,22 +1,21 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class DamageTextSpawner : MonoBehaviour
 {
-    [Header("Settings")]
-    public float textDisplayTime = 1.5f;
-    public Vector3 textOffset = new Vector3(0, 2f, 0);
+    [Header("Settings")] public float textDisplayTime = 1.5f;
+
+    public Vector3 textOffset = new(0, 2f, 0);
     public Color textColor = Color.red;
     public int fontSize = 36;
 
-    [Header("References")]
-    public GameObject textPrefab; // Prefab with TextMeshPro component
+    [Header("References")] public GameObject textPrefab; // Prefab with TextMeshPro component
 
     public void SpawnDamageText(Vector3 position, float damage)
     {
         // Create text object
-        GameObject textObj = Instantiate(textPrefab, position + textOffset, Quaternion.identity);
-        TextMeshPro tmp = textObj.GetComponent<TextMeshPro>();
+        var textObj = Instantiate(textPrefab, position + textOffset, Quaternion.identity);
+        var tmp = textObj.GetComponent<TextMeshPro>();
 
         // Configure text
         tmp.text = damage.ToString();

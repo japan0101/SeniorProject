@@ -1,6 +1,6 @@
 using System;
 
-namespace AutoPlayerScript 
+namespace AutoPlayerScript
 {
     public static class TrainerManager
     {
@@ -22,6 +22,7 @@ namespace AutoPlayerScript
         {
             OnBulletMiss?.Invoke(shooter);
         }
+
         public static void KillEnemy(AutoPlayerAgent shooter)
         {
             OnKillEnemy?.Invoke(shooter);

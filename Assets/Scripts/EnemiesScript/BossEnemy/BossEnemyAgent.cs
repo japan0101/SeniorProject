@@ -1,25 +1,23 @@
 ﻿using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using UnityEngine;
-using Random = UnityEngine.Random;
-
 
 namespace EnemiesScript.Boss
 {
-    public class BossEnemyAgent:EnemyAgent
+    public class BossEnemyAgent : EnemyAgent
     {
-        public float reward = 0f;
-        const int basicslashIndex = 1;
-        const int thrustIndex = 2;
-        const int warcryIndex = 3;
-        const int bodyslamIndex = 4;
-        const int jumpslamIndex = 5;
-        const int evadeslashIndex = 6;
+        private const int basicslashIndex = 1;
+        private const int thrustIndex = 2;
+        private const int warcryIndex = 3;
+        private const int bodyslamIndex = 4;
+        private const int jumpslamIndex = 5;
+        private const int evadeslashIndex = 6;
 
         // Health thresholds (percentage)
-        const float phase2Threshold = 0.75f; // 75% HP - unlocks thrust & warcry
-        const float phase3Threshold = 0.50f; // 50% HP - unlocks bodyslam
-        const float phase4Threshold = 0.25f; // 25% HP - unlocks jumpslam & evadeslash
+        private const float phase2Threshold = 0.75f; // 75% HP - unlocks thrust & warcry
+        private const float phase3Threshold = 0.50f; // 50% HP - unlocks bodyslam
+        private const float phase4Threshold = 0.25f; // 25% HP - unlocks jumpslam & evadeslash
+        public float reward;
 
         private new void Awake()
         {
@@ -46,86 +44,58 @@ namespace EnemiesScript.Boss
             var discreteActionsOut = actionsOut.DiscreteActions;
             continuousActions[0] = Input.GetAxis("Horizontal");
             continuousActions[1] = Input.GetAxis("Vertical");
-            
+
             discreteActionsOut[0] = 0; // Do nothing
             discreteActionsOut[1] = 0; // Do nothing
 
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                discreteActionsOut[0] = 1;//Dash
-            }
+            if (Input.GetKey(KeyCode.LeftShift)) discreteActionsOut[0] = 1; //Dash
 
-            if (Input.GetKey(KeyCode.Keypad1))
-            {
-                discreteActionsOut[1] = basicslashIndex;
-            }
-            if (Input.GetKey(KeyCode.Keypad2))
-            {
-                discreteActionsOut[1] = thrustIndex;
-            }
-            if (Input.GetKey(KeyCode.Keypad3))
-            {
-                discreteActionsOut[1] = warcryIndex;
-            }
-            if (Input.GetKey(KeyCode.Keypad4))
-            {
-                discreteActionsOut[1] = bodyslamIndex;
-            }
-            if (Input.GetKey(KeyCode.Keypad5))
-            {
-                discreteActionsOut[1] = jumpslamIndex;
-            }
-            if (Input.GetKey(KeyCode.Keypad6))
-            {
-                discreteActionsOut[1] = evadeslashIndex;
-            }
+            if (Input.GetKey(KeyCode.Keypad1)) discreteActionsOut[1] = basicslashIndex;
+            if (Input.GetKey(KeyCode.Keypad2)) discreteActionsOut[1] = thrustIndex;
+            if (Input.GetKey(KeyCode.Keypad3)) discreteActionsOut[1] = warcryIndex;
+            if (Input.GetKey(KeyCode.Keypad4)) discreteActionsOut[1] = bodyslamIndex;
+            if (Input.GetKey(KeyCode.Keypad5)) discreteActionsOut[1] = jumpslamIndex;
+            if (Input.GetKey(KeyCode.Keypad6)) discreteActionsOut[1] = evadeslashIndex;
 
-            if (Input.GetKey(KeyCode.Space))
-            {
-                discreteActionsOut[1] = basicslashIndex;
-            }
-            if (Input.GetKey(KeyCode.Q))
-            {
-                continuousActions[2] = -1;
-            }
-            if (Input.GetKey(KeyCode.E))
-            {
-                continuousActions[2] = 1;
-            }
-            
+            if (Input.GetKey(KeyCode.Space)) discreteActionsOut[1] = basicslashIndex;
+            if (Input.GetKey(KeyCode.Q)) continuousActions[2] = -1;
+            if (Input.GetKey(KeyCode.E)) continuousActions[2] = 1;
         }
+
         public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
         {
             if (agent._player == null) return;
 
-            float distance = Vector3.Distance(transform.position, agent._player.transform.position);
+            var distance = Vector3.Distance(transform.position, agent._player.transform.position);
 
             // Get current health percentage (adjust agent.health & agent.maxHealth to your actual property names)
-            float healthPercent = agent.hp / agent.maxHp;
+            var healthPercent = agent.hp / agent.maxHp;
 
-            bool isCloseRange = distance < 3f;
-            bool isMidRange   = distance >= 3f && distance <= 6f;
-            bool isFarRange   = distance > 6f;
+            var isCloseRange = distance < 3f;
+            var isMidRange = distance >= 3f && distance <= 6f;
+            var isFarRange = distance > 6f;
 
             // Phase 1 (100% - 75% HP): Basic slash & Thrust only
             actionMask.SetActionEnabled(1, basicslashIndex, isCloseRange);
             actionMask.SetActionEnabled(1, thrustIndex, isCloseRange || isMidRange);
 
             // Phase 2 (below 75% HP): Unlock Warcry
-            actionMask.SetActionEnabled(1, warcryIndex,    healthPercent <= phase2Threshold);
+            actionMask.SetActionEnabled(1, warcryIndex, healthPercent <= phase2Threshold);
 
             // Phase 3 (below 50% HP): Unlock Bodyslam
-            actionMask.SetActionEnabled(1, bodyslamIndex,  healthPercent <= phase3Threshold && isCloseRange);
+            actionMask.SetActionEnabled(1, bodyslamIndex, healthPercent <= phase3Threshold && isCloseRange);
 
             // Phase 4 (below 25% HP): Unlock Jumpslam & EvadeSlash
-            actionMask.SetActionEnabled(1, jumpslamIndex,  healthPercent <= phase4Threshold && (isMidRange || isFarRange));
-            actionMask.SetActionEnabled(1, evadeslashIndex,healthPercent <= phase4Threshold && isCloseRange);
+            actionMask.SetActionEnabled(1, jumpslamIndex,
+                healthPercent <= phase4Threshold && (isMidRange || isFarRange));
+            actionMask.SetActionEnabled(1, evadeslashIndex, healthPercent <= phase4Threshold && isCloseRange);
         }
+
         public override void CollectObservations(VectorSensor sensor)
         {
             if (agent._player != null)
             {
-                Vector3 toPlayer = agent._player.transform.position - transform.position;
+                var toPlayer = agent._player.transform.position - transform.position;
                 sensor.AddObservation(toPlayer.normalized);
                 sensor.AddObservation(toPlayer.magnitude / 30f);
             }
@@ -134,14 +104,14 @@ namespace EnemiesScript.Boss
                 sensor.AddObservation(Vector3.zero);
                 sensor.AddObservation(0f);
             }
-            
+
             sensor.AddObservation(transform.forward);
             sensor.AddObservation(agent.energy);
 
             // FIX: Use local position instead of world position
             sensor.AddObservation(transform.localPosition);
 
-            Rigidbody rb = GetComponent<Rigidbody>();
+            var rb = GetComponent<Rigidbody>();
             if (rb != null)
                 sensor.AddObservation(rb.angularVelocity.y / 10f);
             else
@@ -150,6 +120,7 @@ namespace EnemiesScript.Boss
             // Add health percent so agent knows which attacks are available
             sensor.AddObservation(agent.hp / agent.maxHp);
         }
+
         public override void OnActionReceived(ActionBuffers actions)
         {
             var moveX = actions.ContinuousActions[0];
@@ -163,7 +134,7 @@ namespace EnemiesScript.Boss
             agent.MoveAgentZ(moveZ);
             agent.RotateAgent(rotation);
             agent.Specials(special);
-            
+
             _attackedThisStep = false;
 
             if (attack > 0)
@@ -171,16 +142,17 @@ namespace EnemiesScript.Boss
                 agent.Attack(attack);
                 _attackedThisStep = true;
             }
+
             base.OnActionReceived(actions);
-            
+
             if (isTraining && agent._player != null)
             {
                 var player = agent._player;
-                float currentDistance = Vector3.Distance(transform.position, player.transform.position);
+                var currentDistance = Vector3.Distance(transform.position, player.transform.position);
 
                 // Reward for being in attack range instead of just getting closer
-                float optimalRange = 2.5f; // Adjust to your attack range
-                float distanceFromOptimal = Mathf.Abs(currentDistance - optimalRange);
+                var optimalRange = 2.5f; // Adjust to your attack range
+                var distanceFromOptimal = Mathf.Abs(currentDistance - optimalRange);
                 AddReward(-distanceFromOptimal * 0.005f); // Penalize being outside optimal range
 
                 // Penalize strafing
@@ -191,13 +163,13 @@ namespace EnemiesScript.Boss
                 AddReward(-Mathf.Abs(rotation) * 0.01f);
 
                 // 2. Penalize actual angular velocity (physical spinning)
-                Rigidbody rb = GetComponent<Rigidbody>();
+                var rb = GetComponent<Rigidbody>();
                 if (rb != null)
                     AddReward(-Mathf.Abs(rb.angularVelocity.y) * 0.005f);
 
                 // 3. Reward for facing player: encourages purposeful rotation, not random spinning
-                Vector3 toPlayer = (player.transform.position - transform.position).normalized;
-                float facingDot = Vector3.Dot(transform.forward, toPlayer);
+                var toPlayer = (player.transform.position - transform.position).normalized;
+                var facingDot = Vector3.Dot(transform.forward, toPlayer);
                 AddReward(facingDot * 0.02f);
 
                 _lastDistance = currentDistance;
@@ -216,26 +188,28 @@ namespace EnemiesScript.Boss
         {
             if (!isTraining) return;
         }
-        public override void OnAttackMissed()//Called by Enemy attack event listener to notify that the attack launched did not and on a player
+
+        public override void
+            OnAttackMissed() //Called by Enemy attack event listener to notify that the attack launched did not and on a player
         {
             if (!isTraining) return;
         }
-        public override void OnAttackLanded()// Called when Agent Hit Something
+
+        public override void OnAttackLanded() // Called when Agent Hit Something
         {
             if (!isTraining) return;
             AddReward(0.05f);
             cumulativeReward = GetCumulativeReward();
         }
-        public override void OnKilledTarget()// Called when Agent Kill Something
+
+        public override void OnKilledTarget() // Called when Agent Kill Something
         {
             if (!isTraining) return;
-            if (GetCumulativeReward() < 0f)
-            {
-                SetReward(1f);
-            }
+            if (GetCumulativeReward() < 0f) SetReward(1f);
             AddReward(5f);
             cumulativeReward = GetCumulativeReward();
         }
+
         public override void OnKilled()
         {
             // Getting Killed
@@ -251,20 +225,19 @@ namespace EnemiesScript.Boss
             AddReward(-0.01f);
             cumulativeReward = GetCumulativeReward();
         }
-        
-        
+
+
         public override void OnEpisodeBegin()
         {
             if (!isTraining) return;
-            
+
             currentEpisode++;
             cumulativeReward = 0f;
-            
+
             // Using the TrainingController the Handle the Spawn Logic
             // SpawnPlayer();
             // if (agent._player != null)
             //     _lastDistance = Vector3.Distance(transform.position, agent._player.transform.position);
         }
-        
     }
 }

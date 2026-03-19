@@ -1,22 +1,20 @@
-using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
-using System;
 using AutoPlayerScript;
-using Unity.VisualScripting;
+using UnityEngine;
 
 public class AutoShoot : MonoBehaviour
 {
-    [Header("Weapon Config")]
-    [SerializeField] private Vector3 rotationOffset;
-    private bool equipedReadyToShoot = true;
-    public Color equipedColor = new Color(0f, 1f, 0.5f, 0.5f);
-    public Color nonEquipedColor = new Color(0f, 0f, 0f, 0.3921f);
-    [Range(0f, 1f)]
-    public float chanceToShoot = 0.8f;
+    [Header("Weapon Config")] [SerializeField]
+    private Vector3 rotationOffset;
 
-    [Header("References")]
-    [SerializeField] public Transform gunHolder;
+    public Color equipedColor = new(0f, 1f, 0.5f, 0.5f);
+    public Color nonEquipedColor = new(0f, 0f, 0f, 0.3921f);
+
+    [Range(0f, 1f)] public float chanceToShoot = 0.8f;
+
+    [Header("References")] [SerializeField]
+    public Transform gunHolder;
+
     [SerializeField] public Transform gunPos;
     [SerializeField] public Transform aimLocation;
     [SerializeField] public Transform visualizer;
@@ -24,40 +22,43 @@ public class AutoShoot : MonoBehaviour
     [SerializeField] public Weapon secondaryWeapon;
     [SerializeField] public AutoPlayerAgent agent;
 
-    [Header("Ray Settings")]
-    public float rayLength = 10f;
+    [Header("Ray Settings")] public float rayLength = 10f;
+
     public LayerMask detectionLayer;
     public Color rayColor = Color.red;
+    private Coroutine activeReloadRoutine;
+    private float cooldownTimer;
+    private bool equipedReadyToShoot = true;
+    private Weapon equipedWeapon;
 
 
     private bool isPrimary;
-    private Weapon equipedWeapon;
-    private Coroutine activeReloadRoutine;
+    private bool isReloading;
+    private float reloadTimer;
     private Coroutine shootCooldownRoutine;
     private Vector3 shootDirection;
-    private float reloadTimer;
-    private float cooldownTimer;
-    private bool isReloading = false;
-
-
-    public bool IsReloading() => activeReloadRoutine != null;
 
     private void Awake()
     {
-        GetComponent<Rigidbody>().freezeRotation=true;
+        GetComponent<Rigidbody>().freezeRotation = true;
         SwitchWeapon(true);
     }
 
-    void Start()
+    private void Start()
     {
-        
         //UpdateAmmoUI();
     }
 
-    void Update()
+    private void Update()
     {
         UpdateAiming();
         //transform.Rotate(0, 20 * Time.deltaTime, 0);
+    }
+
+
+    public bool IsReloading()
+    {
+        return activeReloadRoutine != null;
     }
 
     public int GetCurrentAmmo()
@@ -67,8 +68,10 @@ public class AutoShoot : MonoBehaviour
             Debug.Log("Not equiped");
             return 0;
         }
+
         return equipedWeapon.currentAmmo;
     }
+
     public void ShootWeapon()
     {
         if (shootCooldownRoutine != null)
@@ -76,23 +79,21 @@ public class AutoShoot : MonoBehaviour
 
         equipedReadyToShoot = false;
         equipedWeapon.Shoot(shootDirection, gunPos.position, agent);
-        
+
         shootCooldownRoutine = StartCoroutine(ShootCooldown(equipedWeapon.cooldown));
     }
+
     public bool canReload()
     {
         return equipedWeapon.CanReload() && !isReloading;
     }
+
     public void StartReload()
     {
         isReloading = true;
         // Cancel existing reload if in progress
-        if (activeReloadRoutine != null)
-        {
-            StopCoroutine(activeReloadRoutine);
-            // Debug.Log("Reload interrupted");
-        }
-
+        if (activeReloadRoutine != null) StopCoroutine(activeReloadRoutine);
+        // Debug.Log("Reload interrupted");
         // Start new reload
         activeReloadRoutine = StartCoroutine(ReloadWeapon());
     }
@@ -101,6 +102,7 @@ public class AutoShoot : MonoBehaviour
     {
         return IsReloading() ? reloadTimer / equipedWeapon.reloadTime : 0;
     }
+
     public IEnumerator ReloadWeapon()
     {
         //Debug.Log("Reloading...");
@@ -112,9 +114,9 @@ public class AutoShoot : MonoBehaviour
             reloadTimer += Time.deltaTime;
             yield return null;
         }
-        
+
         //yield return new WaitForSeconds(equipedWeapon.reloadTime);
-        
+
         equipedWeapon.FinishReload();
         activeReloadRoutine = null;
         isReloading = false;
@@ -130,6 +132,7 @@ public class AutoShoot : MonoBehaviour
             //Debug.Log($"Timer: {reloadTimer}");
             yield return null;
         }
+
         equipedReadyToShoot = true;
         shootCooldownRoutine = null;
     }
@@ -143,34 +146,33 @@ public class AutoShoot : MonoBehaviour
         {
             StopCoroutine(activeReloadRoutine);
             activeReloadRoutine = null;
-            isReloading = false ;
+            isReloading = false;
         }
 
         isPrimary = primary;
         equipedWeapon = primary ? primaryWeapon : secondaryWeapon;
         primaryWeapon.SetEquipped(primary);
         secondaryWeapon.SetEquipped(!primary);
-        
     }
 
     public bool CanShoot()
     {
         return equipedWeapon.CanShoot() && equipedReadyToShoot && activeReloadRoutine == null;
     }
+
     private void UpdateAiming()
     {
-        Ray ray = new Ray(aimLocation.position, aimLocation.transform.forward);
+        var ray = new Ray(aimLocation.position, aimLocation.transform.forward);
         RaycastHit hit;
-        Vector3 targetPoint = Physics.Raycast(ray, out hit, rayLength, detectionLayer) 
-            ? hit.point 
+        var targetPoint = Physics.Raycast(ray, out hit, rayLength, detectionLayer)
+            ? hit.point
             : ray.origin + ray.direction * rayLength;
         if (visualizer != null)
             visualizer.position = targetPoint;
 
         shootDirection = targetPoint - gunHolder.position;
         gunHolder.rotation = Quaternion.LookRotation(shootDirection) * Quaternion.Euler(rotationOffset);
-        
+
         Debug.DrawRay(gunHolder.position, shootDirection, rayColor);
     }
-
 }

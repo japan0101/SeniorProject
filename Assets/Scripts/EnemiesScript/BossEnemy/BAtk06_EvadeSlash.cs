@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace EnemiesScript.Boss
 {
-    public class BossESlahshAttack:EnemyAttack
+    public class BossESlahshAttack : EnemyAttack
     {
-        [Header("Specific config")]
-        public float hold_duration = 0.7f;
+        [Header("Specific config")] public float hold_duration = 0.7f;
+
         public float attack_window = 0.2f;
         public GameObject effect;
+        protected Coroutine attackRoutine;
 
         protected float holdposeTimer = 0;
-        protected Coroutine attackRoutine;
-        public override void OnAttack(float dmgModifier)
+
+        private void Update()
         {
-            damage = damage * dmgModifier;
-            attackRoutine = StartCoroutine(AttackSequence(hold_duration));
         }
 
         public void OnDestroy()
@@ -34,26 +32,30 @@ namespace EnemiesScript.Boss
                 Debug.Log(e);
             }
         }
+
+        public void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("Player"))
+                isMissed = false; //For using in OnDestroyed checks weather the attack hit a player
+        }
+
+        public override void OnAttack(float dmgModifier)
+        {
+            damage = damage * dmgModifier;
+            attackRoutine = StartCoroutine(AttackSequence(hold_duration));
+        }
+
         public override void OnAttack(float dmgModifier, Vector3 direction)
         {
             OnAttack(dmgModifier);
         }
-        public void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag("Player")) {
-                isMissed = false;//For using in OnDestroyed checks weather the attack hit a player
-            }
-        }
-        void Update()
-        {
-            
-        }
-        IEnumerator AttackSequence(float delayTime)
+
+        private IEnumerator AttackSequence(float delayTime)
         {
             Debug.Log("Holding Pose");
             GetComponentInParent<Enemy>().groundFriction = 0.002f;
             animator.SetTrigger("EvadeSlash Holdpose");
-            yield return new WaitForSeconds(delayTime);//Holding pose
+            yield return new WaitForSeconds(delayTime); //Holding pose
             attackRoutine = null;
             //Start attacking after this
             animator.SetTrigger("EvadeSlash Start");

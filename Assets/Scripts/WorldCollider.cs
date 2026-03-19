@@ -7,5 +7,4 @@ public class WorldCollider : MonoBehaviour
     {
         Destroy(other.gameObject);
     }
-
 }

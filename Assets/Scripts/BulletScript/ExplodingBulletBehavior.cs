@@ -1,18 +1,19 @@
-using System;
 using EnemiesScript;
 using UnityEngine;
 using UnityEngine.VFX;
 
 public class ExplodingHit : OnHitBehavior
 {
-    [Header("BulletAttribute")]
-    public float blastRadius;
+    [Header("BulletAttribute")] public float blastRadius;
+
     public float blastDamageMultiplier;
     public float blastKnockback;
-    [Header("References")]
-    public VisualEffect blastVFX;
+
+    [Header("References")] public VisualEffect blastVFX;
+
     public AudioClip blastSound;
     public AudioSource audioSource;
+
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
@@ -26,6 +27,11 @@ public class ExplodingHit : OnHitBehavior
         //    Debug.LogError("No VisualEffect found in children!", this);
         //}
     }
+
+    public void Update()
+    {
+    }
+
     private void PlayVFX()
     {
         GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
@@ -41,64 +47,57 @@ public class ExplodingHit : OnHitBehavior
             Debug.LogWarning("VFX references not set!");
         }
     }
+
     public override void OnBulletHit(Collision other, Vector3 lastVelocity) // when the bullet is collsion activated
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, blastRadius);
+        var hitColliders = Physics.OverlapSphere(transform.position, blastRadius);
         //play explosion Visual effect on hitting collision
         PlayVFX();
         foreach (var hitCollider in hitColliders)
-        {   
+        {
             // Check if the object has a specific component if needed
             if (hitCollider.GetComponent<Enemy>() != null)
             {
                 // hitCollider.GetComponent<BaseEnemy>().TakeDamage(hitCollider.ClosestPoint(transform.position), GetComponent<MainBullet>().damage * blastDamageMultiplier);
                 //Debug.Log("Enemy detected: " + hitCollider.name);
             }
+
             if (hitCollider.GetComponent<PlayerHealth>() != null)
+                hitCollider.GetComponent<PlayerHealth>().TakeDamage(hitCollider.ClosestPoint(transform.position),
+                    GetComponent<MainBullet>().damage * blastDamageMultiplier / 2);
+            //Debug.Log("Enemy detected: " + hitCollider.name);
+            if (hitCollider.GetComponent<Rigidbody>() != null)
             {
-                hitCollider.GetComponent<PlayerHealth>().TakeDamage(hitCollider.ClosestPoint(transform.position), (GetComponent<MainBullet>().damage * blastDamageMultiplier) / 2);
-                //Debug.Log("Enemy detected: " + hitCollider.name);
-            }
-            if (hitCollider.GetComponent<Rigidbody>() != null) {
                 //Debug.Log("RigidBody: " + hitCollider.name);
-                Ray ray = new Ray(transform.position, hitCollider.ClosestPoint(transform.position) - transform.position);
+                var ray = new Ray(transform.position,
+                    hitCollider.ClosestPoint(transform.position) - transform.position);
                 RaycastHit hit;
                 Vector3 targetPoint;
 
                 // Check if ray hits something
                 if (Physics.Raycast(ray, out hit, blastRadius))
-                {
                     // Use the hit point if we hit something
                     targetPoint = hit.point;
-                    //Debug.Log("Hit: " + hit.collider.name);
-                }
+                //Debug.Log("Hit: " + hit.collider.name);
                 else
-                {
                     // Use the ray's end point if nothing was hit
                     targetPoint = ray.origin + ray.direction * blastRadius;
-                }
 
                 //get traget direction
-                Vector3 direction = targetPoint - transform.position;
+                var direction = targetPoint - transform.position;
                 hitCollider.GetComponent<Rigidbody>().AddForce(direction * blastKnockback, ForceMode.Impulse);
-
-
             }
         }
+
         playBlastEffect();
         GetComponentInChildren<MeshRenderer>().enabled = false;
         GetComponentInChildren<Collider>().enabled = false;
         Destroy(gameObject, 0.4f);
     }
 
-    public void Update()
+    public override void OnBulletHit(Collider other, Vector3 lastVelocity) //When the bullet is triger activated
     {
-
-    }
-
-    public override void OnBulletHit(Collider other, Vector3 lastVelocity)//When the bullet is triger activated
-    {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, blastRadius);
+        var hitColliders = Physics.OverlapSphere(transform.position, blastRadius);
         //play explosion Visual effect on hitting collision
         PlayVFX();
         foreach (var hitCollider in hitColliders)
@@ -110,43 +109,38 @@ public class ExplodingHit : OnHitBehavior
             //     //Debug.Log("Enemy detected: " + hitCollider.name);
             // }
             if (hitCollider.GetComponent<PlayerHealth>() != null)
-            {
-                hitCollider.GetComponent<PlayerHealth>().TakeDamage(hitCollider.ClosestPoint(transform.position), (GetComponent<MainBullet>().damage * blastDamageMultiplier) / 2);
-                //Debug.Log("Enemy detected: " + hitCollider.name);
-            }
+                hitCollider.GetComponent<PlayerHealth>().TakeDamage(hitCollider.ClosestPoint(transform.position),
+                    GetComponent<MainBullet>().damage * blastDamageMultiplier / 2);
+            //Debug.Log("Enemy detected: " + hitCollider.name);
             if (hitCollider.GetComponent<Rigidbody>() != null)
             {
                 //Debug.Log("RigidBody: " + hitCollider.name);
-                Ray ray = new Ray(transform.position, hitCollider.ClosestPoint(transform.position) - transform.position);
+                var ray = new Ray(transform.position,
+                    hitCollider.ClosestPoint(transform.position) - transform.position);
                 RaycastHit hit;
                 Vector3 targetPoint;
 
                 // Check if ray hits something
                 if (Physics.Raycast(ray, out hit, blastRadius))
-                {
                     // Use the hit point if we hit something
                     targetPoint = hit.point;
-                    //Debug.Log("Hit: " + hit.collider.name);
-                }
+                //Debug.Log("Hit: " + hit.collider.name);
                 else
-                {
                     // Use the ray's end point if nothing was hit
                     targetPoint = ray.origin + ray.direction * blastRadius;
-                }
 
                 //get traget direction
-                Vector3 direction = targetPoint - transform.position;
+                var direction = targetPoint - transform.position;
                 hitCollider.GetComponent<Rigidbody>().AddForce(direction * blastKnockback, ForceMode.Impulse);
-
-
             }
         }
+
         playBlastEffect();
         GetComponentInChildren<MeshRenderer>().enabled = false;
         GetComponentInChildren<Collider>().enabled = false;
         Destroy(gameObject, 0.4f);
     }
-    
+
     public void playBlastEffect()
     {
         audioSource.PlayOneShot(blastSound);

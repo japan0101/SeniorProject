@@ -1,22 +1,25 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace EnemiesScript.Boss
 {
-    public class BossBodySlamAttack:EnemyAttack
+    public class BossBodySlamAttack : EnemyAttack
     {
-        [Header("Specific config")]
-        public float hold_duration = 0.7f;
+        [Header("Specific config")] public float hold_duration = 0.7f;
+
         public float attack_window = 0.3f;
         public GameObject effect;
 
-        [Header("Specific config")]
-        public AudioSource audioSource;
+        [Header("Specific config")] public AudioSource audioSource;
+
+        protected Coroutine attackRoutine;
 
         protected float holdposeTimer = 0;
-        protected Coroutine attackRoutine;
+
+        private void Update()
+        {
+        }
+
         public void OnDestroy()
         {
             base.OnDestroy();
@@ -25,31 +28,30 @@ namespace EnemiesScript.Boss
             GetComponentInParent<Enemy>().groundFriction = 2.5f;
             GetComponentInParent<Enemy>().BslamOverride();
         }
+
+        public void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("Player"))
+                isMissed = false; //For using in OnDestroyed checks weather the attack hit a player
+        }
+
         public override void OnAttack(float dmgModifier)
         {
             damage = damage * dmgModifier;
             attackRoutine = StartCoroutine(AttackSequence(hold_duration));
         }
+
         public override void OnAttack(float dmgModifier, Vector3 direction)
         {
             OnAttack(dmgModifier);
         }
-        public void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag("Player")) {
-                isMissed = false;//For using in OnDestroyed checks weather the attack hit a player
-            }
-        }
-        void Update()
-        {
-            
-        }
-        IEnumerator AttackSequence(float delayTime)
+
+        private IEnumerator AttackSequence(float delayTime)
         {
             Debug.Log("Holding Pose");
             GetComponentInParent<Enemy>().groundFriction = 0.002f;
             animator.SetTrigger("BSlam Holdpose");
-            yield return new WaitForSeconds(delayTime);//Hold pose
+            yield return new WaitForSeconds(delayTime); //Hold pose
             animator.SetTrigger("Bslam Start");
             audioSource.Play();
             attackRoutine = null;

@@ -8,12 +8,14 @@ public class CameraMovement : MonoBehaviour
     public Transform hOrientation;
     public Transform vOrientation;
 
-    float xRotation;
-    float yRotation;
+    private bool _inputEnabled;
 
-    private bool _inputEnabled = false;
+    private float xRotation;
+
+    private float yRotation;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -21,15 +23,14 @@ public class CameraMovement : MonoBehaviour
         Debug.Log($"Starting rotation: {transform.rotation.eulerAngles}");
         Invoke(nameof(EnableInput), 0.1f);
     }
-    void EnableInput() => _inputEnabled = true;
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (!_inputEnabled) return;
         //get Mouse input
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * senX;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * senY;
+        var mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * senX;
+        var mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * senY;
 
         yRotation += mouseX;
         xRotation -= mouseY;
@@ -41,5 +42,10 @@ public class CameraMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         hOrientation.rotation = Quaternion.Euler(0, yRotation, 0);
         vOrientation.rotation = Quaternion.Euler(xRotation, 0, 0);
+    }
+
+    private void EnableInput()
+    {
+        _inputEnabled = true;
     }
 }

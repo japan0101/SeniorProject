@@ -7,37 +7,37 @@ public class EnergyManager : MonoBehaviour
     public Image energyDisplay;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         _stats.ModifyEnergy(_stats.maxEnergy);
         updateDisplay();
     }
+
     private void Update()
     {
         regenEnergy();
         updateDisplay();
     }
+
     private void regenEnergy()
     {
         _stats.ModifyEnergy(_stats.EnergyRegenRate * Time.deltaTime);
-        
     }
-    void updateDisplay()
+
+    private void updateDisplay()
     {
         energyDisplay.fillAmount = _stats.currentEnergy / _stats.maxEnergy;
     }
+
     public bool consumeEnergy(float unit)
     {
-        if (_stats.currentEnergy - unit < 0) {
-            return false;
-        }
-        else
-        {
-            _stats.ModifyEnergy(-unit);
-            updateDisplay();
-        }
+        if (_stats.currentEnergy - unit < 0) return false;
+
+        _stats.ModifyEnergy(-unit);
+        updateDisplay();
         return true;
     }
+
     public void gainEnergy(float unit)
     {
         _stats.ModifyEnergy(unit);

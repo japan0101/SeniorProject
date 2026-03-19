@@ -1,34 +1,35 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
+using UnityEngine;
 
 namespace EnemiesScript
 {
     public abstract class EnemyAttack : MonoBehaviour
     {
         public GameObject attacker;
-        [Header("Base Config")]
-        public float damage;
+
+        [Header("Base Config")] public float damage;
+
         public float lifetime;
         public float baseKnockbackForce;
-        protected bool isMissed = true;
         public float effectDuration = 2.0f;
-        public event Action OnMissed;
         public Animator animator;
-        public virtual void OnAttack(float dmgModifier)
-        {
+        protected bool isMissed = true;
 
-        }
-        public virtual void OnAttack(float dmgModifier, Vector3 direction)
-        {
-
-        }
         public void OnDestroy()
         {
-            if (isMissed)// check weather the launced attack have hit an opponent, the logic of this should be done in a child component since some attack might have AOE
-            {
+            if (isMissed) // check weather the launced attack have hit an opponent, the logic of this should be done in a child component since some attack might have AOE
                 OnMissed?.Invoke(); // tell other component that is listening that an attack has missed
-                //Debug.Log("Missed From Attacks");
-            }
+            //Debug.Log("Missed From Attacks");
+        }
+
+        public event Action OnMissed;
+
+        public virtual void OnAttack(float dmgModifier)
+        {
+        }
+
+        public virtual void OnAttack(float dmgModifier, Vector3 direction)
+        {
         }
     }
 }

@@ -5,9 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerStats", menuName = "PlayerStats")]
 public class PlayerStats : ScriptableObject
 {
-
-    public event Action onStatsChanged;
-
     //Base stats
     public float maxHP = 250;
     public float currentHP = 250;
@@ -29,7 +26,10 @@ public class PlayerStats : ScriptableObject
     public float jumpCooldown = 0.5f;
     public float jumpCost = 15;
 
-    public List<int> States = new List<int>();
+    public List<int> States = new();
+
+    public event Action onStatsChanged;
+
     public void ModifyHP(float amount)
     {
         currentHP = Mathf.Clamp(currentHP + amount, 0, maxHP);

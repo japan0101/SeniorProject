@@ -5,7 +5,7 @@ public class CamMover : MonoBehaviour
     public Transform camPosition;
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         transform.position = camPosition.position;
     }

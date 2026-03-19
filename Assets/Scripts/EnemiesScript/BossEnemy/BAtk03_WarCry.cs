@@ -1,37 +1,36 @@
-﻿using System;
-using System.Collections;
-using Unity.VisualScripting;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace EnemiesScript.Boss
 {
-    public class BossWCAttack:EnemyAttack
+    public class BossWCAttack : EnemyAttack
     {
-        [Header("Specific config")]
-        public float hold_duration = 0.7f;
+        [Header("Specific config")] public float hold_duration = 0.7f;
+
         public float attack_window = 0.8f;
+        protected Coroutine attackRoutine;
 
         protected float holdposeTimer = 0;
-        protected Coroutine attackRoutine;
+
+        public void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("Player"))
+                isMissed = false; //For using in OnDestroyed checks weather the attack hit a player
+        }
+
         public override void OnAttack(float dmgModifier)
         {
             damage = damage * dmgModifier;
             attackRoutine = StartCoroutine(AttackSequence(hold_duration));
         }
+
         public override void OnAttack(float dmgModifier, Vector3 direction)
         {
             OnAttack(dmgModifier);
         }
-        public void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag("Player")) {
-                isMissed = false;//For using in OnDestroyed checks weather the attack hit a player
-            }
-        }
-        IEnumerator AttackSequence(float delayTime)
-        {
 
+        private IEnumerator AttackSequence(float delayTime)
+        {
             Debug.Log("Holding Pose");
             yield return new WaitForSeconds(delayTime);
             animator.SetTrigger("Shout");
