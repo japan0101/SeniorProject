@@ -127,15 +127,6 @@ namespace EnemiesScript.Range
                 float distanceFromOptimal = Mathf.Abs(currentDistance - optimalRange);
                 AddReward(-distanceFromOptimal * 0.005f);
 
-                // Reward for facing boss
-                if (sightDetector != null && sightDetector.IsTargetVisible)
-                {
-                    Vector3 toPlayer = (player.transform.position - transform.position).normalized;
-                    float dotProduct = Vector3.Dot(transform.forward, toPlayer);
-
-                    if (dotProduct > 0.9f)
-                        AddReward(dotProduct * 0.1f);
-                }
 
                 // Penalize getting too close to boss (danger zone)
                 if (currentDistance < 3f)

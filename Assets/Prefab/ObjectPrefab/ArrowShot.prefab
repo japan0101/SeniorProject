@@ -54,7 +54,7 @@ MonoBehaviour:
   baseKnockbackForce: 100
   effectDuration: 2
   animator: {fileID: 0}
-  power: 20
+  power: 100
 --- !u!54 &2616900517433008262
 Rigidbody:
   m_ObjectHideFlags: 0
