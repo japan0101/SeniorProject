@@ -13,13 +13,20 @@
       <Method Name="Update" Hidden="true" />
       <Field Name="warcryIndex" Hidden="true" />
     </Members>
+    <InheritanceLine Type="EnemiesScript.Enemy" FixedFromPoint="true">
+      <Path>
+        <Point X="12.688" Y="1.941" />
+        <Point X="12.688" Y="3.784" />
+        <Point X="11.75" Y="3.784" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>hISUKAAAoAAAAQAIAAAAEAEAAZQgAAAEAAgAAACAIEA=</HashCode>
       <FileName>Assets\Scripts\EnemiesScript\BossEnemy\BossEnemy.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EnemiesScript.Enemy" Collapsed="true">
-    <Position X="12" Y="0.5" Width="1.5" />
+    <Position X="12" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAQBCYBAoEEgEEWMIAkyGAEQAJSEIgQgQAhQgQCgAsI=</HashCode>
       <FileName>Assets\Scripts\EnemiesScript\Enemy.cs</FileName>
