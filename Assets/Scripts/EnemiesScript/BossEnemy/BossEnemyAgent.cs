@@ -157,7 +157,6 @@ namespace EnemiesScript.Boss
                 AddReward(-distanceFromOptimal * 0.005f); // Penalize being outside optimal range
 
                 // Penalize strafing
-                AddReward(-Mathf.Abs(moveX) * 0.01f);
 
                 // --- Anti-spin fixes ---
                 // 1. Heavy penalty on the rotation action itself
@@ -172,7 +171,10 @@ namespace EnemiesScript.Boss
                 // 3. Hard penalty for actively facing AWAY — makes sustained spinning very expensive
                 if (facingDot < 0f)
                     AddReward(facingDot * 0.05f); // facingDot is negative here so this is a penalty
-
+                
+                // Step penalty
+                AddReward(-0.0001f);
+                
                 _lastDistance = currentDistance;
                 cumulativeReward = GetCumulativeReward();
             }

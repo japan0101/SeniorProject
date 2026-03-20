@@ -1,5 +1,5 @@
 default_settings:
-  max_steps: 5000000
+  max_steps: 3000000
   self_play:
     save_steps: 50000
     swap_steps: 20000
