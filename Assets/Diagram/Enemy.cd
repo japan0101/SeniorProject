@@ -3,43 +3,51 @@
   <Class Name="EnemiesScript.Enemy">
     <Position X="11.75" Y="3" Width="3.25" />
     <TypeIdentifier>
-      <HashCode>EAQBCQBBoEEgAAWMAAggGAEQAJSAAAAgQAhQgACgAMI=</HashCode>
+      <HashCode>EAQBCYBAoEEgEEWMIAkyGAEQAJSEIgQgQAhQgQCgAsI=</HashCode>
       <FileName>Assets\Scripts\EnemiesScript\Enemy.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EnemiesScript.Melee.MeleeEnemy" Collapsed="true">
-    <Position X="9.5" Y="5.5" Width="1.5" />
+    <Position X="9.25" Y="4.5" Width="1.5" />
+    <InheritanceLine Type="EnemiesScript.Enemy" FixedFromPoint="true">
+      <Path>
+        <Point X="11.75" Y="5.875" />
+        <Point X="11.375" Y="5.875" />
+        <Point X="11.375" Y="4.846" />
+        <Point X="10.75" Y="4.846" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AISACAAAoAAAAQAAAAAAEAAAAJQgAAAAAAgAAACEAEA=</HashCode>
+      <HashCode>AISACAAAoAAAAQAAAAAAEAAAAJQgAAAAAAgAAACAAEA=</HashCode>
       <FileName>Assets\Scripts\EnemiesScript\Melee\MeleeEnemy.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="EnemiesScript.Range.RangeEnemy" Collapsed="true">
-    <Position X="9.5" Y="7" Width="1.5" />
+    <Position X="9.25" Y="5.5" Width="1.5" />
+    <InheritanceLine Type="EnemiesScript.Enemy" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="11.75" Y="5.875" />
+        <Point X="10.75" Y="5.875" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AIQACAAAoAAAAAAAAAAAEAAAAJQgAAAAAAgAAACEAEA=</HashCode>
+      <HashCode>AIQACAAAoAAAAAAAAAAAEAAAAJQgAAAAAAgAAACAAEA=</HashCode>
       <FileName>Assets\Scripts\EnemiesScript\Range\RangeEnemy.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="EnemiesScript.Melee.MeleeEnemyAttack" Collapsed="true">
-    <Position X="18" Y="7.5" Width="1.75" />
+  <Class Name="EnemiesScript.Boss.BossEnemy" Collapsed="true">
+    <Position X="9.25" Y="6.5" Width="1.5" />
+    <InheritanceLine Type="EnemiesScript.Enemy" FixedFromPoint="true">
+      <Path>
+        <Point X="11.75" Y="5.875" />
+        <Point X="11.375" Y="5.875" />
+        <Point X="11.375" Y="6.846" />
+        <Point X="10.75" Y="6.846" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAACAAAAIAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\EnemiesScript\Melee\MeleeEnemyAttack.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="EnemiesScript.Range.RangeEnemyAttack" Collapsed="true">
-    <Position X="15.75" Y="7.5" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAACAAAAAAAAAAAEAAAAAQAAAAAAAAAA=</HashCode>
-      <FileName>Assets\Scripts\EnemiesScript\Range\RangeEnemyAttack.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="EnemiesScript.EnemyAttack">
-    <Position X="15.5" Y="3.5" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAABAAAAAAAFgACAAAAAAABAAAgAAAAAAAAAAABAAAA=</HashCode>
-      <FileName>Assets\Scripts\EnemiesScript\EnemyAttacks.cs</FileName>
+      <HashCode>hISUKAAAoAAAAQAIAAAAEAEAAZQgAAAEAAgAAACAIEA=</HashCode>
+      <FileName>Assets\Scripts\EnemiesScript\BossEnemy\BossEnemy.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
