@@ -17,6 +17,9 @@ public class TrainingController : MonoBehaviour
     [SerializeField] private int numberOfRangeEnemies = 1;
     [SerializeField] private float spawnAreaRadius = 10f;
 
+    [Header("Episode Settings")]
+    [SerializeField] private int maxStepsPerEpisode = 5000;
+
     // --- MODIFIED ---
     // List for tracking LIVING enemies to check for win conditions.
     private readonly List<EnemyAgent> activeEnemies = new();
@@ -25,15 +28,28 @@ public class TrainingController : MonoBehaviour
     private readonly List<Agent> episodeParticipants = new();
 
     private bool matchIsOver;
+    private int currentStepCount;
 
     private void Start()
     {
         ResetArena();
     }
 
+    private void FixedUpdate()
+    {
+        if (matchIsOver) return;
+        currentStepCount++;
+        if (currentStepCount >= maxStepsPerEpisode)
+        {
+            Debug.Log("Episode timed out");
+            EndMatch(); // ends for ALL agents simultaneously
+        }
+    }
+
     private void ResetArena()
     {
         matchIsOver = false;
+        currentStepCount = 0; // reset shared step counter
 
         // --- 1. Clean up old GameObjects ---
         // We no longer need to manually destroy agents, as the parent is the arena.
