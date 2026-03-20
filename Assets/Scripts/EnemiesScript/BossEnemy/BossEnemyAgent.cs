@@ -96,6 +96,7 @@ namespace EnemiesScript.Boss
         {
             if (agent._player != null)
             {
+                //Direction vector to player
                 var toPlayer = agent._player.transform.position - transform.position;
                 sensor.AddObservation(toPlayer.normalized);
                 sensor.AddObservation(toPlayer.magnitude / 30f);
@@ -106,12 +107,14 @@ namespace EnemiesScript.Boss
                 sensor.AddObservation(0f);
             }
 
+            //current forward direction
             sensor.AddObservation(transform.forward);
             sensor.AddObservation(agent.energy);
 
             // FIX: Use local position instead of world position
             sensor.AddObservation(transform.localPosition);
 
+            //It's own Velocity
             var rb = GetComponent<Rigidbody>();
             if (rb != null)
                 sensor.AddObservation(rb.angularVelocity.y / 10f);
