@@ -151,27 +151,17 @@ namespace EnemiesScript.Boss
                 var player = agent._player;
                 var currentDistance = Vector3.Distance(transform.position, player.transform.position);
 
-                // Reward for being in attack range instead of just getting closer
-                var optimalRange = 2.5f; // Adjust to your attack range
+                // Penalty for being outside optimal attack range
+                var optimalRange = 2.5f;
                 var distanceFromOptimal = Mathf.Abs(currentDistance - optimalRange);
-                AddReward(-distanceFromOptimal * 0.005f); // Penalize being outside optimal range
+                AddReward(-distanceFromOptimal * 0.003f);
 
-                // Penalize strafing
-                AddReward(-Mathf.Abs(moveX) * 0.01f);
-
-                // --- Anti-spin fixes ---
-                // 1. Heavy penalty on the rotation action itself
-                //    (rb.angularVelocity is always 0 due to freezeRotation=true, so we use the action value)
-                AddReward(-Mathf.Abs(rotation) * 0.03f);
-
-                // 2. Continuous facing reward — reward looking at player, penalize looking away
+                // Facing reward: +0.05 when fully facing player, -0.05 when facing away
+                // This is the ONLY rotation signal — no per-step rotation penalty
+                // (stacked penalties caused reward collapse)
                 var toPlayer = (player.transform.position - transform.position).normalized;
                 var facingDot = Vector3.Dot(transform.forward, toPlayer);
-                AddReward(facingDot * 0.02f);
-
-                // 3. Hard penalty for actively facing AWAY — makes sustained spinning very expensive
-                if (facingDot < 0f)
-                    AddReward(facingDot * 0.05f); // facingDot is negative here so this is a penalty
+                AddReward(facingDot * 0.05f);
 
                 _lastDistance = currentDistance;
                 cumulativeReward = GetCumulativeReward();
@@ -199,7 +189,7 @@ namespace EnemiesScript.Boss
         public override void OnAttackLanded() // Called when Agent Hit Something
         {
             if (!isTraining) return;
-            AddReward(0.05f);
+            AddReward(1f);
             cumulativeReward = GetCumulativeReward();
         }
 

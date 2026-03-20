@@ -430,13 +430,14 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
+  MaxStep: 7000
   agent: {fileID: 4336597781567697657}
   currentEpisode: 0
   cumulativeReward: 0
   isTraining: 1
   arenaController: {fileID: 0}
   sightDetector: {fileID: 0}
+  reward: 0
 --- !u!114 &4336597781567697657
 MonoBehaviour:
   m_ObjectHideFlags: 0
