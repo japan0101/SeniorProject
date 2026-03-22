@@ -83,6 +83,14 @@ namespace EnemiesScript.Boss
             if (atkIndex == 5 && healthPct > 0.25f) return; // jumpslam: needs < 25% HP
             if (atkIndex == 6 && healthPct > 0.25f) return; // evadeslash: needs < 25% HP
 
+            // Range gate — hard failsafe matching the action mask range conditions
+            if (_player != null)
+            {
+                float dist = Vector3.Distance(transform.position, _player.transform.position);
+                if (atkIndex == 1 && dist >= 3f) return; // basic slash: close range only
+                if (atkIndex == 2 && dist >  6f) return; // thrust: close or mid range only
+            }
+
             // Core logic
             _atk = Instantiate(attacks[actualIndex], gameObject.transform);
             _atk.animator = animator;
