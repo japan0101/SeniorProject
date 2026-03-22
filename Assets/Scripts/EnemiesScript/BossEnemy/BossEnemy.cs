@@ -1,4 +1,4 @@
-﻿using AutoPlayerScript;
+using AutoPlayerScript;
 using UnityEngine;
 
 namespace EnemiesScript.Boss
@@ -74,6 +74,14 @@ namespace EnemiesScript.Boss
                 Debug.LogWarning("Invalid attack index passed to Attack()!");
                 return;
             }
+
+            // HP phase gate — hard failsafe in case action mask is bypassed
+            // Uses atkIndex (1-based, same as BossEnemyAgent constants)
+            float healthPct = hp / maxHp;
+            if (atkIndex == 3 && healthPct > 0.75f) return; // warcry: needs < 75% HP
+            if (atkIndex == 4 && healthPct > 0.50f) return; // bodyslam: needs < 50% HP
+            if (atkIndex == 5 && healthPct > 0.25f) return; // jumpslam: needs < 25% HP
+            if (atkIndex == 6 && healthPct > 0.25f) return; // evadeslash: needs < 25% HP
 
             // Core logic
             _atk = Instantiate(attacks[actualIndex], gameObject.transform);
