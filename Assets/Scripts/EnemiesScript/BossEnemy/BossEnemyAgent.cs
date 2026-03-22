@@ -152,6 +152,7 @@ namespace EnemiesScript.Boss
             if (isTraining && agent._player != null)
             {
                 var player = agent._player;
+                Debug.Log("Player position: " + player.transform.position);
                 var currentDistance = Vector3.Distance(transform.position, player.transform.position);
 
                 // Penalty for being outside optimal attack range
