@@ -78,8 +78,8 @@ namespace EnemiesScript.Boss
             var isFarRange = distance > 6f;
 
             // Phase 1 (100% - 75% HP): Basic slash & Thrust only
-            actionMask.SetActionEnabled(1, basicslashIndex, bossEnemy.CanUseAttack(basicslashIndex));
-            actionMask.SetActionEnabled(1, thrustIndex, bossEnemy.CanUseAttack(thrustIndex));
+            actionMask.SetActionEnabled(1, basicslashIndex, isCloseRange && bossEnemy.CanUseAttack(basicslashIndex));
+            actionMask.SetActionEnabled(1, thrustIndex, (isCloseRange || isMidRange) && bossEnemy.CanUseAttack(thrustIndex));
 
             // Phase 2 (below 75% HP): Unlock Warcry
             actionMask.SetActionEnabled(1, warcryIndex, healthPercent <= phase2Threshold && bossEnemy.CanUseAttack(warcryIndex));
@@ -149,8 +149,7 @@ namespace EnemiesScript.Boss
 
             base.OnActionReceived(actions);
 
-            if (isTraining && agent._player != null)
-            {
+
                 var player = agent._player;
                 Debug.Log("Player position: " + player.transform.position);
                 var currentDistance = Vector3.Distance(transform.position, player.transform.position);
@@ -169,7 +168,6 @@ namespace EnemiesScript.Boss
 
                 _lastDistance = currentDistance;
                 cumulativeReward = GetCumulativeReward();
-            }
         }
 
         public override void OnAttack()
@@ -192,7 +190,6 @@ namespace EnemiesScript.Boss
 
         public override void OnAttackLanded() // Called when Agent Hit Something
         {
-            if (!isTraining) return;
             AddReward(1f);
             cumulativeReward = GetCumulativeReward();
         }

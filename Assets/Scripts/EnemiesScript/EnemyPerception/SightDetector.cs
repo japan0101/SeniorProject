@@ -64,10 +64,12 @@ public class SightDetector : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 Debug.DrawRay(origin.position, hit.point - origin.position, Color.green);
-                //Debug.Log("Is Hit" + hit.transform.gameObject.CompareTag(targetTag));
+                // Debug.Log("Is Hit" + hit.transform.gameObject.CompareTag(targetTag));
                 if (hit.transform.gameObject.CompareTag(targetTag))
+                {
                     IsTargetVisible = true;
-                //Debug.Log(hit.transform.gameObject.tag + " Position:" + hit.transform.position);
+                    Debug.Log(hit.transform.gameObject.tag + " Position:" + hit.transform.position);
+                }
                 else
                     IsTargetVisible = false;
                 //Debug.Log("Obstacle:" + hit.transform.position);

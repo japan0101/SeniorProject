@@ -115,18 +115,14 @@ namespace EnemiesScript.Range
                 var distanceFromOptimal = Mathf.Abs(currentDistance - optimalRange);
                 AddReward(-distanceFromOptimal * 0.003f);
 
-                // Penalize getting too close to boss (danger zone)
-                if (currentDistance < 3f)
-                    AddReward(-0.02f);
-
                 // Facing reward: +0.05 when fully facing player, -0.05 when facing away
-                // This is the ONLY rotation signal — no per-step rotation penalty
-                // (stacked penalties caused reward collapse)
                 var toPlayer = (player.transform.position - transform.position).normalized;
                 var facingDot = Vector3.Dot(transform.forward, toPlayer);
                 AddReward(facingDot * 0.05f);
 
-                // Step penalty
+                // Survival reward: staying alive has positive value
+                // This gives the agent something to gain each step, balancing the penalties
+                AddReward(0.001f);
 
                 _lastDistance = currentDistance;
                 cumulativeReward = GetCumulativeReward();
