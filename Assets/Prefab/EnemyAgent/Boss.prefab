@@ -430,7 +430,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 7000
+  MaxStep: 0
   agent: {fileID: 4336597781567697657}
   currentEpisode: 0
   cumulativeReward: 0

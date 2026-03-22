@@ -127,11 +127,11 @@ namespace EnemiesScript.Range
                 AddReward(facingDot * 0.05f);
 
                 // Step penalty
-                AddReward(-0.0001f);
 
                 _lastDistance = currentDistance;
                 cumulativeReward = GetCumulativeReward();
             }
+            
         }
 
         public override void OnAttack()
