@@ -150,8 +150,9 @@ namespace EnemiesScript.Boss
             base.OnActionReceived(actions);
 
 
+            if (isTraining && agent._player != null)
+            {
                 var player = agent._player;
-                Debug.Log("Player position: " + player.transform.position);
                 var currentDistance = Vector3.Distance(transform.position, player.transform.position);
 
                 // Penalty for being outside optimal attack range
@@ -160,14 +161,13 @@ namespace EnemiesScript.Boss
                 AddReward(-distanceFromOptimal * 0.003f);
 
                 // Facing reward: +0.05 when fully facing player, -0.05 when facing away
-                // This is the ONLY rotation signal — no per-step rotation penalty
-                // (stacked penalties caused reward collapse)
                 var toPlayer = (player.transform.position - transform.position).normalized;
                 var facingDot = Vector3.Dot(transform.forward, toPlayer);
                 AddReward(facingDot * 0.05f);
 
                 _lastDistance = currentDistance;
                 cumulativeReward = GetCumulativeReward();
+            }
         }
 
         public override void OnAttack()
