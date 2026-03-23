@@ -1,0 +1,125 @@
+{
+    "PlayerAI": {
+        "checkpoints": [
+            {
+                "steps": 1999998,
+                "file_path": "results\\Boss15\\PlayerAI\\PlayerAI-1999998.onnx",
+                "reward": 32.15904786575231,
+                "creation_time": 1774229116.3793464,
+                "auxillary_file_paths": [
+                    "results\\Boss15\\PlayerAI\\PlayerAI-1999998.pt"
+                ]
+            },
+            {
+                "steps": 2499944,
+                "file_path": "results\\Boss15\\PlayerAI\\PlayerAI-2499944.onnx",
+                "reward": 20.605559403859925,
+                "creation_time": 1774246186.1451836,
+                "auxillary_file_paths": [
+                    "results\\Boss15\\PlayerAI\\PlayerAI-2499944.pt"
+                ]
+            },
+            {
+                "steps": 2500264,
+                "file_path": "results\\Boss15\\PlayerAI\\PlayerAI-2500264.onnx",
+                "reward": 20.605559403859925,
+                "creation_time": 1774246646.5849006,
+                "auxillary_file_paths": [
+                    "results\\Boss15\\PlayerAI\\PlayerAI-2500264.pt"
+                ]
+            },
+            {
+                "steps": 2999953,
+                "file_path": "results\\Boss15\\PlayerAI\\PlayerAI-2999953.onnx",
+                "reward": 4.849965947054443,
+                "creation_time": 1774259619.3953807,
+                "auxillary_file_paths": [
+                    "results\\Boss15\\PlayerAI\\PlayerAI-2999953.pt"
+                ]
+            },
+            {
+                "steps": 3250390,
+                "file_path": "results\\Boss15\\PlayerAI\\PlayerAI-3250390.onnx",
+                "reward": 5.421119333123214,
+                "creation_time": 1774271860.8444917,
+                "auxillary_file_paths": [
+                    "results\\Boss15\\PlayerAI\\PlayerAI-3250390.pt"
+                ]
+            }
+        ],
+        "elo": 1012.7761781352189,
+        "final_checkpoint": {
+            "steps": 3250390,
+            "file_path": "results\\Boss15\\PlayerAI.onnx",
+            "reward": 5.421119333123214,
+            "creation_time": 1774271860.8444917,
+            "auxillary_file_paths": [
+                "results\\Boss15\\PlayerAI\\PlayerAI-3250390.pt"
+            ]
+        }
+    },
+    "BossAI": {
+        "checkpoints": [
+            {
+                "steps": 1999988,
+                "file_path": "results\\Boss15\\BossAI\\BossAI-1999988.onnx",
+                "reward": 49.55801719985902,
+                "creation_time": 1774233364.5042725,
+                "auxillary_file_paths": [
+                    "results\\Boss15\\BossAI\\BossAI-1999988.pt"
+                ]
+            },
+            {
+                "steps": 2267919,
+                "file_path": "results\\Boss15\\BossAI\\BossAI-2267919.onnx",
+                "reward": 39.52069286466576,
+                "creation_time": 1774246647.0969613,
+                "auxillary_file_paths": [
+                    "results\\Boss15\\BossAI\\BossAI-2267919.pt"
+                ]
+            },
+            {
+                "steps": 2499952,
+                "file_path": "results\\Boss15\\BossAI\\BossAI-2499952.onnx",
+                "reward": 42.51785277106489,
+                "creation_time": 1774255097.6698976,
+                "auxillary_file_paths": [
+                    "results\\Boss15\\BossAI\\BossAI-2499952.pt"
+                ]
+            },
+            {
+                "steps": 2999950,
+                "file_path": "results\\Boss15\\BossAI\\BossAI-2999950.onnx",
+                "reward": 49.57485293916294,
+                "creation_time": 1774271860.61404,
+                "auxillary_file_paths": [
+                    "results\\Boss15\\BossAI\\BossAI-2999950.pt"
+                ]
+            },
+            {
+                "steps": 3000014,
+                "file_path": "results\\Boss15\\BossAI\\BossAI-3000014.onnx",
+                "reward": 49.57485293916294,
+                "creation_time": 1774271860.954474,
+                "auxillary_file_paths": [
+                    "results\\Boss15\\BossAI\\BossAI-3000014.pt"
+                ]
+            }
+        ],
+        "elo": 1222.2178129823042,
+        "final_checkpoint": {
+            "steps": 3000014,
+            "file_path": "results\\Boss15\\BossAI.onnx",
+            "reward": 49.57485293916294,
+            "creation_time": 1774271860.954474,
+            "auxillary_file_paths": [
+                "results\\Boss15\\BossAI\\BossAI-3000014.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.2.0.dev0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

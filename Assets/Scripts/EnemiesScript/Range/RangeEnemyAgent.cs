@@ -127,7 +127,7 @@ namespace EnemiesScript.Range
                 _lastDistance = currentDistance;
                 cumulativeReward = GetCumulativeReward();
             }
-            
+
         }
 
         public override void OnAttack()
@@ -185,6 +185,8 @@ namespace EnemiesScript.Range
 
             currentEpisode++;
             cumulativeReward = 0f;
+            agent.hp = agent.maxHp;
+            agent.energy = agent.maxEnergy;
 
             // SpawnPlayer();
         }

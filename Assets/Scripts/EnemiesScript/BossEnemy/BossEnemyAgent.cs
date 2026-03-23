@@ -224,6 +224,8 @@ namespace EnemiesScript.Boss
 
             currentEpisode++;
             cumulativeReward = 0f;
+            agent.hp = agent.maxHp;
+            agent.energy = agent.maxEnergy;
 
             // Using the TrainingController the Handle the Spawn Logic
             // SpawnPlayer();
