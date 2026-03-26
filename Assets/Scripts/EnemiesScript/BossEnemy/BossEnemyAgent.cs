@@ -155,10 +155,14 @@ namespace EnemiesScript.Boss
                 var player = agent._player;
                 var currentDistance = Vector3.Distance(transform.position, player.transform.position);
 
-                // Penalty for being outside optimal attack range
+                // Stronger penalty for being outside optimal attack range
                 var optimalRange = 2.5f;
                 var distanceFromOptimal = Mathf.Abs(currentDistance - optimalRange);
-                AddReward(-distanceFromOptimal * 0.003f);
+                AddReward(-distanceFromOptimal * 0.006f);
+
+                // Bonus for being in close attack range — overcomes any fear of damage
+                if (currentDistance < 3f)
+                    AddReward(0.02f);
 
                 // Facing reward: +0.05 when fully facing player, -0.05 when facing away
                 var toPlayer = (player.transform.position - transform.position).normalized;
@@ -173,7 +177,8 @@ namespace EnemiesScript.Boss
         public override void OnAttack()
         {
             if (!isTraining) return;
-            // AddReward(-0.02f);
+            // Small cost per attack attempt — makes the boss commit only when positioned well
+            AddReward(-0.05f);
             cumulativeReward = GetCumulativeReward();
         }
 
@@ -182,10 +187,13 @@ namespace EnemiesScript.Boss
             if (!isTraining) return;
         }
 
-        public override void
-            OnAttackMissed() //Called by Enemy attack event listener to notify that the attack launched did not and on a player
+        public override void OnAttackMissed()
         {
             if (!isTraining) return;
+            // Heavy penalty for missing — teaches the boss to attack only when it will land
+            // Net: miss costs -0.05 (attempt) + -0.2 (miss) = -0.25, hit earns -0.05 + 1.0 = +0.95
+            AddReward(-0.2f);
+            cumulativeReward = GetCumulativeReward();
         }
 
         public override void OnAttackLanded() // Called when Agent Hit Something
@@ -198,7 +206,7 @@ namespace EnemiesScript.Boss
         {
             if (!isTraining) return;
             AddReward(5f);
-            cumulativeReward = GetCumulativeReward();
+            cumulativeReward = GetCumulativeReward(); 
         }
 
         public override void OnKilled()
@@ -212,8 +220,9 @@ namespace EnemiesScript.Boss
 
         public override void OnHurt()
         {
+            // No penalty for taking damage — penalizing hurt teaches the boss to run away
+            // The kill/death reward (-1f) is sufficient negative signal
             if (!isTraining) return;
-            AddReward(-0.01f);
             cumulativeReward = GetCumulativeReward();
         }
 

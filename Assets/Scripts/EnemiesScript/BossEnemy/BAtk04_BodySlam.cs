@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 namespace EnemiesScript.Boss
@@ -23,10 +23,12 @@ namespace EnemiesScript.Boss
         public void OnDestroy()
         {
             base.OnDestroy();
-            animator.SetTrigger("EndAttack");
+            var parentEnemy = GetComponentInParent<Enemy>();
+            if (parentEnemy == null) return; // parent already destroyed (e.g. arena reset)
+            animator?.SetTrigger("EndAttack");
             Debug.Log("Return Friction to default");
-            GetComponentInParent<Enemy>().groundFriction = 2.5f;
-            GetComponentInParent<Enemy>().BslamOverride();
+            parentEnemy.groundFriction = 2.5f;
+            parentEnemy.BslamOverride();
         }
 
         public void OnTriggerEnter(Collider other)

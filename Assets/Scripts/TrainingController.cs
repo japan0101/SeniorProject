@@ -10,6 +10,7 @@ public class TrainingController : MonoBehaviour
 
     [SerializeField] private GameObject meleeEnemyPrefab;
     [SerializeField] private GameObject rangeEnemyPrefab;
+    [SerializeField] private GameObject bossEnemyPrefab;
 
     [Header("Spawning Configuration")] [SerializeField]
     private int numberOfMeleeEnemies = 1;
@@ -64,6 +65,18 @@ public class TrainingController : MonoBehaviour
 
         // --- 3. Spawn New Agents ---
         var player = SpawnPlayer();
+
+        // Spawn Boss and wire mutual listeners
+        if (bossEnemyPrefab != null)
+        {
+            var boss = SpawnEnemy(bossEnemyPrefab);
+            // Boss listens to player getting hurt → OnAttackLanded fires on boss
+            boss.GetComponent<EnemyAgent>().agent.AddListenerToTarget(player.gameObject);
+            // Player listens to boss getting hurt → OnAttackLanded fires on player
+            player.GetComponent<EnemyAgent>().agent.AddListenerToTarget(boss.gameObject);
+        }
+
+        // Melee enemies (if any)
         for (var i = 0; i < numberOfMeleeEnemies; i++)
         {
             var enemy = SpawnEnemy(meleeEnemyPrefab);

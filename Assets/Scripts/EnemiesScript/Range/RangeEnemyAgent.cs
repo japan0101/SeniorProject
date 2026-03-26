@@ -82,6 +82,25 @@ namespace EnemiesScript.Range
             }
         }
 
+        public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask)
+        {
+            // Only allow attack when:
+            // 1. Facing the boss (avoids shooting sideways)
+            // 2. Within effective projectile range
+            if (agent._player != null)
+            {
+                var toPlayer = (agent._player.transform.position - transform.position);
+                var dist = toPlayer.magnitude;
+                var facingDot = Vector3.Dot(transform.forward, toPlayer.normalized);
+
+                bool canShoot = facingDot > 0.7f   // roughly facing the boss
+                             && dist >= 3f           // not too close (danger zone)
+                             && dist <= 12f;         // within projectile range
+
+                actionMask.SetActionEnabled(1, 1, canShoot);
+            }
+        }
+
         public override void OnActionReceived(ActionBuffers actions)
         {
             var moveX = actions.ContinuousActions[0];
@@ -110,18 +129,30 @@ namespace EnemiesScript.Range
                 var player = agent._player;
                 var currentDistance = Vector3.Distance(transform.position, player.transform.position);
 
-                // Penalty for being outside optimal shooting range
+                // Asymmetric distance penalty:
+                // Too close = dangerous, punish harder than too far
                 var optimalRange = 6f;
-                var distanceFromOptimal = Mathf.Abs(currentDistance - optimalRange);
-                AddReward(-distanceFromOptimal * 0.003f);
+                if (currentDistance < optimalRange)
+                {
+                    // Under-range: penalize strongly
+                    AddReward(-(optimalRange - currentDistance) * 0.01f);
+
+                    // Hard danger zone: inside boss melee range
+                    if (currentDistance < 3f)
+                        AddReward(-0.05f);
+                }
+                else
+                {
+                    // Over-range: penalize lightly (safe but unproductive)
+                    AddReward(-(currentDistance - optimalRange) * 0.003f);
+                }
 
                 // Facing reward: +0.05 when fully facing player, -0.05 when facing away
                 var toPlayer = (player.transform.position - transform.position).normalized;
                 var facingDot = Vector3.Dot(transform.forward, toPlayer);
                 AddReward(facingDot * 0.05f);
 
-                // Survival reward: staying alive has positive value
-                // This gives the agent something to gain each step, balancing the penalties
+                // Survival reward
                 AddReward(0.001f);
 
                 _lastDistance = currentDistance;

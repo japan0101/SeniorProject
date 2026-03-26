@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 namespace EnemiesScript.Boss
@@ -27,8 +27,12 @@ namespace EnemiesScript.Boss
             {
                 animator.SetTrigger("EndAttack");
                 Destroy(gameObject, lifetime);
-                effect = Instantiate(effect, transform.position, Quaternion.identity);
-                Destroy(effect, 0.5f);
+                // Use a local variable — do NOT overwrite 'effect' or next call will Instantiate a destroyed object
+                if (effect != null)
+                {
+                    var spawnedEffect = Instantiate(effect, transform.position, Quaternion.identity);
+                    Destroy(spawnedEffect, 0.5f);
+                }
                 GetComponent<MeshCollider>().enabled = true;
             }
         }

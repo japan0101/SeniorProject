@@ -435,6 +435,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8372120976345004799, guid: 0314b0df869a133429752441e2d575ed, type: 3}
+      propertyPath: bossEnemyPrefab
+      value: 
+      objectReference: {fileID: 4895929049003943609, guid: a2cb9d86449593c4fbf0251642eb8162, type: 3}
+    - target: {fileID: 8372120976345004799, guid: 0314b0df869a133429752441e2d575ed, type: 3}
+      propertyPath: meleeEnemyPrefab
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8372120976345004799, guid: 0314b0df869a133429752441e2d575ed, type: 3}
+      propertyPath: numberOfMeleeEnemies
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
